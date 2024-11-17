@@ -1,8 +1,7 @@
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -54,6 +52,7 @@ public class Game extends Application {
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
+    @FXML
     private Canvas canvas;
 
     // Loaded images
@@ -76,13 +75,15 @@ public class Game extends Application {
     public void start(Stage primaryStage) {
         try {
             //Load the main scene.
-            BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
+            BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("GameScreenDemo.fxml"));
             Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
             //Place the main scene on stage and show it.
             primaryStage.setTitle(WINDOW_TITLE);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            drawGame();
         }  catch(Exception e) {
             e.printStackTrace();
         }
@@ -133,7 +134,7 @@ public class Game extends Application {
         // Redraw game as the player may have moved.
         drawGame();
 
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
+        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
@@ -141,7 +142,19 @@ public class Game extends Application {
      * Draw the game on the canvas.
      */
     public void drawGame() {
-        // Get the Graphic Context of the canvas. This is what we draw on.
+
+        Image brickImage = new Image("brick.png");
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        //Test for drawing graphics using iteration ONLY
+        for (int i = 0; i<=12; i++) {
+            for (int j = 0; j<=10; j++) {
+                gc.drawImage(brickImage, i * 48, j * 48);
+            }
+        }
+
+
+        /*// Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // Clear canvas
@@ -159,26 +172,7 @@ public class Game extends Application {
         }
 
         // Draw player at current location
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
-    }
-
-    /**
-     * Reset the player's location and move them back to (0,0).
-     */
-    public void resetPlayerLocation() {
-        playerX = 0;
-        playerY = 0;
-        drawGame();
-    }
-
-    /**
-     * Move the player to roughly the center of the grid.
-     */
-    public void movePlayerToCenter() {
-        // We just move the player to cell (5, 2)
-        playerX = 5;
-        playerY = 2;
-        drawGame();
+        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
     }
 
     /**
@@ -212,9 +206,9 @@ public class Game extends Application {
 
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Draw the the image so the top-left corner is where we dropped.
+        // Draw the image so the top-left corner is where we dropped.
         gc.drawImage(iconImage, x, y);
-        // Draw the the image so the center is where we dropped.
+        // Draw the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
     }
 
@@ -227,7 +221,7 @@ public class Game extends Application {
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
+        // We store this as a global variable so other methods can access it.
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
 
@@ -243,21 +237,10 @@ public class Game extends Application {
         Button resetPlayerLocationButton = new Button("Reset Player");
         toolbar.getChildren().add(resetPlayerLocationButton);
 
-        // Setup the behaviour of the button.
-        resetPlayerLocationButton.setOnAction(e -> {
-            // We keep this method short and use a method for the bulk of the work.
-            resetPlayerLocation();
-        });
 
         // Center Player Button
         Button centerPlayerLocationButton = new Button("Center Player");
         toolbar.getChildren().add(centerPlayerLocationButton);
-
-        // Setup the behaviour of the button.
-        centerPlayerLocationButton.setOnAction(e -> {
-            // We keep this method short and use a method for the bulk of the work.
-            movePlayerToCenter();
-        });
 
         // Tick Timeline buttons
         Button startTickTimelineButton = new Button("Start Ticks");
@@ -267,7 +250,7 @@ public class Game extends Application {
         // Stop button is disabled by default
         stopTickTimelineButton.setDisable(true);
 
-        // Setup the behaviour of the buttons.
+        // Set up the behaviour of the buttons.
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);

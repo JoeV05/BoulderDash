@@ -29,7 +29,7 @@ import javafx.util.Duration;
  * how to draw an image on a canvas, respond to arrow key presses, use a tick method that is
  * called periodically, and use drag and drop.
  * 
- * Do not build the whole application in one fileeeeeeeee. This file should probably remain very small.
+ * Do not build the whole application in one file. This file should probably remain very small.
  *
  * @author Liam O'Reilly
  */
