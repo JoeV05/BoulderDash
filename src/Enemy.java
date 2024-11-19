@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.Test;
+
 /**
  * The Enemy Class which all enemies inherit from
  * @version 1.0
@@ -9,7 +11,11 @@ public abstract class Enemy implements MoveTo {
     @Override
     public abstract  int[] moveTo();
 
-
+    /**
+     * A Test method designed to be used inside moveTo to test your movement is working correctly
+     */
+    @Test
+    public abstract void movementTests();
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
