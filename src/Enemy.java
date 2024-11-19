@@ -5,7 +5,7 @@
  */
 public abstract class Enemy implements MoveTo {
     private int [] position;
-
+    //TODO Some kind of image representing enemy (Talk to James about how this will work)
     @Override
     public abstract  int[] moveTo();
 
