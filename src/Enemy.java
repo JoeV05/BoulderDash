@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-
+import javafx.scene.image.Image;
 /**
  * The Enemy Class which all enemies inherit from
  * @version 1.0
@@ -7,9 +7,16 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class Enemy implements MoveTo {
     private int [] position;
+    final private Image image;
+
+    protected Enemy(Image image,int[] position) {
+        this.image = image;
+        this.position = position;
+    }
+
     //TODO Some kind of image representing enemy (Talk to James about how this will work)
     @Override
-    public abstract  int[] moveTo();
+    public abstract  int[] moveTo(int [][] gameState);
 
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
