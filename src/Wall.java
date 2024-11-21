@@ -1,3 +1,7 @@
+/**
+ * @author Joseph Vinson
+ */
+
 public class Wall extends Tile {
     protected WallType wallType;
 

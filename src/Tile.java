@@ -1,3 +1,7 @@
+/**
+ * @author Joseph Vinson
+ */
+
 public abstract class Tile {
     protected final int[] coordinates;
     protected final boolean walkable;

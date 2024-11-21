@@ -1,3 +1,7 @@
+/**
+ * @author Joseph Vinson
+ */
+
 public enum WallType {
     NORMAL_WALL,
     TITANIUM_WALL,

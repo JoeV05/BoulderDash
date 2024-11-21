@@ -1,3 +1,7 @@
+/**
+ * @author Joseph Vinson
+ */
+
 public class MagicWall extends Wall {
     private boolean isActive;
 
