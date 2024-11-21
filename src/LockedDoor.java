@@ -3,20 +3,13 @@
  */
 
 public class LockedDoor extends Wall {
-    private Colour colour;
-    private boolean locked;
+    private final Colour colour;
 
     public static final WallType wType = WallType.LOCKED_DOOR;
 
-    private int x;
-    private int y;
-
-    public LockedDoor(int x, int y, Colour color) {
+    public LockedDoor(int x, int y, Colour colour) {
         super(x, y, wType);
-        this.x = x;
-        this.y = y;
         this.colour = colour;
-        this.locked = true;
     }
 
     public boolean canUnlock(Key key) {
@@ -24,15 +17,7 @@ public class LockedDoor extends Wall {
     }
 
     public void unlock() {
-        this.locked = false;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+        this.walkable = false;
     }
 
     public Colour getColour() {
@@ -40,6 +25,6 @@ public class LockedDoor extends Wall {
     }
 
     public boolean isLocked() {
-        return locked;
+        return walkable;
     }
 }

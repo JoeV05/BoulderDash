@@ -1,28 +1,17 @@
 /**
- * @author Tafara Gonese
+ * @author Tafara Gonese, Joseph Vinson
  */
 
-public class Key {
-    private Colour colour;
-    private int x;
-    private int y;
+public class Key extends Tile{
+    private final Colour colour;
 
     public Key(Colour colour, int x, int y) {
+        super(x, y, false, TileType.KEY);
         this.colour = colour;
-        this.x = x;
-        this.y = y;
     }
 
     public Colour getColour() {
         return colour;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public boolean canUnlock(LockedDoor lockedDoor) {
