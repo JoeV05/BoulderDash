@@ -1,4 +1,5 @@
 /**
+ * Enumeration to represent the different types of wall
  * @author Joseph Vinson
  */
 
