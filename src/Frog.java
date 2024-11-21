@@ -1,12 +1,20 @@
-public class Frog extends Enemy{
+import javafx.scene.image.Image;
 
+public class Frog extends Enemy {
+
+
+    protected Frog(Image image,int[] position) {
+        super(image,position);
+    }
 
     /**
-     * @return
+     * Calculates movement of the frog
+     *
+     * @return int [] coordinates frog should move to
      */
     @Override
-    public int[] moveTo() {
-        return new int[0];
+    public int[] moveTo(int[][] gameState) {
+
     }
 
     /**
@@ -37,3 +45,5 @@ public class Frog extends Enemy{
         return 0;
     }
 }
+
+

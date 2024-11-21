@@ -9,6 +9,6 @@ public interface MoveTo {
      * Calculates movement of the object it is attached to
      * @return int[] representing the coordinates to move the object to
      */
-    public int[] moveTo();
+    public int[] moveTo(int [][] gameState);
 
 }
