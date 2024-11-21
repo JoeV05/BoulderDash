@@ -1,4 +1,5 @@
 /**
+ * Represents an Amoeba
  * @author Joseph Vinson
  */
 

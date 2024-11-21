@@ -3,8 +3,9 @@
  */
 
 public abstract class Tile {
-    protected final int[] coordinates;
-    protected final boolean walkable;
+    protected boolean walkable;
+    protected int[] coordinates;
+
     protected final TileType tileType;
 
     public Tile(int x, int y, boolean walkable, TileType tileType) {
