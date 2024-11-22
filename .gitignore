@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .idea
 CS-230-Game.iml
+.jar
 ### Eclipse ###
 ### Ecl
 .apt_generated
