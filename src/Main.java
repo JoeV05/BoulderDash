@@ -30,7 +30,7 @@ import javafx.util.Duration;
  * called periodically, and use drag and drop.
  * 
  * Do not build the whole application in one file. This file should probably remain very small.
- *
+ * testing small commit to see if I convert everything to maven
  * @author Liam O'Reilly
  */
 public class Main extends Application {
