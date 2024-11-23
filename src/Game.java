@@ -1,3 +1,5 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -85,6 +88,12 @@ public class Game extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
+            scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
+            scene.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyReleased);
+            // Loop the timeline forever
+            tickTimeline.setCycleCount(Animation.INDEFINITE);
+            tickTimeline.play();
 
 
         }  catch(Exception e) {
@@ -190,6 +199,29 @@ public class Game extends Application {
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
     }
 
+    public void move(KeyCode key) {
+        int xBefore = playerX;
+        int yBefore = playerY;
+        switch (key) {
+            case UP:
+            case W:
+                System.out.println("up");
+                break;
+            case DOWN:
+            case S:
+                System.out.println("down");
+                break;
+            case LEFT:
+            case A:
+                System.out.println("left");
+                break;
+            case RIGHT:
+            case D:
+                System.out.println("righjt");
+                break;
+        }
+    }
+
     /**
      * This method is called periodically by the tick timeline
      * and would for, example move, perform logic in the game,
@@ -197,11 +229,9 @@ public class Game extends Application {
      * over them all and calling their own tick method).
      */
     public void tick() {
-        // Here we move the player right one cell and teleport
-        // them back to the left side when they reach the right side.
-        playerX = playerX + 1;
-        if (playerX > 11) {
-            playerX = 0;
+        if (!pressedKeys.isEmpty()) {
+            KeyCode intendedKey = pressedKeys.peek();
+            move(intendedKey);
         }
         // We then redraw the whole canvas.
         extracted();
