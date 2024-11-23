@@ -8,6 +8,8 @@ public class GameController {
     @FXML
     private Canvas demoCanvas;
 
+    private GraphicsContext gc;
+
     @FXML
     public void drawPlayerF() {
         System.out.println("Front of player");
@@ -39,6 +41,11 @@ public class GameController {
     public void displaySprite(Image image) {
         GraphicsContext gc = demoCanvas.getGraphicsContext2D();
         gc.drawImage(image, 200, 200, 100, 100);
+    }
+
+    @FXML
+    public void drawGame(char[][] stage) {
+        //Stage is 640px
     }
 
     @FXML

@@ -21,6 +21,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
  * This class is intentionally not structured very well. This is just a starting point to show
@@ -58,9 +63,8 @@ public class Game extends Application {
     private Image dirtImage;
     private Image iconImage;
 
-    // X and Y coordinate of player on the grid.
-    private int playerX = 0;
-    private int playerY = 0;
+    // Store the current level in a 2D array
+    private char[][] level;
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -81,6 +85,7 @@ public class Game extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            initialLevel();
             //drawGame();
         }  catch(Exception e) {
             e.printStackTrace();
@@ -111,6 +116,29 @@ public class Game extends Application {
         drawGame();
         primaryStage.setScene(scene);
         primaryStage.show();*/
+    }
+
+    public void initialLevel() {
+        int rowLength = 20;
+        int colLength = 10;
+        level = new char[rowLength][colLength];
+        File file = new File("src/level.txt");
+        System.out.println(file.exists());
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int row = 0; scanner.hasNextLine() && row < rowLength; row++) {
+            level[row] = scanner.nextLine().toCharArray();
+        }
+        System.out.println(Arrays.deepToString(level));
+    }
+
+    public void updateLevel() {
+
     }
 
     /**
@@ -158,7 +186,7 @@ public class Game extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                playerX = playerX + 1;
+
                 break;
             default:
                 // Do nothing for all other keys.
@@ -181,10 +209,8 @@ public class Game extends Application {
     public void tick() {
         // Here we move the player right one cell and teleport
         // them back to the left side when they reach the right side.
-        playerX = playerX + 1;
-        if (playerX > 11) {
-            playerX = 0;
-        }
+
+
         // We then redraw the whole canvas.
         drawGame();
     }
