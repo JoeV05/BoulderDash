@@ -77,13 +77,16 @@ public class Game extends Application {
             //Load the main scene.
             BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("GameScreenDemo.fxml"));
             Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+            buildGUI();
+            drawGame();
 
             //Place the main scene on stage and show it.
             primaryStage.setTitle(WINDOW_TITLE);
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            drawGame();
+
+
         }  catch(Exception e) {
             e.printStackTrace();
         }
@@ -132,7 +135,7 @@ public class Game extends Application {
         }
 
         // Redraw game as the player may have moved.
-        drawGame();
+        //drawGame();
 
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
@@ -142,9 +145,9 @@ public class Game extends Application {
      * Draw the game on the canvas.
      */
     public void drawGame() {
-
-        Image brickImage = new Image("brick.png");
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        Image brickImage = new Image("brick.png");
+
 
         //Test for drawing graphics using iteration ONLY
         for (int i = 0; i<=12; i++) {
@@ -189,6 +192,10 @@ public class Game extends Application {
             playerX = 0;
         }
         // We then redraw the whole canvas.
+        extracted();
+    }
+
+    private void extracted() {
         drawGame();
     }
 
