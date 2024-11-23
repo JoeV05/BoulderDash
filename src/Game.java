@@ -121,7 +121,7 @@ public class Game extends Application {
     public void initialLevel() {
         int rowLength = 20;
         int colLength = 10;
-        level = new char[rowLength][colLength];
+        level = new char[colLength][rowLength];
         File file = new File("src/level.txt");
         System.out.println(file.exists());
         Scanner scanner;
@@ -131,8 +131,9 @@ public class Game extends Application {
             throw new RuntimeException(e);
         }
 
-        for (int row = 0; scanner.hasNextLine() && row < rowLength; row++) {
-            level[row] = scanner.nextLine().toCharArray();
+
+        for (int col = 0; col < colLength; col++) {
+            level[col] = scanner.nextLine().toCharArray();
         }
         System.out.println(Arrays.deepToString(level));
     }
