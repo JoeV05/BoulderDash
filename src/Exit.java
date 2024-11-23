@@ -10,11 +10,17 @@ public class Exit extends Wall {
         scoreRequirement = scoreReq;
     }
 
-    public boolean canExit() {
-        return true;
+    public boolean canExit(int diamonds) {
+        return diamonds >= scoreRequirement;
     }
 
-    public void unlock() {
+    private void unlock() {
         this.walkable = true;
+    }
+
+    public void updateExit(int diamonds) {
+        if (this.canExit(diamonds)) {
+            this.unlock();
+        }
     }
 }
