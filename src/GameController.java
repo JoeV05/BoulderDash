@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class GameController {
 
     @FXML
-    private Canvas canvas;
+    private Canvas demoCanvas;
 
     @FXML
     public void drawPlayerF() {
@@ -37,7 +37,23 @@ public class GameController {
     }
 
     public void displaySprite(Image image) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        GraphicsContext gc = demoCanvas.getGraphicsContext2D();
         gc.drawImage(image, 200, 200, 100, 100);
+    }
+
+    @FXML
+    public void initialize() {
+
+        Image brickImage = new Image("Brick.png");
+        GraphicsContext gc = demoCanvas.getGraphicsContext2D();
+
+        //Test for drawing graphics using iteration ONLY
+        for (int i = 0; i <= 12; i++) {
+            for (int j = 0; j <= 10; j++) {
+                gc.drawImage(brickImage, i * 48, j * 48, 48, 48);
+            }
+        }
+
+
     }
 }

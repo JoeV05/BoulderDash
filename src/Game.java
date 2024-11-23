@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -52,7 +51,6 @@ public class Game extends Application {
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
-    @FXML
     private Canvas canvas;
 
     // Loaded images
@@ -83,7 +81,7 @@ public class Game extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            drawGame();
+            //drawGame();
         }  catch(Exception e) {
             e.printStackTrace();
         }
@@ -116,43 +114,20 @@ public class Game extends Application {
     }
 
     /**
-     * Process a key event due to a key being pressed, e.g., to move the player.
-     * @param event The key event that was pressed.
-     */
-    public void processKeyEvent(KeyEvent event) {
-        // We change the behaviour depending on the actual key that was pressed.
-        switch (event.getCode()) {
-            case RIGHT:
-                // Right key was pressed. So move the player right by one cell.
-                playerX = playerX + 1;
-                break;
-            default:
-                // Do nothing for all other keys.
-                break;
-        }
-
-        // Redraw game as the player may have moved.
-        drawGame();
-
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
-        event.consume();
-    }
-
-    /**
      * Draw the game on the canvas.
      */
+    @FXML
     public void drawGame() {
 
-        Image brickImage = new Image("brick.png");
+        Image brickImage = new Image("Brick.png");
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         //Test for drawing graphics using iteration ONLY
-        for (int i = 0; i<=12; i++) {
-            for (int j = 0; j<=10; j++) {
-                gc.drawImage(brickImage, i * 48, j * 48);
+        for (int i = 0; i <= 12; i++) {
+            for (int j = 0; j <= 10; j++) {
+                gc.drawImage(brickImage, i * 48, j * 48, 48, 48);
             }
         }
-
 
         /*// Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -173,6 +148,28 @@ public class Game extends Application {
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
+    }
+    /**
+     * Process a key event due to a key being pressed, e.g., to move the player.
+     * @param event The key event that was pressed.
+     */
+    public void processKeyEvent(KeyEvent event) {
+        // We change the behaviour depending on the actual key that was pressed.
+        switch (event.getCode()) {
+            case RIGHT:
+                // Right key was pressed. So move the player right by one cell.
+                playerX = playerX + 1;
+                break;
+            default:
+                // Do nothing for all other keys.
+                break;
+        }
+
+        // Redraw game as the player may have moved.
+        drawGame();
+
+        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
+        event.consume();
     }
 
     /**
@@ -205,9 +202,9 @@ public class Game extends Application {
         System.out.println(s);
 
         // Draw an icon at the dropped location.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the image so the top-left corner is where we dropped.
-        gc.drawImage(iconImage, x, y);
+        //gc.drawImage(iconImage, x, y);
         // Draw the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
     }
@@ -222,8 +219,8 @@ public class Game extends Application {
 
         // Create the canvas that we will draw on.
         // We store this as a global variable so other methods can access it.
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
+        //canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        //root.setCenter(canvas);
 
         // Create a toolbar with some nice padding and spacing
         HBox toolbar = new HBox();
