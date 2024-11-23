@@ -38,20 +38,21 @@ import java.util.Scanner;
  */
 public class Game extends Application {
     // The dimensions of the window
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 500;
+    private static final int WINDOW_WIDTH = 840;
+    private static final int WINDOW_HEIGHT = 320;
     private static final String WINDOW_TITLE = "BOULDER DASH DEMO";
 
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 600;
-    private static final int CANVAS_HEIGHT = 500;
+    private static final int CANVAS_WIDTH = 640;
+    private static final int CANVAS_HEIGHT = 320;
 
     // The width and height (in pixels) of each cell that makes up the game.
-    private static final int GRID_CELL_WIDTH = 50;
-    private static final int GRID_CELL_HEIGHT = 50;
+    private static final int CELL_WIDTH = 32;
+    private static final int CELL_HEIGHT = 32;
 
     // The width of the grid in number of cells.
-    private static final int GRID_WIDTH = 12;
+    private static final int GRID_WIDTH = 20;
+    private static final int GRID_HEIGHT = 10;
 
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
@@ -118,10 +119,13 @@ public class Game extends Application {
         primaryStage.show();*/
     }
 
+    /**
+     * Read the characters from level.txt and convert to 2D array
+     */
     public void initialLevel() {
-        int rowLength = 20;
-        int colLength = 10;
-        level = new char[colLength][rowLength];
+        int rowLength = GRID_WIDTH;
+        int colHeight = GRID_HEIGHT;
+        level = new char[colHeight][rowLength];
         File file = new File("src/level.txt");
         System.out.println(file.exists());
         Scanner scanner;
@@ -131,13 +135,15 @@ public class Game extends Application {
             throw new RuntimeException(e);
         }
 
-
-        for (int col = 0; col < colLength; col++) {
+        for (int col = 0; col < colHeight; col++) {
             level[col] = scanner.nextLine().toCharArray();
         }
         System.out.println(Arrays.deepToString(level));
     }
 
+    /**
+     * Get the new positions of enemies, walls and the player and redraw the scene
+     */
     public void updateLevel() {
 
     }
@@ -146,38 +152,38 @@ public class Game extends Application {
      * Draw the game on the canvas.
      */
     @FXML
-    public void drawGame() {
-
-        Image brickImage = new Image("Brick.png");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        //Test for drawing graphics using iteration ONLY
-        for (int i = 0; i <= 12; i++) {
-            for (int j = 0; j <= 10; j++) {
-                gc.drawImage(brickImage, i * 48, j * 48, 48, 48);
-            }
-        }
-
-        /*// Get the Graphic Context of the canvas. This is what we draw on.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // Clear canvas
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Set the background to gray.
-        gc.setFill(Color.GRAY);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Draw row of dirt images
-        // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
-        // We draw the row at y value 2.
-        for (int x = 0; x < GRID_WIDTH; x++) {
-            gc.drawImage(dirtImage, x * GRID_CELL_WIDTH, 2 * GRID_CELL_HEIGHT);
-        }
-
-        // Draw player at current location
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
-    }
+//    public void drawGame() {
+//
+//        Image brickImage = new Image("Brick.png");
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//
+//        //Test for drawing graphics using iteration ONLY
+//        for (int i = 0; i <= 12; i++) {
+//            for (int j = 0; j <= 10; j++) {
+//                gc.drawImage(brickImage, i * 48, j * 48, 48, 48);
+//            }
+//        }
+//
+//        /*// Get the Graphic Context of the canvas. This is what we draw on.
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//
+//        // Clear canvas
+//        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//
+//        // Set the background to gray.
+//        gc.setFill(Color.GRAY);
+//        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//
+//        // Draw row of dirt images
+//        // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
+//        // We draw the row at y value 2.
+//        for (int x = 0; x < GRID_WIDTH; x++) {
+//            gc.drawImage(dirtImage, x * GRID_CELL_WIDTH, 2 * GRID_CELL_HEIGHT);
+//        }
+//
+//        // Draw player at current location
+//        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
+//    }
     /**
      * Process a key event due to a key being pressed, e.g., to move the player.
      * @param event The key event that was pressed.
@@ -195,7 +201,7 @@ public class Game extends Application {
         }
 
         // Redraw game as the player may have moved.
-        drawGame();
+        //drawGame();
 
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
@@ -213,7 +219,7 @@ public class Game extends Application {
 
 
         // We then redraw the whole canvas.
-        drawGame();
+        //drawGame();
     }
 
     /**
