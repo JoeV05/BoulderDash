@@ -2,14 +2,13 @@
  * @author Joseph Vinson
  */
 
-public abstract class Tile {
+public abstract class Tile extends Entity{
     protected boolean walkable;
-    protected int[] coordinates;
 
     protected final TileType tileType;
 
     public Tile(int x, int y, boolean walkable, TileType tileType) {
-        this.coordinates = new int[] {x, y};
+        super(x, y);
         this.walkable = walkable;
         this.tileType = tileType;
     }
