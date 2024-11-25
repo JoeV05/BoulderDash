@@ -3,8 +3,24 @@
  */
 
 public class Exit extends Wall {
+    private static int scoreRequirement;
 
-    public Exit(int x, int y) {
-        super(x ,y, WallType.NORMAL_WALL);
+    public Exit(int x, int y, int scoreReq) {
+        super(x ,y, WallType.TITANIUM_WALL);
+        scoreRequirement = scoreReq;
+    }
+
+    public boolean canExit(int diamonds) {
+        return diamonds >= scoreRequirement;
+    }
+
+    private void unlock() {
+        this.walkable = true;
+    }
+
+    public void updateExit(int diamonds) {
+        if (this.canExit(diamonds)) {
+            this.unlock();
+        }
     }
 }

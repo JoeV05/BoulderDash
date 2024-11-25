@@ -14,7 +14,7 @@ public class Frog extends Enemy {
      */
     @Override
     public int[] moveTo(int[][] gameState) {
-
+        return new int[2];
     }
 
     /**

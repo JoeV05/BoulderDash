@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="GameController">
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+      <VBox alignment="TOP_CENTER" prefHeight="320.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#drawPlayerF" prefWidth="100.0" text="PlayerFront">
                <VBox.margin>
@@ -37,6 +37,6 @@
       </VBox>
    </left>
    <center>
-      <Canvas fx:id="canvas" height="500.0" width="600.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="demoCanvas" height="320.0" width="640.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

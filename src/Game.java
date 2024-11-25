@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -21,6 +20,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -34,25 +38,25 @@ import javafx.scene.input.TransferMode;
  */
 public class Game extends Application {
     // The dimensions of the window
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 500;
+    private static final int WINDOW_WIDTH = 840;
+    private static final int WINDOW_HEIGHT = 320;
     private static final String WINDOW_TITLE = "BOULDER DASH DEMO";
 
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 600;
-    private static final int CANVAS_HEIGHT = 500;
+    private static final int CANVAS_WIDTH = 640;
+    private static final int CANVAS_HEIGHT = 320;
 
     // The width and height (in pixels) of each cell that makes up the game.
-    private static final int GRID_CELL_WIDTH = 50;
-    private static final int GRID_CELL_HEIGHT = 50;
+    private static final int CELL_WIDTH = 32;
+    private static final int CELL_HEIGHT = 32;
 
     // The width of the grid in number of cells.
-    private static final int GRID_WIDTH = 12;
+    private static final int GRID_WIDTH = 20;
+    private static final int GRID_HEIGHT = 10;
 
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
-    @FXML
     private Canvas canvas;
 
     // Loaded images
@@ -60,9 +64,8 @@ public class Game extends Application {
     private Image dirtImage;
     private Image iconImage;
 
-    // X and Y coordinate of player on the grid.
-    private int playerX = 0;
-    private int playerY = 0;
+    // Store the current level in a 2D array
+    private char[][] level;
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -83,7 +86,8 @@ public class Game extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            drawGame();
+            initialLevel();
+            //drawGame();
         }  catch(Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +120,71 @@ public class Game extends Application {
     }
 
     /**
+     * Read the characters from level.txt and convert to 2D array
+     */
+    public void initialLevel() {
+        int rowLength = GRID_WIDTH;
+        int colHeight = GRID_HEIGHT;
+        level = new char[colHeight][rowLength];
+        File file = new File("src/level.txt");
+        System.out.println(file.exists());
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int col = 0; col < colHeight; col++) {
+            level[col] = scanner.nextLine().toCharArray();
+        }
+        System.out.println(Arrays.deepToString(level));
+    }
+
+    /**
+     * Get the new positions of enemies, walls and the player and redraw the scene
+     */
+    public void updateLevel() {
+
+    }
+
+    /**
+     * Draw the game on the canvas.
+     */
+    @FXML
+//    public void drawGame() {
+//
+//        Image brickImage = new Image("Brick.png");
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//
+//        //Test for drawing graphics using iteration ONLY
+//        for (int i = 0; i <= 12; i++) {
+//            for (int j = 0; j <= 10; j++) {
+//                gc.drawImage(brickImage, i * 48, j * 48, 48, 48);
+//            }
+//        }
+//
+//        /*// Get the Graphic Context of the canvas. This is what we draw on.
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//
+//        // Clear canvas
+//        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//
+//        // Set the background to gray.
+//        gc.setFill(Color.GRAY);
+//        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//
+//        // Draw row of dirt images
+//        // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
+//        // We draw the row at y value 2.
+//        for (int x = 0; x < GRID_WIDTH; x++) {
+//            gc.drawImage(dirtImage, x * GRID_CELL_WIDTH, 2 * GRID_CELL_HEIGHT);
+//        }
+//
+//        // Draw player at current location
+//        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
+//    }
+    /**
      * Process a key event due to a key being pressed, e.g., to move the player.
      * @param event The key event that was pressed.
      */
@@ -124,7 +193,7 @@ public class Game extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                playerX = playerX + 1;
+
                 break;
             default:
                 // Do nothing for all other keys.
@@ -132,47 +201,10 @@ public class Game extends Application {
         }
 
         // Redraw game as the player may have moved.
-        drawGame();
+        //drawGame();
 
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
-    }
-
-    /**
-     * Draw the game on the canvas.
-     */
-    public void drawGame() {
-
-        Image brickImage = new Image("brick.png");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        //Test for drawing graphics using iteration ONLY
-        for (int i = 0; i<=12; i++) {
-            for (int j = 0; j<=10; j++) {
-                gc.drawImage(brickImage, i * 48, j * 48);
-            }
-        }
-
-
-        /*// Get the Graphic Context of the canvas. This is what we draw on.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // Clear canvas
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Set the background to gray.
-        gc.setFill(Color.GRAY);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Draw row of dirt images
-        // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
-        // We draw the row at y value 2.
-        for (int x = 0; x < GRID_WIDTH; x++) {
-            gc.drawImage(dirtImage, x * GRID_CELL_WIDTH, 2 * GRID_CELL_HEIGHT);
-        }
-
-        // Draw player at current location
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);*/
     }
 
     /**
@@ -184,12 +216,10 @@ public class Game extends Application {
     public void tick() {
         // Here we move the player right one cell and teleport
         // them back to the left side when they reach the right side.
-        playerX = playerX + 1;
-        if (playerX > 11) {
-            playerX = 0;
-        }
+
+
         // We then redraw the whole canvas.
-        drawGame();
+        //drawGame();
     }
 
     /**
@@ -205,9 +235,9 @@ public class Game extends Application {
         System.out.println(s);
 
         // Draw an icon at the dropped location.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the image so the top-left corner is where we dropped.
-        gc.drawImage(iconImage, x, y);
+        //gc.drawImage(iconImage, x, y);
         // Draw the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
     }
@@ -222,8 +252,8 @@ public class Game extends Application {
 
         // Create the canvas that we will draw on.
         // We store this as a global variable so other methods can access it.
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
+        //canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        //root.setCenter(canvas);
 
         // Create a toolbar with some nice padding and spacing
         HBox toolbar = new HBox();
