@@ -1,3 +1,5 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,21 +12,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -70,6 +67,12 @@ public class Game extends Application {
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
+    // James wants me to do movement here it is
+    private Player player;
+    private final Queue<KeyCode> pressedKeys = new LinkedList<>();
+    private final HashSet<KeyCode> seenKeys = new HashSet<>();
+
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -85,6 +88,14 @@ public class Game extends Application {
             primaryStage.setTitle(WINDOW_TITLE);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            // james want me to do movement so output to screen
+            player = new Player(0, 0);
+            scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
+            scene.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyReleased);
+            Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
+            tickTimeline.setCycleCount(Animation.INDEFINITE);
+            tickTimeline.play();
 
             initialLevel();
             //drawGame();
@@ -117,6 +128,21 @@ public class Game extends Application {
         drawGame();
         primaryStage.setScene(scene);
         primaryStage.show();*/
+    }
+
+    // its likely we'll have keys that the menu screen will need.
+    // escape [esc] for example. so we'll keep this code here for now.
+    public void handleKeyPressed(KeyEvent event) {
+        if (!seenKeys.contains(event.getCode())) {
+            pressedKeys.add(event.getCode());
+            seenKeys.add(event.getCode());
+        }
+        event.consume();
+    }
+    public void handleKeyReleased(KeyEvent event) {
+        pressedKeys.remove(event.getCode());
+        seenKeys.remove(event.getCode());
+        event.consume();
     }
 
     /**
@@ -213,13 +239,15 @@ public class Game extends Application {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
+    private int count = 0;
     public void tick() {
-        // Here we move the player right one cell and teleport
-        // them back to the left side when they reach the right side.
-
-
-        // We then redraw the whole canvas.
-        //drawGame();
+        count ++;
+        System.out.print("tick num -> " + count + " , movement -> ");
+        if (!pressedKeys.isEmpty()) {
+            KeyCode intendedKey = pressedKeys.peek();
+            player.move(intendedKey);
+        }
+        System.out.println(" ");
     }
 
     /**
