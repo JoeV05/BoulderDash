@@ -16,5 +16,10 @@ public class MagicWall extends Wall {
         } else {
             this.stored = new Boulder(this.x, this.y);
         }
+        this.isActive = true;
+    }
+
+    public void dropStored() {
+        //Game.???(this.stored)
     }
 }
