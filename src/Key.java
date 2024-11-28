@@ -19,7 +19,7 @@ public class Key extends Tile {
      * @param x The x-coordinate of the key on the game map
      * @param y The y-coordinate of the key on the game map
      */
-    public Key(Colour colour, int x, int y) {
+    public Key(int x, int y, Colour colour) {
         super(x, y, false, TileType.KEY);
         this.colour = colour;
     }

@@ -36,12 +36,12 @@ import java.util.*;
 public class Game extends Application {
     // The dimensions of the window
     private static final int WINDOW_WIDTH = 840;
-    private static final int WINDOW_HEIGHT = 320;
+    private static final int WINDOW_HEIGHT = 640;
     private static final String WINDOW_TITLE = "BOULDER DASH DEMO";
 
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 640;
-    private static final int CANVAS_HEIGHT = 320;
+    private static final int CANVAS_HEIGHT = 640;
 
     // The width and height (in pixels) of each cell that makes up the game.
     private static final int CELL_WIDTH = 32;
@@ -63,6 +63,7 @@ public class Game extends Application {
 
     // Store the current level in a 2D array
     private char[][] level;
+    private static Entity[][] levelState;
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -165,13 +166,108 @@ public class Game extends Application {
             level[col] = scanner.nextLine().toCharArray();
         }
         System.out.println(Arrays.deepToString(level));
+
+        for (int col = 0; col < colHeight; col++) {
+            for (int row = 0; row < rowLength; row++) {
+                switch (level[col][row]) {
+                    case '#':
+                        levelState[col][row] = new Wall(row, col, WallType.NORMAL_WALL);
+                        break;
+                    case 'T':
+                        levelState[col][row] = new Wall(row, col, WallType.TITANIUM_WALL);
+                        break;
+                    case 'M':
+                        levelState[col][row] = new Wall(row, col, WallType.MAGIC_WALL);
+                        break;
+                    case 'E':
+                        levelState[col][row] = new Exit(row, col, );
+                        //Need to edit and read metadata at the end of the file to determine the required score
+                        break;
+                    case 'R':
+                        levelState[col][row] = new LockedDoor(row, col, Colour.RED);
+                        break;
+                    case 'G':
+                        levelState[col][row] = new LockedDoor(row, col, Colour.GREEN);
+                        break;
+                    case 'B':
+                        levelState[col][row] = new LockedDoor(row, col, Colour.BLUE);
+                        break;
+                    case 'Y':
+                        levelState[col][row] = new LockedDoor(row, col, Colour.YELLOW);
+                        break;
+                    case 'r':
+                        levelState[col][row] = new Key(row, col, Colour.RED);
+                        break;
+                    case 'g':
+                        levelState[col][row] = new Key(row, col, Colour.GREEN);
+                        break;
+                    case 'b':
+                        levelState[col][row] = new Key(row, col, Colour.BLUE);
+                        break;
+                    case 'y':
+                        levelState[col][row] = new Key(row, col, Colour.YELLOW);
+                        break;
+                    case 'P':
+                        levelState[col][row] = new Player(row, col);
+                        break;
+                    case 'O':
+                        levelState[col][row] = new Boulder(row, col);
+                        break;
+                    case '*':
+                        levelState[col][row] = new Diamond(row, col);
+                        break;
+                    case 'W':
+                        levelState[col][row] = new Butterfly(row, col);
+                        //Metadata needed for left/right-hand wall cling
+                        break;
+                    case 'X':
+                        levelState[col][row] = new Firelfly(row, col);
+                        //Metadata needed for left/right-hand wall cling
+                        break;
+                    case 'F':
+                        levelState[col][row] = new Frog(row, col);
+                        break;
+                    case 'A':
+                        levelState[col][row] = new Amoeba(row, col, );
+                        //Metadata needed for Amoeba maximumSize
+                        break;
+                    default:
+                        levelState[col][row] = new Dirt(row, col);
+                }
+            }
+        }
+        updateSprites();
     }
 
     /**
-     * Get the new positions of enemies, walls and the player and redraw the scene
+     * Change the position of an Entity in the levelState
      */
-    public void updateLevel() {
+    public static void updateLevel(int newX, int newY, Entity entity) {
+        int oldX = entity.getX();
+        int oldY = entity.getY();
+        replaceEntity(newX, newY, entity);
+        replaceEntity(oldX, oldY, new Dirt(oldX, oldY));
+    }
+    /**
+     * Changes the entity type in the levelState at x,y
+     * @param x new x position to be moved to
+     * @param y new y position to be moved to
+     * @param entity to be replaced with
+     */
+    public static void replaceEntity(int x, int y, Entity entity) {
+        levelState[y][x] = entity;
+    }
 
+    private void updateSprites() {
+        GameController.drawGame(levelState);
+    }
+
+    /**
+     * Returns the entity at the given x/y coords
+     * @return Entity to be moved
+     */
+    public Entity getEntity(int x, int y) {
+        return levelState[y][x];
     }
 
     /**
