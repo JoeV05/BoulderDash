@@ -14,4 +14,8 @@ public abstract class FallingEntity extends Entity {
     public FallingType getEntityType() {
         return entityType;
     }
+
+    public void fall() {
+        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is either empty or a magic wall
+    }
 }
