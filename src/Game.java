@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -221,7 +220,7 @@ public class Game extends Application {
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'X':
-                        levelState[col][row] = new Firelfly(row, col);
+                        levelState[col][row] = new Firefly(row, col);
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'F':

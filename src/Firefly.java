@@ -1,6 +1,6 @@
 import javafx.scene.image.Image;
 
-public class Firelfly extends Enemy {
+public class Firefly extends Enemy {
 
     /**
      * Talk to james about image
@@ -8,7 +8,7 @@ public class Firelfly extends Enemy {
      * @return Image of Firefly
      */
 
-    protected Firelfly(Image image, int[] position) {
+    protected Firefly(Image image, int[] position) {
         super(image, position);
     }
 
