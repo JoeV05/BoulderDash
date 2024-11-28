@@ -23,14 +23,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Sample application that demonstrates the use of JavaFX Canvas for a Game.
- * This class is intentionally not structured very well. This is just a starting point to show
- * how to draw an image on a canvas, respond to arrow key presses, use a tick method that is
- * called periodically, and use drag and drop.
- *
- * Do not build the whole application in one file. This file should probably remain very small.
- *
- * @author Liam O'Reilly
+ * @author James, Luke, and Joe
+ * Fixing the game class. The errors are mainly due to the relationships between Tile, Wall, and Entity.
+ * I'll be changing this class alot cant lie.
  */
 public class Game extends Application {
     // The dimensions of the window
