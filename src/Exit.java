@@ -1,3 +1,5 @@
+import java.awt.*;
+import javafx.scene.image.Image;
 /**
  * @author Joseph Vinson
  */
@@ -5,8 +7,8 @@
 public class Exit extends Wall {
     private static int scoreRequirement;
 
-    public Exit(int x, int y, int scoreReq) {
-        super(x ,y, WallType.TITANIUM_WALL);
+    public Exit(int x, int y, int scoreReq, Image image) {
+        super(x ,y, WallType.TITANIUM_WALL,image);
         scoreRequirement = scoreReq;
     }
 

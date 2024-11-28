@@ -1,3 +1,5 @@
+import java.awt.*;
+import javafx.scene.image.Image;
 /**
  * Represents an Amoeba
  *
@@ -38,8 +40,8 @@ public class Amoeba extends Tile {
      * @param maximumSize        The maximum size the amoeba can reach before transforming.
      * @param transformToBouldersSize The size at which the amoeba transforms into boulders.
      */
-    public Amoeba(int x, int y, int maximumSize, int transformToBouldersSize) {
-        super(x, y, false, TileType.AMOEBA);
+    public Amoeba(int x, int y, int maximumSize, int transformToBouldersSize, Image image) {
+        super(x, y, false, TileType.AMOEBA,image);
         this.maximumSize = maximumSize;
         this.transformToBouldersSize = transformToBouldersSize;
         this.size = 1; // Start with a size of 1

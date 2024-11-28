@@ -8,21 +8,13 @@ public class Butterfly extends Firefly {
      * @return Image of butterfly
      */
 
-    protected Butterfly(Image image, int[] position) {
-        super(image, position);
+    protected Butterfly(int row , int column, Image image) {
+        super(image,row,column);
     }
 
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
      */
-
-    @Override
-    public int[] moveTo(int[][] gameState) {
-        return new int[0];
-    }
-
-    
-
     @Override
     public void movementTests() {
 

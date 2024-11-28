@@ -1,5 +1,6 @@
 import javafx.scene.input.KeyCode;
-
+import javafx.scene.image.Image;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Player extends Entity {
@@ -7,8 +8,8 @@ public class Player extends Entity {
     private ArrayList<Key> keys = new ArrayList<>();
     private int diamonds = 0;
 
-    public Player(int x, int y) {
-        super(x, y);
+    public Player(int x, int y, Image image) {
+        super(x, y,image);
     }
 
     public void move(KeyCode key) {

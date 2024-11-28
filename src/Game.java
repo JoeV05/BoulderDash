@@ -90,7 +90,7 @@ public class Game extends Application {
             primaryStage.show();
 
             // james want me to do movement so output to screen
-            player = new Player(0, 0);
+            player = new Player(0, 0,new Image("tiles/player.png"));
             scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
             scene.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyReleased);
             Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
@@ -170,68 +170,68 @@ public class Game extends Application {
             for (int row = 0; row < rowLength; row++) {
                 switch (level[col][row]) {
                     case '#':
-                        levelState[col][row] = new Wall(row, col, WallType.NORMAL_WALL);
+                        levelState[col][row] = new Wall(row, col, WallType.NORMAL_WALL, new Image("graphics/wall PLACEHOLDER.jpg"));
                         break;
                     case 'T':
-                        levelState[col][row] = new Wall(row, col, WallType.TITANIUM_WALL);
+                        levelState[col][row] = new Wall(row, col, WallType.TITANIUM_WALL,new Image("tiles/titanium.png"));
                         break;
                     case 'M':
-                        levelState[col][row] = new Wall(row, col, WallType.MAGIC_WALL);
+                        levelState[col][row] = new Wall(row, col, WallType.MAGIC_WALL,new Image("graphics/Magic Wall PLACEHOLDER.jpg"));
                         break;
                     case 'E':
-                        levelState[col][row] = new Exit(row, col, );
+                        levelState[col][row] = new Exit(row, col, 0,new Image("graphics/exit PLACEHOLDER.jpg"));
                         //Need to edit and read metadata at the end of the file to determine the required score
                         break;
                     case 'R':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.RED);
+                        levelState[col][row] = new LockedDoor(row, col, Colour.RED,new Image("graphics/door Placeholder.jpg"));
                         break;
                     case 'G':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.GREEN);
+                        levelState[col][row] = new LockedDoor(row, col, Colour.GREEN,new Image("graphics/door Placeholder.jpg"));
                         break;
                     case 'B':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.BLUE);
+                        levelState[col][row] = new LockedDoor(row, col, Colour.BLUE,new Image("graphics/door Placeholder.jpg"));
                         break;
                     case 'Y':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.YELLOW);
+                        levelState[col][row] = new LockedDoor(row, col, Colour.YELLOW,new Image("graphics/door Placeholder.jpg"));
                         break;
                     case 'r':
-                        levelState[col][row] = new Key(row, col, Colour.RED);
+                        levelState[col][row] = new Key(row, col, Colour.RED,new Image("graphics/Key PLACEHOLDER.jpg"));
                         break;
                     case 'g':
-                        levelState[col][row] = new Key(row, col, Colour.GREEN);
+                        levelState[col][row] = new Key(row, col, Colour.GREEN,new Image("graphics/Key PLACEHOLDER.jpg"));
                         break;
                     case 'b':
-                        levelState[col][row] = new Key(row, col, Colour.BLUE);
+                        levelState[col][row] = new Key(row, col, Colour.BLUE,new Image("graphics/Key PLACEHOLDER.jpg"));
                         break;
                     case 'y':
-                        levelState[col][row] = new Key(row, col, Colour.YELLOW);
+                        levelState[col][row] = new Key(row, col, Colour.YELLOW,new Image("graphics/Key PLACEHOLDER.jpg"));
                         break;
                     case 'P':
-                        levelState[col][row] = new Player(row, col);
+                        levelState[col][row] = new Player(row, col, new Image("graphics/player.png"));
                         break;
                     case 'O':
-                        levelState[col][row] = new Boulder(row, col);
+                        levelState[col][row] = new Boulder(row, col,new Image("tiles/boulder.png"));
                         break;
                     case '*':
-                        levelState[col][row] = new Diamond(row, col);
+                        levelState[col][row] = new Diamond(row, col, new Image("tiles/diamond.png"));
                         break;
                     case 'W':
-                        levelState[col][row] = new Butterfly(row, col);
+                        levelState[col][row] = new Butterfly(row, col,new Image("graphics/Butterfly PLACEHOLDER.jpg"));
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'X':
-                        levelState[col][row] = new Firefly(row, col);
+                        levelState[col][row] = new Firefly(new Image("graphics/Firefly Placeholder.webp"),row, col);
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'F':
-                        levelState[col][row] = new Frog(row, col);
+                                levelState[col][row] = new Frog(new Image("src/graphics/FROG PLACEHOLDER.png") ,row, col);
                         break;
                     case 'A':
-                        levelState[col][row] = new Amoeba(row, col, );
+                        levelState[col][row] = new Amoeba(row, col, 0,0,new Image("graphics/ameoba PLACEHOLDER.jpg"));
                         //Metadata needed for Amoeba maximumSize
                         break;
                     default:
-                        levelState[col][row] = new Dirt(row, col);
+                        levelState[col][row] = new Dirt(row, col,new Image("graphics/dirt.png"));
                 }
             }
         }
@@ -245,7 +245,7 @@ public class Game extends Application {
         int oldX = entity.getX();
         int oldY = entity.getY();
         replaceEntity(newX, newY, entity);
-        replaceEntity(oldX, oldY, new Dirt(oldX, oldY));
+        replaceEntity(oldX, oldY, new Dirt(oldX, oldY,new Image("graphics/dirt.png")));
     }
     /**
      * Changes the entity type in the levelState at x,y
@@ -291,7 +291,7 @@ public class Game extends Application {
 //        // Clear canvas
 //        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 //
-//        // Set the background to gray.
+//        // Set the background to gray
 //        gc.setFill(Color.GRAY);
 //        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 //

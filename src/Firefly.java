@@ -1,11 +1,5 @@
 import javafx.scene.image.Image;
 
-/**
- *
- * @author Luke Brace
- *
- */
-
 public class Firefly extends Enemy {
 
     /**
@@ -14,19 +8,9 @@ public class Firefly extends Enemy {
      * @return Image of Firefly
      */
 
-    protected Firefly(Image image, int[] position) {
-        super(image, position);
+    protected Firefly(Image image, int row, int column) {
+        super(row,column,image);
     }
-
-    /**
-     * A Test method designed to be used inside moveTo to test your movement is working correctly
-     */
-
-    @Override
-    public int[] moveTo(int[][] gameState) {
-        return new int[0];
-    }
-
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death

@@ -5,19 +5,12 @@ import javafx.scene.image.Image;
  * @version 1.0
  * @author Edward Tickle
  */
-public abstract class Enemy implements MoveTo {
-    private int [] position;
-    final private Image image;
+public abstract class Enemy extends Entity{
 
-    protected Enemy(Image image,int[] position) {
-        this.image = image;
-        this.position = position;
+    protected Enemy(int row, int column, Image image) {
+        super(row,column,image);
+
     }
-
-    //TODO Some kind of image representing enemy (Talk to James about how this will work)
-    @Override
-    public abstract  int[] moveTo(int [][] gameState);
-
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
      */
@@ -34,14 +27,4 @@ public abstract class Enemy implements MoveTo {
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
     public abstract int onDeathByFallingObject();
-
-    /**
-     * Getter for Position
-     * @return Int[] Position
-     */
-    public int[] getPosition() {
-        return position;
-    }
-
-
 }
