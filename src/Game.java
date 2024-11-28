@@ -23,65 +23,52 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Sample application that demonstrates the use of JavaFX Canvas for a Game.
- * This class is intentionally not structured very well. This is just a starting point to show
- * how to draw an image on a canvas, respond to arrow key presses, use a tick method that is
- * called periodically, and use drag and drop.
- *
- * Do not build the whole application in one file. This file should probably remain very small.
- *
- * @author Liam O'Reilly
+ * @author James, Luke, and Joe
+ * Fixing the game class. The errors are mainly due to the relationships between Tile, Wall, and Entity.
+ * I'll be changing this class alot cant lie. It'll get worse before it gets better.
  */
 public class Game extends Application {
-    // The dimensions of the window
+    // window properties.
     private static final int WINDOW_WIDTH = 840;
     private static final int WINDOW_HEIGHT = 640;
-    private static final String WINDOW_TITLE = "BOULDER DASH DEMO";
+    private static final String WINDOW_TITLE = "Boulder Dash";
 
-    // The dimensions of the canvas
+    // canvas. canvas is contained within window.
     private static final int CANVAS_WIDTH = 640;
     private static final int CANVAS_HEIGHT = 640;
+    private Canvas canvas;
 
-    // The width and height (in pixels) of each cell that makes up the game.
+    // cell.
     private static final int CELL_WIDTH = 32;
     private static final int CELL_HEIGHT = 32;
 
-    // The width of the grid in number of cells.
-    private static final int GRID_WIDTH = 20;
-    private static final int GRID_HEIGHT = 10;
+    // grid.
+    private static final int GRID_WIDTH = 40;
+    private static final int GRID_HEIGHT = 23;
 
-    // The canvas in the GUI. This needs to be a global variable
-    // (in this setup) as we need to access it in different methods.
-    // We could use FXML to place code in the controller instead.
-    private Canvas canvas;
+    // entity map.
+    private static Entity[][] map;
 
-    // Loaded images
-    private Image playerImage;
-    private Image dirtImage;
-    private Image iconImage;
-
-    // Store the current level in a 2D array
-    private char[][] level;
-    private static Entity[][] levelState;
-
-    // Timeline which will cause tick method to be called periodically.
+    // timeline.
     private Timeline tickTimeline;
 
-    // James wants me to do movement here it is
+    // player.
     private Player player;
+
+    // control registering -> actively held keys.
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
 
 
     /**
-     * Set up the new application.
+     *
      * @param primaryStage The stage that is to be used for the application.
      */
     @Override
     public void start(Stage primaryStage) {
         try {
             //Load the main scene.
-            BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("GameScreenDemo.fxml"));
+            BorderPane root = (BorderPane)FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GameScreenDemo.fxml")));
             Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
             //Place the main scene on stage and show it.
