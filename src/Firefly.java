@@ -1,5 +1,11 @@
 import javafx.scene.image.Image;
 
+/**
+ *
+ * @author Luke Brace
+ *
+ */
+
 public class Firefly extends Enemy {
 
     /**
