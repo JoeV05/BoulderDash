@@ -22,6 +22,10 @@ public class MagicWall extends Wall {
     }
 
     public void dropStored() {
-        //Game.???(this.stored)
+        // TODO - If the tile below is empty somehow drop the stored FallingEntity
+    }
+
+    public void chainMagicWalls() {
+        // TODO - Maybe magic walls can be chained together? (not in spec but as additional feature)
     }
 }
