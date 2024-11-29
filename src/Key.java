@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Represents a key item.
  *
@@ -20,7 +22,8 @@ public class Key extends Tile {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, false, TileType.KEY);
+        // TODO: create three more classes red key etc. calling this but with the differing images.
+        super(x, y, false, TileType.KEY, new Image("./sprites/key_green.png"));
         this.colour = colour;
     }
 

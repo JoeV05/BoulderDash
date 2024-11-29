@@ -14,18 +14,24 @@ public class Firefly extends Enemy {
      * @return Image of Firefly
      */
 
-    protected Firefly(Image image, int[] position) {
-        super(image, position);
+    protected Firefly(int x, int y) {
+        super(x, y, new Image("./sprites/firefly.png"));
+    }
+
+
+    // this is used by butterfly to carry its sprite up the chain
+    protected Firefly(int x, int y, Image image) {
+        super(x, y, image);
     }
 
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
      */
 
-    @Override
-    public int[] moveTo(int[][] gameState) {
-        return new int[0];
-    }
+    //@Override
+    //public int[] moveTo(int[][] gameState) {
+    //    return new int[0];
+    //}
 
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death

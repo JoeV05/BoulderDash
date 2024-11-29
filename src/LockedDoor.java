@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Represents a locked door tile.
  *
@@ -21,7 +23,8 @@ public class LockedDoor extends Wall {
      * @param colour The colour of the locked door
      */
     public LockedDoor(int x, int y, Colour colour) {
-        super(x, y, WallType.LOCKED_DOOR);
+        // TODO: create three more classes red blue etc. calling this but with the differing images.
+        super(x, y, WallType.LOCKED_DOOR, new Image("./sprites/door_blue.png"));
         this.colour = colour;
     }
 

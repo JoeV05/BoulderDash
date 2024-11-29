@@ -5,18 +5,16 @@ import javafx.scene.image.Image;
  * @version 1.0
  * @author Edward Tickle
  */
-public abstract class Enemy implements MoveTo {
-    private int [] position;
-    final private Image image;
+public abstract class Enemy extends Entity {
 
-    protected Enemy(Image image,int[] position) {
-        this.image = image;
-        this.position = position;
+
+    protected Enemy(int x, int y, Image sprite) {
+        super(x, y, sprite);
     }
 
     //TODO Some kind of image representing enemy (Talk to James about how this will work)
-    @Override
-    public abstract  int[] moveTo(int [][] gameState);
+    //@Override
+    //public abstract  int[] moveTo(int [][] gameState);
 
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
@@ -39,8 +37,11 @@ public abstract class Enemy implements MoveTo {
      * Getter for Position
      * @return Int[] Position
      */
-    public int[] getPosition() {
-        return position;
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 
 

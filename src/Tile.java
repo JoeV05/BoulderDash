@@ -1,3 +1,4 @@
+import javafx.scene.image.Image;
 /**
  * @author Joseph Vinson
  * Represents a generic tile in the game
@@ -7,17 +8,17 @@
  */
 
 public abstract class Tile extends Entity{
-    protected boolean walkable; //Indicates whether the tile can be walked on
+    protected boolean walkable;
 
-    protected final TileType tileType; //Indicates what type of tile it is
+    protected final TileType tileType;
 
-    public Tile(int x, int y, boolean walkable, TileType tileType) {
-        super(x, y); //calls the Entity constructor to set the tiles coordinates
+    public Tile(int x, int y, boolean walkable, TileType tileType, Image sprite) {
+        super(x, y, sprite);
         this.walkable = walkable;
         this.tileType = tileType;
     }
 
     public boolean isWalkable() {
-        return walkable; //Returns true if the tile is walkable, returns false if not
+        return walkable;
     }
 }

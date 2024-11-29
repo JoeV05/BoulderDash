@@ -7,6 +7,6 @@ import javafx.scene.image.Image;
 public class Diamond extends FallingEntity {
 
     public Diamond(int x, int y) {
-        super(x, y, FallingType.DIAMOND, new Image("./graphics/diamond.png"));
+        super(x, y, FallingType.DIAMOND, new Image("./sprites/diamond.png"));
     }
 }

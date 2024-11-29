@@ -3,8 +3,8 @@ import javafx.scene.image.Image;
 public class Frog extends Enemy {
 
 
-    protected Frog(Image image,int[] position) {
-        super(image,position);
+    protected Frog(int x, int y) {
+        super(x, y, new Image("./sprites/frog.png"));
     }
 
     /**
@@ -12,10 +12,10 @@ public class Frog extends Enemy {
      *
      * @return int [] coordinates frog should move to
      */
-    @Override
-    public int[] moveTo(int[][] gameState) {
-        return new int[2];
-    }
+    //@Override
+    //public int[] moveTo(int[][] gameState) {
+    //    return new int[2];
+    //}
 
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
