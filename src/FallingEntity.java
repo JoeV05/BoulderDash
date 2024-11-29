@@ -1,4 +1,3 @@
-import java.awt.*;
 import javafx.scene.image.Image;
 /**
  * @author Joseph Vinson
