@@ -17,7 +17,8 @@ public abstract class FallingEntity extends Entity {
     }
 
     public void fall() {
-        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is either empty or a magic wall
-        //TODO - handle case where entity below is either player or enemy
+        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is empty
+        //TODO - use transform from MagicWall if the tile below isInstanceOf(MagicWall)
+        //TODO - handle case where tile below isInstanceOf(Enemy)
     }
 }
