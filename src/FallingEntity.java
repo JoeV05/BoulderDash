@@ -1,4 +1,5 @@
 import javafx.scene.image.Image;
+
 /**
  * @author Joseph Vinson
  */
@@ -6,8 +7,8 @@ import javafx.scene.image.Image;
 public abstract class FallingEntity extends Entity {
     private final FallingType entityType;
 
-    public FallingEntity(int x, int y, FallingType entityType, Image image) {
-        super(x, y,image);
+    public FallingEntity(int x, int y, FallingType entityType, Image sprite) {
+        super(x, y, sprite);
 
         this.entityType = entityType;
     }
@@ -17,8 +18,10 @@ public abstract class FallingEntity extends Entity {
     }
 
     public void fall() {
-        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is empty
-        //TODO - use transform from MagicWall if the tile below isInstanceOf(MagicWall)
-        //TODO - handle case where tile below isInstanceOf(Enemy)
+        /*TODO - use Game.replaceEntity() [unsure of exact implementation]
+            to move it to the tile below, assuming the tile below is either empty or a magic wall
+            [needs to handle magic walls differently, i.e. use transform method from magic wall]
+            also somehow kill the player and enemies
+         */
     }
 }
