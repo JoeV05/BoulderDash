@@ -25,7 +25,7 @@ import java.util.*;
 /**
  * @author James, Luke, and Joe
  * Fixing the game class. The errors are mainly due to the relationships between Tile, Wall, and Entity.
- * I'll be changing this class alot cant lie. It'll get worse before it gets better.
+ * I'll be changing this class a lot, can't lie. It'll get worse before it gets better.
  */
 public class Game extends Application {
     // window properties.
@@ -48,6 +48,7 @@ public class Game extends Application {
 
     // entity map.
     private static Entity[][] map;
+    private char[][] charMap;
 
     // timeline.
     private Timeline tickTimeline;
@@ -138,7 +139,7 @@ public class Game extends Application {
     public void initialLevel() {
         int rowLength = GRID_WIDTH;
         int colHeight = GRID_HEIGHT;
-        level = new char[colHeight][rowLength];
+        charMap = new char[colHeight][rowLength];
         File file = new File("src/level.txt");
         System.out.println(file.exists());
         Scanner scanner;
@@ -149,76 +150,80 @@ public class Game extends Application {
         }
 
         for (int col = 0; col < colHeight; col++) {
-            level[col] = scanner.nextLine().toCharArray();
+            charMap[col] = scanner.nextLine().toCharArray();
         }
-        System.out.println(Arrays.deepToString(level));
+        System.out.println(Arrays.deepToString(charMap));
 
         for (int col = 0; col < colHeight; col++) {
             for (int row = 0; row < rowLength; row++) {
-                switch (level[col][row]) {
+                switch (charMap[col][row]) {
                     case '#':
-                        levelState[col][row] = new Wall(row, col, WallType.NORMAL_WALL, new Image("graphics/wall PLACEHOLDER.jpg"));
+                        map[col][row] = new Wall(row, col, WallType.NORMAL_WALL, new Image("sprites/Wall.png"));
                         break;
                     case 'T':
-                        levelState[col][row] = new Wall(row, col, WallType.TITANIUM_WALL,new Image("tiles/titanium.png"));
+                        map[col][row] = new Wall(row, col, WallType.TITANIUM_WALL,new Image("sprites/Titanium.png"));
                         break;
                     case 'M':
-                        levelState[col][row] = new Wall(row, col, WallType.MAGIC_WALL,new Image("graphics/Magic Wall PLACEHOLDER.jpg"));
+                        map[col][row] = new Wall(row, col, WallType.MAGIC_WALL,new Image("sprites/Magic_Wall.png"));
                         break;
                     case 'E':
-                        levelState[col][row] = new Exit(row, col, 0,new Image("graphics/exit PLACEHOLDER.jpg"));
+                        map[col][row] = new Exit(row, col, 0,new Image("sprites/Ship_Locked.png"));
                         //Need to edit and read metadata at the end of the file to determine the required score
                         break;
                     case 'R':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.RED,new Image("graphics/door Placeholder.jpg"));
+                        map[col][row] = new LockedDoor(row, col, Colour.RED,new Image("sprites/Red_Door.png"));
                         break;
                     case 'G':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.GREEN,new Image("graphics/door Placeholder.jpg"));
+                        map[col][row] = new LockedDoor(row, col, Colour.GREEN,new Image("sprites/Green_Door.png"));
                         break;
                     case 'B':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.BLUE,new Image("graphics/door Placeholder.jpg"));
+                        map[col][row] = new LockedDoor(row, col, Colour.BLUE,new Image("sprites/Blue_Door.png"));
                         break;
                     case 'Y':
-                        levelState[col][row] = new LockedDoor(row, col, Colour.YELLOW,new Image("graphics/door Placeholder.jpg"));
+                        map[col][row] = new LockedDoor(row, col, Colour.YELLOW,new Image("sprites/Yellow_Door.png"));
                         break;
                     case 'r':
-                        levelState[col][row] = new Key(row, col, Colour.RED,new Image("graphics/Key PLACEHOLDER.jpg"));
+                        map[col][row] = new Key(row, col, Colour.RED,new Image("sprites/Yellow_Key.png"));
                         break;
                     case 'g':
-                        levelState[col][row] = new Key(row, col, Colour.GREEN,new Image("graphics/Key PLACEHOLDER.jpg"));
+                        map[col][row] = new Key(row, col, Colour.GREEN,new Image("sprites/Green_Key.png"));
                         break;
                     case 'b':
-                        levelState[col][row] = new Key(row, col, Colour.BLUE,new Image("graphics/Key PLACEHOLDER.jpg"));
+                        map[col][row] = new Key(row, col, Colour.BLUE,new Image("sprites/Blue_Key.png"));
                         break;
                     case 'y':
-                        levelState[col][row] = new Key(row, col, Colour.YELLOW,new Image("graphics/Key PLACEHOLDER.jpg"));
+                        map[col][row] = new Key(row, col, Colour.YELLOW,new Image("sprites/Yellow_Key.png"));
                         break;
                     case 'P':
-                        levelState[col][row] = new Player(row, col, new Image("graphics/player.png"));
+                        map[col][row] = new Player(row, col, new Image("sprites/Spaceman_Front.png"));
                         break;
                     case 'O':
-                        levelState[col][row] = new Boulder(row, col,new Image("tiles/boulder.png"));
+                        map[col][row] = new Boulder(row, col,new Image("sprites/Boulder.png"));
                         break;
                     case '*':
-                        levelState[col][row] = new Diamond(row, col, new Image("tiles/diamond.png"));
+                        map[col][row] = new Diamond(row, col, new Image("sprites/Diamond.png"));
                         break;
                     case 'W':
-                        levelState[col][row] = new Butterfly(row, col,new Image("graphics/Butterfly PLACEHOLDER.jpg"));
+                        map[col][row] = new Butterfly(row, col,new Image("sprites/Butterfly.png"));
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'X':
-                        levelState[col][row] = new Firefly(new Image("graphics/Firefly Placeholder.webp"),row, col);
+                        map[col][row] = new Firefly(new Image("sprites/Firefly.png"),row, col);
                         //Metadata needed for left/right-hand wall cling
                         break;
                     case 'F':
-                                levelState[col][row] = new Frog(new Image("src/graphics/FROG PLACEHOLDER.png") ,row, col);
+                                map[col][row] = new Frog(new Image("sprites/Frog.png") ,row, col);
                         break;
                     case 'A':
-                        levelState[col][row] = new Amoeba(row, col, 0,0,new Image("graphics/ameoba PLACEHOLDER.jpg"));
+                        map[col][row] = new Amoeba(row, col, 0,0,new Image("sprites/Amoeba.png"));
                         //Metadata needed for Amoeba maximumSize
                         break;
+                    case 'D':
+                        map[col][row] = new Dirt(row, col, new Image("sprites/Dirt.png"));
+                        break;
                     default:
-                        levelState[col][row] = new Dirt(row, col,new Image("graphics/dirt.png"));
+                        map[col][row] = null;
+                        break;
                 }
             }
         }
@@ -241,11 +246,11 @@ public class Game extends Application {
      * @param entity to be replaced with
      */
     public static void replaceEntity(int x, int y, Entity entity) {
-        levelState[y][x] = entity;
+        map[y][x] = entity;
     }
 
     private void updateSprites() {
-        GameController.drawGame(levelState);
+        GameController.drawGame(map);
     }
 
     /**
@@ -253,7 +258,7 @@ public class Game extends Application {
      * @return Entity to be moved
      */
     public Entity getEntity(int x, int y) {
-        return levelState[y][x];
+        return map[y][x];
     }
 
     /**
@@ -407,7 +412,6 @@ public class Game extends Application {
 
         // Setup a draggable image.
         ImageView draggableImage = new ImageView();
-        draggableImage.setImage(iconImage);
         toolbar.getChildren().add(draggableImage);
 
         // This code setup what happens when the dragging starts on the image.
