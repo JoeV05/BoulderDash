@@ -23,8 +23,7 @@ public class LockedDoor extends Wall {
      * @param colour The colour of the locked door
      */
     public LockedDoor(int x, int y, Colour colour) {
-        // TODO: create three more classes red blue etc. calling this but with the differing images.
-        super(x, y, WallType.LOCKED_DOOR, new Image("./sprites/door_blue.png"));
+        super(x, y, WallType.LOCKED_DOOR);
         this.colour = colour;
     }
 
