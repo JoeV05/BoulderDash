@@ -127,7 +127,7 @@ public class Game extends Application {
                 cave[row][col] = switch (tileChar) {
                     case '#' -> new Wall(row, col, WallType.NORMAL_WALL);
                     case 'T' -> new Wall(row, col, WallType.TITANIUM_WALL);
-                    case 'M' -> new Wall(row, col, WallType.MAGIC_WALL);
+                    case 'M' -> new MagicWall(row, col);
                     case 'E' -> new Exit(row, col, 5);
                     case 'R' -> new LockedDoor(row, col, Colour.RED);
                     case 'G' -> new LockedDoor(row, col, Colour.GREEN);
