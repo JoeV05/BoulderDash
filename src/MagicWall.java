@@ -22,6 +22,15 @@ public class MagicWall extends Wall {
     }
 
     public void dropStored() {
-        //Game.???(this.stored)
+        // TODO - If the tile below is empty somehow drop the stored FallingEntity
+        if (this.x < 23) {// TODO - ask James if getEntity() should be static so it can be used here
+            // TODO - drop stored into tile below, update x and y for stored (y should increase by 1)
+        } else if (true) { // TODO - check if tile below is magic wall
+            // TODO - somehow chain the effect of magic wall transformation
+        }
+    }
+
+    public void chainMagicWalls() {
+        // TODO - Chain magic walls together
     }
 }
