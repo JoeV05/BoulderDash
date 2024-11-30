@@ -4,11 +4,14 @@ import javafx.scene.image.Image;
  * @author Joseph Vinson
  */
 
+// TODO - FUCKING FUCK FUCK FUCK I HATE JAVAFX
+// TODO - Set the sprite to exit sprite
+
 public class Exit extends Wall {
     private static int scoreRequirement;
 
     public Exit(int x, int y, int scoreReq) {
-        super(x ,y, WallType.TITANIUM_WALL, new Image("./sprites/exit.png"));
+        super(x ,y, WallType.TITANIUM_WALL);
         scoreRequirement = scoreReq;
     }
 
