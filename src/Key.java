@@ -22,8 +22,7 @@ public class Key extends Tile {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        // TODO: create three more classes red key etc. calling this but with the differing images.
-        super(x, y, false, TileType.KEY, new Image("./sprites/key_green.png"));
+        super(x, y, false, TileType.KEY, Key.getKeySprite(colour));
         this.colour = colour;
     }
 
@@ -53,8 +52,33 @@ public class Key extends Tile {
      * @param lockedDoor The locked door to attempt to unlock
      */
     public void use(LockedDoor lockedDoor) {
+        // TODO - somehow burn the key from the players inventory - should player use singleton design pattern?
         if (canUnlock(lockedDoor)) {
             lockedDoor.unlock();
         }
+    }
+
+    public static Image getKeySprite(Colour colour) {
+        Image sprite;
+
+        switch (colour) {
+            case Colour.RED:
+                sprite = new Image("./sprites/Red_Key.png");
+                break;
+            case Colour.GREEN:
+                sprite = new Image("./sprites/Green_Key.png");
+                break;
+            case Colour.YELLOW:
+                sprite = new Image("./sprites/Yellow_Key.png");
+                break;
+            case Colour.BLUE:
+                sprite = new Image("./sprites/Blue_Key.png");
+                break;
+            default:
+                sprite = null;
+                break;
+        }
+
+        return sprite;
     }
 }

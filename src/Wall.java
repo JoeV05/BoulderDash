@@ -15,23 +15,23 @@ public class Wall extends Tile {
     }
 
     private static Image getWallSprite(WallType wallType) {
-        Image img;
+        Image sprite;
 
         switch (wallType) {
             case WallType.NORMAL_WALL:
-                img = new Image("./sprites/normal_wall.png");
+                sprite = new Image("./sprites/normal_wall.png");
                 break;
             case WallType.TITANIUM_WALL:
-                img = new Image("./sprites/titanium_wall.png");
+                sprite = new Image("./sprites/titanium_wall.png");
                 break;
             case WallType.MAGIC_WALL:
-                img = new Image("./sprites/magic_wall.png");
+                sprite = new Image("./sprites/magic_wall.png");
                 break;
             default:
-                img = null;
+                sprite = null;
                 break;
         }
 
-        return img;
+        return sprite;
     }
 }
