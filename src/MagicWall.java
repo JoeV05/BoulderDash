@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 public class MagicWall extends ActionWall {
     private boolean hasEntityStored;
     private boolean finishedTransforming;
-    private FallingEntity stored;
+    private FallingType stored;
 
     public MagicWall(int x, int y) {
         super(x, y, WallType.MAGIC_WALL);
@@ -16,9 +16,16 @@ public class MagicWall extends ActionWall {
 
     @Override
     public void tick() {
-        if (this.hasEntityStored) {
-            this.dropStored();
+        if (this.y > Game.GRID_HEIGHT - 2) {
+            return;
+        }
+        Entity below = Game.getEntity(this.x, this.y + 1);
+        if (this.hasEntityStored && below instanceof Path) {
+            FallingEntity f = this.dropStored();
+            Game.replaceEntity(this.x, this.y + 1, f);
+            Game.addFallingEntity(f);
             this.hasEntityStored = false;
+            this.stored = null;
         }
     }
 
@@ -29,10 +36,10 @@ public class MagicWall extends ActionWall {
         int fX = falling.getX();
         int fY = falling.getY();
         if (falling instanceof Boulder) {
-            this.stored = new Diamond(this.x, this.y);
+            this.stored = FallingType.DIAMOND;
             Game.replaceEntity(fX, fY, new Path(fX, fY));
         } else {
-            this.stored = new Boulder(this.x, this.y);
+            this.stored = FallingType.BOULDER;
             Game.replaceEntity(fX, fY, new Path(fX, fY));
         }
         this.hasEntityStored = true;
@@ -41,20 +48,27 @@ public class MagicWall extends ActionWall {
     // TODO - Make the magic wall either drop the FallingEntity it has stored or transfer it into a MagicWall
     //  if there is one beneath this one (make use of static methods in Game)
     // TODO - javadoc method comment
-    public void dropStored() {
+    public FallingEntity dropStored() {
         if (this.y > Game.GRID_HEIGHT - 2) {
             System.out.println("Liam is a wet fish");
         }
         Entity below = Game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
-            this.stored.setY(this.y + 1);
+            FallingEntity f;
+            /*this.stored.setY(this.stored.getY() + 1);
             Game.replaceEntity(this.x, this.y + 1, this.stored);
             Game.addFallingEntity(this.stored);
-            Game.removeFallingEntity(this.stored);
             this.stored = null;
-            this.hasEntityStored = false;
-        } else if (below instanceof MagicWall) {
+            this.hasEntityStored = false;*/
+            if (this.stored == FallingType.BOULDER) {
+                f = new Boulder(this.x, this.y + 1);
+            } else {
+                f = new Diamond(this.x, this.y + 1);
+            }
+            return f;
+        }/* else if (below instanceof MagicWall) {
             // TODO - somehow chain the effect of magic wall transformation
-        }
+        }*/
+        return null;
     }
 }
