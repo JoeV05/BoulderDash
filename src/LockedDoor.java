@@ -15,6 +15,7 @@ public class LockedDoor extends Wall {
     /** The colour of the locked door which determines which key can open it. */
     private final Colour colour;
 
+    // TODO - Same thing as key with the switch
     /**
      * Constructs a new Locked Door with a specific position and colour.
      *
@@ -23,7 +24,24 @@ public class LockedDoor extends Wall {
      * @param colour The colour of the locked door
      */
     public LockedDoor(int x, int y, Colour colour) {
-        super(x, y, WallType.LOCKED_DOOR);
+        super(x, y, WallType.LOCKED_DOOR, new Image("sprites/Door_Blue.png"));
+        switch(colour) {
+            case RED:
+                setSprite(new Image("sprites/Door_Red.png"));
+                break;
+            case YELLOW:
+                setSprite(new Image("sprites/Door_Yellow.png"));
+                break;
+            case GREEN:
+                setSprite(new Image("sprites/Door_Green.png"));
+                break;
+            case BLUE:
+                setSprite(new Image("sprites/Door_Blue.png"));
+                break;
+            default:
+                setSprite(new Image("./sprites/Titanium.png"));
+                break;
+        }
         this.colour = colour;
     }
 
