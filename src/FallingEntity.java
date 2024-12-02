@@ -24,7 +24,7 @@ public abstract class FallingEntity extends Entity {
         if (this.y > Game.GRID_HEIGHT) {
             throw new LiamWetFishException("HOT SINGLE FISH IN YOUR AREA");
         }
-        if (this.y == Game.GRID_HEIGHT - 1) {
+        if (this.y == Game.GRID_HEIGHT - 2) {
             return;
         }
         if (Game.getEntity(this.x, this.y + 1) instanceof Path) {
