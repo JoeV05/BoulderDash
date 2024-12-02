@@ -285,12 +285,12 @@ public class Game extends Application {
             p.move(intendedKey);
         }
 
-        for (FallingEntity fallingEntity : fallingEntities) {
-            fallingEntity.fall();
-        }
-
         for (ActionWall actionWall : actionWalls) {
             actionWall.tick();
+        }
+
+        for (FallingEntity fallingEntity : fallingEntities) {
+            fallingEntity.fall();
         }
 
         draw();
