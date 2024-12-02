@@ -1,7 +1,8 @@
+// TODO - if tile no longer needs to exist, presumably this also no longer needs to exist
+
 /**
  * Enumeration to represent the different types of tile
  * @author Joseph Vinson
- * edit I removed enum Door. as Door is already under Wall
  */
 
 public enum TileType {
@@ -31,6 +32,11 @@ public enum TileType {
     /**
      * Represents a wall that blocks all movement.
      * Walls have sublasses with unique abilities.
+     */
+    DOOR,
+    /**
+     * Represents a locked door that acts as a wall until the player uses
+     * the colour specified key turning the wall to a path
      */
     EXIT
     /**
