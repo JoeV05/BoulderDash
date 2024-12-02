@@ -20,6 +20,7 @@ public abstract class FallingEntity extends Entity {
         return entityType;
     }
 
+    // TODO - javadoc method comment
     public void fall() {
         if (this.y > Game.GRID_HEIGHT) {
             throw new LiamWetFishException("HOT SINGLE FISH IN YOUR AREA");
@@ -27,10 +28,13 @@ public abstract class FallingEntity extends Entity {
         if (this.y == Game.GRID_HEIGHT - 2) {
             return;
         }
-        if (Game.getEntity(this.x, this.y + 1) instanceof Path) {
+        Entity below = Game.getEntity(this.x, this.y + 1);
+        if (below instanceof Path) {
             Game.updateLevel(x, y + 1, this);
         }
-        //TODO - use updateLevel to move it to the tile below, assuming the tile below is either empty or a magic wall
+        if (below instanceof MagicWall) {
+            ((MagicWall) below).transform(this);
+        }
         //TODO - handle case where entity below is either player or enemy
         //  ^^^ This is for hazards people, not tiles, stop trying to make me do your work for you
     }
