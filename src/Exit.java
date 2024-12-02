@@ -6,11 +6,11 @@ import javafx.scene.image.Image;
  * @author Joseph Vinson
  */
 
-public class Exit extends Wall {
+public class Exit extends ActionWall {
     private static int scoreRequirement;
 
     public Exit(int x, int y, int scoreReq) {
-        super(x, y, WallType.TITANIUM_WALL, new Image("./sprites/Exit_Locked.png"));
+        super(x, y, WallType.EXIT);
         scoreRequirement = scoreReq;
     }
 
@@ -33,4 +33,11 @@ public class Exit extends Wall {
     }
 
     //TODO: add code that changes the sprite when the player has fulfilled the conditions to exit
+    @Override
+    public void tick(){
+        if (this.walkable) {
+            Image sprite = new Image("./sprites/Exit_Unlocked.png");
+            this.setSprite(sprite);
+        }
+    }
 }
