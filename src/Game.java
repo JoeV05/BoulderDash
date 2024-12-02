@@ -243,7 +243,7 @@ public class Game extends Application {
      * Returns the entity at the given x/y coordinates
      * @return Entity to be moved
      */
-    public Entity getEntity(int x, int y) {
+    public static Entity getEntity(int x, int y) {
         return map[y][x];
     }
 
