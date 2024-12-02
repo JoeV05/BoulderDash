@@ -24,8 +24,7 @@ import static java.util.Objects.isNull;
 
 /**
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
- * Fixing the game class. The errors are mainly due to the relationships between Tile, Wall, and Entity.
- * ^^^ Literally not even true, what are you on about
+ * Represents the game state, stores level data and renders game window
  */
 public class Game extends Application {
 
