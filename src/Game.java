@@ -70,6 +70,10 @@ public class Game extends Application {
     private static ArrayList<FallingEntity> fallingEntities;
     private static ArrayList<ActionWall> actionWalls;
 
+    public static void addFallingEntity(FallingEntity e) {
+        fallingEntities.add(e);
+    }
+
     // TODO - Check tile where they are trying to move, maybe split method up
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
