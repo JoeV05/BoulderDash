@@ -1,5 +1,7 @@
 import javafx.scene.image.Image;
 
+// TODO - maybe make a subclass for walkables so isInstanceOf can be used instead of variable check
+
 /**
  * @author James Harvey, Joseph Vinson
  */
@@ -7,12 +9,12 @@ import javafx.scene.image.Image;
 public abstract class Entity {
     protected int x;
     protected int y;
-    protected Image Sprite;
+    protected Image sprite;
 
-    public Entity(int x, int y, Image Sprite) {
+    public Entity(int x, int y, Image sprite) {
         this.x = x;
         this.y = y;
-        this.Sprite = Sprite;
+        this.sprite = sprite;
     }
 
     public int getX() {
@@ -32,6 +34,12 @@ public abstract class Entity {
     }
 
     public Image getSprite() {
-        return this.Sprite;
+        return this.sprite;
+    }
+
+    // TODO - is this needed? it's protected, so only classes that already have the ability
+    //  to directly set the value of sprite could use it
+    protected void setSprite(Image sprite) {
+        this.sprite = sprite;
     }
 }
