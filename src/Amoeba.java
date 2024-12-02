@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
+
+// TODO - looking at this code makes me want to cry, needs fixing
 
 /**
  * Represents an Amoeba
@@ -22,6 +26,8 @@ public class Amoeba extends Tile {
      */
     private int size;
 
+    // TODO - remove duplicate variables
+
     /**
      * The maximum size the amoeba can reach before transforming.
      */
@@ -32,6 +38,8 @@ public class Amoeba extends Tile {
      */
     private final int transformToBouldersSize;
 
+    private ArrayList<Amoeba> group;
+
     /**
      * Constructs a new Amoeba tile.
      *
@@ -41,10 +49,21 @@ public class Amoeba extends Tile {
      * @param transformToBouldersSize The size at which the amoeba transforms into boulders.
      */
     public Amoeba(int x, int y, int maximumSize, int transformToBouldersSize) {
-        super(x, y, false, TileType.AMOEBA, new Image("./sprites/omeba.png"));
+        super(x, y, false, TileType.AMOEBA, new Image("./sprites/Amoeba.png"));
         this.maximumSize = maximumSize;
         this.transformToBouldersSize = transformToBouldersSize;
         this.size = 1; // Start with a size of 1
+        this.group = new ArrayList<>();
+        this.group.add(this);
+    }
+
+    public Amoeba(int x, int y, int maximumSize, int transformToBouldersSize, Image image, ArrayList<Amoeba> group) {
+        super(x, y, false, TileType.AMOEBA, image);
+        this.maximumSize = maximumSize;
+        this.transformToBouldersSize = transformToBouldersSize;
+        this.group = group;
+        this.group.add(this);
+        this.size = this.group.size();
     }
 
     /**
@@ -53,6 +72,7 @@ public class Amoeba extends Tile {
      */
     public void grow() {
         if (this.size < this.maximumSize) {
+            // TODO - Check the thing
             this.size++;
         } else if (this.size >= this.transformToBouldersSize) {
             transformToBouldersAndDiamonds();
