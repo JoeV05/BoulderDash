@@ -29,7 +29,9 @@ public class Wall extends Tile {
                 break;
             case WallType.EXIT:
                 img = new Image("./sprites/Exit_Locked.png");
+                break;
             default:
+                System.out.println(wallType);
                 throw new LiamWetFishException("WHAT THE FISH??? WHERES THE FISHING WALLTYPE???");
         }
         return img;
