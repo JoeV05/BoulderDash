@@ -68,6 +68,7 @@ public class Game extends Application {
     private static final View view = new View(1);
 
     private static ArrayList<FallingEntity> fallingEntities;
+    private static ArrayList<ActionWall> actionWalls;
 
     // TODO - Check tile where they are trying to move, maybe split method up
     public static boolean isValidMove(int x, int y, Direction dir) {
@@ -152,10 +153,14 @@ public class Game extends Application {
                         map[row][col] = new Wall(col, row, WallType.TITANIUM_WALL);
                         break;
                     case 'M':
-                        map[row][col] = new MagicWall(col, row);
+                        MagicWall m = new MagicWall(col, row);
+                        map[row][col] = m;
+                        actionWalls.add(m);
                         break;
                     case 'E':
-                        map[row][col] = new Exit(col, row, 5);
+                        Exit e = new Exit(col, row, 5);
+                        map[row][col] = e;
+                        actionWalls.add(e);
                         break;
                     // TODO - metadata needed for unlock exit condition
                     case 'R':
@@ -209,8 +214,11 @@ public class Game extends Application {
                         map[row][col] = Player.getPlayer(col, row);
                         break;
                     // TODO - metadata needed for maximum Amoeba size
-                    default:
+                    case 'D':
                         map[row][col] = new Dirt(col, row);
+                        break;
+                    default:
+                        map[row][col] = new Path(col, row);
                         break;
                 }
             }
@@ -279,6 +287,10 @@ public class Game extends Application {
 
         for (FallingEntity fallingEntity : fallingEntities) {
             fallingEntity.fall();
+        }
+
+        for (ActionWall actionWall : actionWalls) {
+            actionWall.tick();
         }
 
         draw();
@@ -352,6 +364,7 @@ public class Game extends Application {
 
     public static void main(String[] args) {
         fallingEntities = new ArrayList<>();
+        actionWalls = new ArrayList<>();
         launch(args);
     }
 }
