@@ -1,3 +1,6 @@
+// TODO - from what I understand this is now deprecated and should be removed,
+//  if this is incorrect maybe put that out on discord
+
 /**
  * The interface to allow the player and the enemies to tell the game class where they are moving
  * Version 1.0
