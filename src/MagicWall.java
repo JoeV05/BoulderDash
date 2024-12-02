@@ -4,37 +4,57 @@ import javafx.scene.image.Image;
  * @author Joseph Vinson
  */
 
-public class MagicWall extends Wall {
-    private boolean isActive;
+public class MagicWall extends ActionWall {
+    private boolean hasEntityStored;
+    private boolean finishedTransforming;
     private FallingEntity stored;
 
     public MagicWall(int x, int y) {
-        super(x, y, WallType.MAGIC_WALL, new Image("./sprites/Magic_Wall.png"));
+        super(x, y, WallType.MAGIC_WALL);
+        this.hasEntityStored = false;
+    }
+
+    @Override
+    public void tick() {
+        if (this.hasEntityStored) {
+            this.dropStored();
+            this.hasEntityStored = false;
+        }
     }
 
     // TODO - think this is actually all fine, maybe a sanity check from Jamie and Tafara?
+    // TODO - javadoc method comment
     public void transform(FallingEntity falling) {
-        if (falling.getEntityType() == FallingType.BOULDER) {
+        Game.removeFallingEntity(falling);
+        int fX = falling.getX();
+        int fY = falling.getY();
+        if (falling instanceof Boulder) {
             this.stored = new Diamond(this.x, this.y);
+            Game.replaceEntity(fX, fY, new Path(fX, fY));
         } else {
             this.stored = new Boulder(this.x, this.y);
+            Game.replaceEntity(fX, fY, new Path(fX, fY));
         }
-        this.isActive = true;
+        this.hasEntityStored = true;
     }
 
-    // TODO - Shoot me in the head, this game is a fucking nightmare
-    //  Make the magic wall either drop the FallingEntity it has stored or transfer it into a MagicWall
+    // TODO - Make the magic wall either drop the FallingEntity it has stored or transfer it into a MagicWall
     //  if there is one beneath this one (make use of static methods in Game)
+    // TODO - javadoc method comment
     public void dropStored() {
-        // TODO - If the tile below is empty somehow drop the stored FallingEntity
-        if (this.x < 23) {// TODO - ask James if getEntity() should be static so it can be used here
-            // TODO - drop stored into tile below, update x and y for stored (y should increase by 1)
-        } else if (true) { // TODO - check if tile below is magic wall
+        if (this.y > Game.GRID_HEIGHT - 2) {
+            System.out.println("Liam is a wet fish");
+        }
+        Entity below = Game.getEntity(this.x, this.y + 1);
+        if (below instanceof Path) {
+            this.stored.setY(this.y + 1);
+            Game.replaceEntity(this.x, this.y + 1, this.stored);
+            Game.addFallingEntity(this.stored);
+            Game.removeFallingEntity(this.stored);
+            this.stored = null;
+            this.hasEntityStored = false;
+        } else if (below instanceof MagicWall) {
             // TODO - somehow chain the effect of magic wall transformation
         }
-    }
-
-    public void chainMagicWalls() {
-        // TODO - Chain magic walls together
     }
 }
