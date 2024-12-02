@@ -25,31 +25,43 @@ public class Player extends Entity {
         switch (key) {
             case UP:
             case W:
+                if (!Game.isValidMove(x, y, Direction.UP)) {
+                    return;
+                }
                 setSprite(new Image("./sprites/Player_Down.png"));
                 Game.replaceEntity(x, y - 1, this);
-                setY(y - 1);
                 Game.replaceEntity(x, y, p);
+                setY(y - 1);
                 break;
             case DOWN:
             case S:
+                if (!Game.isValidMove(x, y, Direction.DOWN)) {
+                    return;
+                }
                 setSprite(new Image("./sprites/Player_Up.png"));
                 Game.replaceEntity(x, y + 1, this);
-                setY(y + 1);
                 Game.replaceEntity(x, y, p);
+                setY(y + 1);
                 break;
             case LEFT:
             case A:
+                if (!Game.isValidMove(x, y, Direction.LEFT)) {
+                    return;
+                }
                 setSprite(new Image("./sprites/Player_Left.png"));
                 Game.replaceEntity(x - 1, y, this);
-                setX(x - 1);
                 Game.replaceEntity(x, y, p);
+                setX(x - 1);
                 break;
             case RIGHT:
             case D:
+                if (!Game.isValidMove(x, y, Direction.RIGHT)) {
+                    return;
+                }
                 setSprite(new Image("./sprites/Player_Right.png"));
                 Game.replaceEntity(x + 1, y, this);
-                setX(x + 1);
                 Game.replaceEntity(x, y, p);
+                setX(x + 1);
                 break;
             default:
                 // all redundant key inputs are sent here

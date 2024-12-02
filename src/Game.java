@@ -68,6 +68,22 @@ public class Game extends Application {
     // view.
     private static final View view = new View(1);
 
+    public static boolean isValidMove(int x, int y, Direction dir) {
+        switch (dir) {
+            case UP:
+                return y > 0;
+            case DOWN:
+                // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
+                //  WHAT THE FISH!!!
+                return y < (GRID_HEIGHT - 2);
+            case LEFT:
+                return x > 0;
+            case RIGHT:
+                return x < (GRID_WIDTH - 1);
+        }
+        throw new LiamWetFishException("WHAT THE FUCK DID YOU DO TO GET HERE");
+    }
+
     /**
      *
      * @param primaryStage The stage that is to be used for the application.
@@ -185,7 +201,7 @@ public class Game extends Application {
         return map[y][x];
     }
 
-    // TODO - what is this for? looks like an artefact of devlin shitfuckery based off the use of deltas
+    // TODO - what is this for? looks like an artefact of devlin poopfishery based off the use of deltas
     public static void swapEntities(int dy, int dx) {
         boolean moved = !(dy == 0 && dx == 0);
         if (moved) {
@@ -285,5 +301,13 @@ public class Game extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public int getGridWidth() {
+        return GRID_WIDTH;
+    }
+
+    public int getGridHeight() {
+        return GRID_HEIGHT;
     }
 }
