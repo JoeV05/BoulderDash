@@ -26,11 +26,11 @@ public class MagicWall extends ActionWall {
                 Game.addFallingEntity(f);
                 this.hasEntityStored = false;
                 this.stored = null;
+            } else if (below instanceof MagicWall) {
+                ((MagicWall) below).transform(this.stored);
+                this.hasEntityStored = false;
+                this.stored = null;
             }
-        } else if (below instanceof MagicWall) {
-            ((MagicWall) below).transform(this.stored);
-            this.hasEntityStored = false;
-            this.stored = null;
         }
     }
 
@@ -51,7 +51,11 @@ public class MagicWall extends ActionWall {
     }
 
     public void transform(FallingType stored) {
-        this.stored = stored;
+        if (stored == FallingType.BOULDER) {
+            this.stored = FallingType.DIAMOND;
+        } else {
+            this.stored = FallingType.BOULDER;
+        }
         this.hasEntityStored = true;
     }
 
