@@ -1,5 +1,6 @@
-/**
+// TODO - revisit javadoc comments
 
+/**
  * Enumeration for the different colours that a key or door can have
  * @author Joseph Vinson
  */
