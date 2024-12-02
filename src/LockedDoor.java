@@ -24,7 +24,7 @@ public class LockedDoor extends Wall {
      * @param colour The colour of the locked door
      */
     public LockedDoor(int x, int y, Colour colour) {
-        super(x, y, WallType.LOCKED_DOOR, new Image("sprites/Door_Blue.png"));
+        super(x, y, WallType.LOCKED_DOOR);
         switch(colour) {
             case RED:
                 setSprite(new Image("sprites/Door_Red.png"));
