@@ -26,5 +26,6 @@ public enum WallType {
      * The corresponding key. Once unlocked, the door transforms into
      * a walkable path tile
      */
-    LOCKED_DOOR
+    LOCKED_DOOR,
+    EXIT
 }
