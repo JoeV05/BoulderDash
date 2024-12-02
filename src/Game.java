@@ -45,8 +45,8 @@ public class Game extends Application {
     private static final int CELL_HEIGHT = 32;
 
     // grid.
-    private static final int GRID_WIDTH = 40;
-    private static final int GRID_HEIGHT = 23;
+    public static final int GRID_WIDTH = 40;
+    public static final int GRID_HEIGHT = 23;
 
     //TODO: Remove, set sprites to 32px
     // TODO - There are already variables for 32px, can whoever added the comment
@@ -67,6 +67,8 @@ public class Game extends Application {
     // view.
     private static final View view = new View(1);
 
+    private static ArrayList<FallingEntity> fallingEntities;
+
     // TODO - Check tile where they are trying to move, maybe split method up
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
@@ -81,7 +83,7 @@ public class Game extends Application {
             case RIGHT:
                 return x < (GRID_WIDTH - 1);
         }
-        throw new LiamWetFishException("WHAT THE FUCK DID YOU DO TO GET HERE");
+        throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
     }
 
     /**
@@ -142,31 +144,75 @@ public class Game extends Application {
             for (int col = 0; col < charCave.getTilesWide(); col++) {
                 char tileChar = reduceGets[row][col];
 
-                map[row][col] = switch(tileChar) {
-                    case '#' -> new Wall(col, row, WallType.NORMAL_WALL);
-                    case 'T' -> new Wall(col, row, WallType.TITANIUM_WALL);
-                    case 'M' -> new Wall(col, row, WallType.MAGIC_WALL);
-                    case 'E' -> new Exit(col, row, 5);
+                switch(tileChar) {
+                    case '#':
+                        map[row][col] = new Wall(col, row, WallType.NORMAL_WALL);
+                        break;
+                    case 'T':
+                        map[row][col] = new Wall(col, row, WallType.TITANIUM_WALL);
+                        break;
+                    case 'M':
+                        map[row][col] = new MagicWall(col, row);
+                        break;
+                    case 'E':
+                        map[row][col] = new Exit(col, row, 5);
+                        break;
                     // TODO - metadata needed for unlock exit condition
-                    case 'R' -> new LockedDoor(col, row, Colour.RED);
-                    case 'G' -> new LockedDoor(col, row, Colour.GREEN);
-                    case 'B' -> new LockedDoor(col, row, Colour.BLUE);
-                    case 'Y' -> new LockedDoor(col, row, Colour.YELLOW);
-                    case 'r' -> new Key(col, row, Colour.RED);
-                    case 'g' -> new Key(col, row, Colour.GREEN);
-                    case 'b' -> new Key(col, row, Colour.BLUE);
-                    case 'y' -> new Key(col, row, Colour.YELLOW);
-                    case 'O' -> new Boulder(col, row);
-                    case 'V' -> new Diamond(col, row);
-                    case 'W' -> new Butterfly(col, row);
-                    case 'X' -> new Firefly(col, row);
+                    case 'R':
+                        map[row][col] = new LockedDoor(col, row, Colour.RED);
+                        break;
+                    case 'G':
+                        map[row][col] = new LockedDoor(col, row, Colour.GREEN);
+                        break;
+                    case 'B':
+                        map[row][col] = new LockedDoor(col, row, Colour.BLUE);
+                        break;
+                    case 'Y':
+                        map[row][col] = new LockedDoor(col, row, Colour.YELLOW);
+                        break;
+                    case 'r':
+                        map[row][col] = new Key(col, row, Colour.RED);
+                        break;
+                    case 'g':
+                        map[row][col] = new Key(col, row, Colour.GREEN);
+                        break;
+                    case 'b':
+                        map[row][col] = new Key(col, row, Colour.BLUE);
+                        break;
+                    case 'y':
+                        map[row][col] = new Key(col, row, Colour.YELLOW);
+                        break;
+                    case 'O':
+                        Boulder b = new Boulder(col, row);
+                        map[row][col] = b;
+                        fallingEntities.add(b);
+                        break;
+                    case 'V':
+                        Diamond d = new Diamond(col, row);
+                        map[row][col] = d;
+                        fallingEntities.add(d);
+                        break;
+                    case 'W':
+                        map[row][col] = new Butterfly(col, row);
+                        break;
+                    case 'X':
+                        map[row][col] = new Firefly(col, row);
+                        break;
                     // TODO - metadata needed for left/right wall cling
-                    case 'F' -> new Frog(col, row);
-                    case 'A' -> new Amoeba(col, row, 10, 10);
-                    case 'P' -> Player.getPlayer(col, row);
+                    case 'F':
+                        map[row][col] = new Frog(col, row);
+                        break;
+                    case 'A':
+                        map[row][col] = new Amoeba(col, row, 10, 10);
+                        break;
+                    case 'P':
+                        map[row][col] = Player.getPlayer(col, row);
+                        break;
                     // TODO - metadata needed for maximum Amoeba size
-                    default -> new Dirt(col, row);
-                };
+                    default:
+                        map[row][col] = new Dirt(col, row);
+                        break;
+                }
             }
         }
     }
@@ -230,6 +276,11 @@ public class Game extends Application {
             KeyCode intendedKey = pressedKeys.peek();
             p.move(intendedKey);
         }
+
+        for (FallingEntity fallingEntity : fallingEntities) {
+            fallingEntity.fall();
+        }
+
         draw();
     }
 
@@ -300,6 +351,7 @@ public class Game extends Application {
     }
 
     public static void main(String[] args) {
+        fallingEntities = new ArrayList<>();
         launch(args);
     }
 }
