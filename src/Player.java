@@ -16,8 +16,6 @@ public class Player extends Entity {
     }
 
     // TODO - javadoc method comment
-    // TODO - maybe there's already a method in Game that could simplify this?
-    //  not sure, this was a quick dirty fix to try to get player moving again
     public void move(KeyCode key) {
         int x = getX();
         int y = getY();
@@ -25,6 +23,7 @@ public class Player extends Entity {
         Game.checkForChangeInView(x, y, this.getX(), this.getY());
     }
 
+    // TODO - javadoc method comment
     private void moveSwitch(KeyCode key) {
         Path p = new Path(x, y);
         switch (key) {
@@ -34,9 +33,7 @@ public class Player extends Entity {
                     return;
                 }
                 setSprite(new Image("./sprites/Player_Down.png"));
-                Game.replaceEntity(x, y - 1, this);
-                Game.replaceEntity(x, y, p);
-                setY(y - 1);
+                Game.updateLevel(x, y - 1, this);
                 break;
             case DOWN:
             case S:
@@ -44,9 +41,7 @@ public class Player extends Entity {
                     return;
                 }
                 setSprite(new Image("./sprites/Player_Up.png"));
-                Game.replaceEntity(x, y + 1, this);
-                Game.replaceEntity(x, y, p);
-                setY(y + 1);
+                Game.updateLevel(x, y + 1, this);
                 break;
             case LEFT:
             case A:
@@ -54,9 +49,7 @@ public class Player extends Entity {
                     return;
                 }
                 setSprite(new Image("./sprites/Player_Left.png"));
-                Game.replaceEntity(x - 1, y, this);
-                Game.replaceEntity(x, y, p);
-                setX(x - 1);
+                Game.updateLevel(x - 1, y, this);
                 break;
             case RIGHT:
             case D:
@@ -64,9 +57,7 @@ public class Player extends Entity {
                     return;
                 }
                 setSprite(new Image("./sprites/Player_Right.png"));
-                Game.replaceEntity(x + 1, y, this);
-                Game.replaceEntity(x, y, p);
-                setX(x + 1);
+                Game.updateLevel(x + 1, y, this);
                 break;
             default:
                 // all redundant key inputs are sent here

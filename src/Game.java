@@ -68,6 +68,7 @@ public class Game extends Application {
     // view.
     private static final View view = new View(1);
 
+    // TODO - Check tile where they are trying to move, maybe split method up
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
             case UP:
@@ -171,8 +172,6 @@ public class Game extends Application {
         }
     }
 
-    // TODO - Figure it where this is meant to be used
-    //  Also shouldn't it replace with a path and not dirt?
     /**
      * Change the position of an Entity in the levelState
      */
@@ -180,7 +179,9 @@ public class Game extends Application {
         int oldX = entity.getX();
         int oldY = entity.getY();
         replaceEntity(newX, newY, entity);
-        replaceEntity(oldX, oldY, new Dirt(oldX, oldY));
+        entity.setX(newX);
+        entity.setY(newY);
+        replaceEntity(oldX, oldY, new Path(oldX, oldY));
     }
 
     /**
