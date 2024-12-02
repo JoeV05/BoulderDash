@@ -20,7 +20,13 @@ import java.util.*;
 
 import static java.util.Objects.isNull;
 
-// TODO - Write good class comment
+/**
+*Represents the main game logic and state managment for the Boulder Game
+*This class initilises the game window, recieves user input and
+*handles the rendering and updating of game state
+*The game a grid based level system with entities modelled on
+*top of it using javafx for rendering
+*/
 
 /**
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
@@ -31,7 +37,7 @@ public class Game extends Application {
     // title.
     private static final String GAME_TITLE = "Boulder Dash";
 
-    // window properties.
+    // constants for game window and settings
     private static final int WINDOW_WIDTH = 750;
     private static final int WINDOW_HEIGHT = 400;
 
@@ -40,11 +46,11 @@ public class Game extends Application {
     private static final int CANVAS_HEIGHT = 400;
     private Canvas canvas;
 
-    // cell.
+    // constants for grid and cell sizes
     private static final int CELL_WIDTH = 32;
     private static final int CELL_HEIGHT = 32;
 
-    // grid.
+    // constants for grid and cell sizes
     public static final int GRID_WIDTH = 40;
     public static final int GRID_HEIGHT = 23;
 
@@ -54,33 +60,39 @@ public class Game extends Application {
     private static final int GRID_CELL_WIDTH = 25;
     private static final int GRID_CELL_HEIGHT = 25;
 
-    // entity map.
+    // the map of entities representing the game
     private static Entity[][] map;
 
-    // timeline.
+    // game timeline for peroidic updates
+    //TODO: unsure about this comment not sure how ticktimeLine works
     private Timeline tickTimeline;
 
     // control registering -> actively held keys.
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
 
-    // view.
+    // viewing system for managing the visible area of the game
     private static final View view = new View(1);
-
-    private static ArrayList<FallingEntity> fallingEntities;
-    private static ArrayList<ActionWall> actionWalls;
+    //list of entities requiring special logic
+    private static ArrayList<FallingEntity> fallingEntities;//entites effected by gravity
+    private static ArrayList<ActionWall> actionWalls;//special attribute walls
 
     public static void addFallingEntity(FallingEntity e) {
-        fallingEntities.add(e);
+        fallingEntities.add(e);//Adds a falling entity to the list of entites effected by gravity
     }
 
     public static void removeFallingEntity(FallingEntity e) {
-        if (fallingEntities.contains(e)) {
+        if (fallingEntities.contains(e)) {//removes a falling entity from the list
             fallingEntities.remove(e);
         }
     }
 
     // TODO - Check tile where they are trying to move, maybe split method up
+    //Validates whether a move is allowed based on the current grid
+    //x = the current x coord of the entity
+    //y = the current y coord of the entity
+    //dir = the intended direction of the move
+    // return true if the move is valid
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
             case UP:
