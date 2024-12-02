@@ -1,10 +1,13 @@
 import javafx.scene.image.Image;
 
+// TODO - javadoc class comment
+// TODO - maybe tidy up comments?
+
 public class Frog extends Enemy {
 
 
-    protected Frog(int x, int y) {
-        super(x, y, new Image("./sprites/frog.png"));
+    public Frog(int x, int y) {
+        super(x, y, new Image("./sprites/Frog.png"));
     }
 
     /**
