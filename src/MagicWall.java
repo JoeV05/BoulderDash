@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 
 public class MagicWall extends ActionWall {
     private boolean hasEntityStored;
-    private boolean finishedTransforming;
     private FallingType stored;
 
     public MagicWall(int x, int y) {
@@ -20,10 +19,16 @@ public class MagicWall extends ActionWall {
             return;
         }
         Entity below = Game.getEntity(this.x, this.y + 1);
-        if (this.hasEntityStored && below instanceof Path) {
-            FallingEntity f = this.dropStored();
-            Game.replaceEntity(this.x, this.y + 1, f);
-            Game.addFallingEntity(f);
+        if (this.hasEntityStored) {
+            if (below instanceof Path) {
+                FallingEntity f = this.dropStored();
+                Game.replaceEntity(this.x, this.y + 1, f);
+                Game.addFallingEntity(f);
+                this.hasEntityStored = false;
+                this.stored = null;
+            }
+        } else if (below instanceof MagicWall) {
+            ((MagicWall) below).transform(this.stored);
             this.hasEntityStored = false;
             this.stored = null;
         }
@@ -45,6 +50,11 @@ public class MagicWall extends ActionWall {
         this.hasEntityStored = true;
     }
 
+    public void transform(FallingType stored) {
+        this.stored = stored;
+        this.hasEntityStored = true;
+    }
+
     // TODO - Make the magic wall either drop the FallingEntity it has stored or transfer it into a MagicWall
     //  if there is one beneath this one (make use of static methods in Game)
     // TODO - javadoc method comment
@@ -55,11 +65,6 @@ public class MagicWall extends ActionWall {
         Entity below = Game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
             FallingEntity f;
-            /*this.stored.setY(this.stored.getY() + 1);
-            Game.replaceEntity(this.x, this.y + 1, this.stored);
-            Game.addFallingEntity(this.stored);
-            this.stored = null;
-            this.hasEntityStored = false;*/
             if (this.stored == FallingType.BOULDER) {
                 f = new Boulder(this.x, this.y + 1);
             } else {
