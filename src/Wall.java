@@ -1,5 +1,5 @@
-import java.io.File;
-import javafx.scene.image.Image;
+import  javafx.scene.image.Image;
+
 /**
  * @author Joseph Vinson
  * Represents a wall tile in the game. Walls are barries of movements for both
@@ -7,31 +7,18 @@ import javafx.scene.image.Image;
  */
 
 public class Wall extends Tile {
-    protected WallType wallType;
+    protected WallType wallType; // The specific type of this wall (e.g., Normal, Titanium, Magic, Locked Door).
 
+    // TODO - is sprite switching already handled?
+    //  I don't remember but it looks like it?
     public Wall(int x, int y, WallType wallType) {
-        super(x, y, false, TileType.WALL, getWallSprite(wallType));
-        this.wallType = wallType;
+        super(x, y, false, TileType.WALL, new Image("./sprites/Wall.png")); //this type of tile is not walkable and it belongs to the wall type
+
+        this.wallType = wallType; //sets the type of wall i.e. magic, titanium,door
     }
 
-    private static Image getWallSprite(WallType wallType) {
-        Image sprite;
-
-        switch (wallType) {
-            case WallType.NORMAL_WALL:
-                sprite = new Image("./sprites/normal_wall.png");
-                break;
-            case WallType.TITANIUM_WALL:
-                sprite = new Image("./sprites/titanium_wall.png");
-                break;
-            case WallType.MAGIC_WALL:
-                sprite = new Image("./sprites/magic_wall.png");
-                break;
-            default:
-                sprite = null;
-                break;
-        }
-
-        return sprite;
+    public Wall(int x, int y, WallType wallType, Image sprite) {
+        super(x, y, false, TileType.WALL, sprite);
+        this.wallType = wallType;
     }
 }
