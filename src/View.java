@@ -1,3 +1,5 @@
+// TODO - javadoc class comment
+
 /**
  */
 public class View {
@@ -23,10 +25,12 @@ public class View {
         };
     }
 
+    // TODO - javadoc method comment
     public int getView() {
         return viewMode;
     }
 
+    // TODO - javadoc method comment
     public void changeViewMode(int viewMode) {
         this.viewMode = viewMode;
     }
