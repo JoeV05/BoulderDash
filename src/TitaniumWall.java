@@ -1,4 +1,4 @@
-// TODO - GET THIS SHIT OUTTA HERE
+// TODO - GET THIS FISH OUTTA HERE
 // TODO - Seriously though this class doesn't need to exist, the WallType enum should handle it
 
 /**

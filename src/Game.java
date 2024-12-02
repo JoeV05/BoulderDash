@@ -303,12 +303,4 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    public int getGridWidth() {
-        return GRID_WIDTH;
-    }
-
-    public int getGridHeight() {
-        return GRID_HEIGHT;
-    }
 }
