@@ -74,6 +74,12 @@ public class Game extends Application {
         fallingEntities.add(e);
     }
 
+    public static void removeFallingEntity(FallingEntity e) {
+        if (fallingEntities.contains(e)) {
+            fallingEntities.remove(e);
+        }
+    }
+
     // TODO - Check tile where they are trying to move, maybe split method up
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
