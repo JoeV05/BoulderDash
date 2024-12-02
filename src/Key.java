@@ -14,6 +14,7 @@ public class Key extends Tile {
     /** The colour of the key which determines which locked door it can open. */
     private final Colour colour;
 
+    // TODO replace placeholder parameter and switch statement with static method
     /**
      * Constructs a new Key with a specific colour and position.
      *
@@ -22,7 +23,24 @@ public class Key extends Tile {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, false, TileType.KEY, Key.getKeySprite(colour));
+        super(x, y, false, TileType.KEY, new Image("sprites/Door_Blue.png"));
+        switch(colour) {
+            case RED:
+                setSprite(new Image("sprites/Key_Red.png"));
+                break;
+            case YELLOW:
+                setSprite(new Image("sprites/Key_Yellow.png"));
+                break;
+            case GREEN:
+                setSprite(new Image("sprites/Key_Green.png"));
+                break;
+            case BLUE:
+                setSprite(new Image("sprites/Key_Blue.png"));
+                break;
+            default:
+                setSprite(new Image("./sprites/Titanium.png"));
+                break;
+        }
         this.colour = colour;
     }
 
@@ -35,6 +53,8 @@ public class Key extends Tile {
         return colour;
     }
 
+    // TODO - shouldn't the logic be if a Player object can unlock() a Door object with one of the Key objects it has,
+    //  getColour should be sufficient for this in terms of the role of key in the operation (I think)
     /**
      * Checks if this key can unlock a specific locked door.
      *
@@ -45,6 +65,7 @@ public class Key extends Tile {
         return lockedDoor.getColour() == this.colour;
     }
 
+    // TODO - what
     /**
      * Attempts to use the key to unlock a specific locked door.
      * If the key's colour matches the door's colour, the door is unlocked.
@@ -52,33 +73,8 @@ public class Key extends Tile {
      * @param lockedDoor The locked door to attempt to unlock
      */
     public void use(LockedDoor lockedDoor) {
-        // TODO - somehow burn the key from the players inventory - should player use singleton design pattern?
         if (canUnlock(lockedDoor)) {
             lockedDoor.unlock();
         }
-    }
-
-    public static Image getKeySprite(Colour colour) {
-        Image sprite;
-
-        switch (colour) {
-            case Colour.RED:
-                sprite = new Image("./sprites/Red_Key.png");
-                break;
-            case Colour.GREEN:
-                sprite = new Image("./sprites/Green_Key.png");
-                break;
-            case Colour.YELLOW:
-                sprite = new Image("./sprites/Yellow_Key.png");
-                break;
-            case Colour.BLUE:
-                sprite = new Image("./sprites/Blue_Key.png");
-                break;
-            default:
-                sprite = null;
-                break;
-        }
-
-        return sprite;
     }
 }
