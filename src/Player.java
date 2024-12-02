@@ -21,6 +21,11 @@ public class Player extends Entity {
     public void move(KeyCode key) {
         int x = getX();
         int y = getY();
+        this.moveSwitch(key);
+        Game.checkForChangeInView(x, y, this.getX(), this.getY());
+    }
+
+    private void moveSwitch(KeyCode key) {
         Path p = new Path(x, y);
         switch (key) {
             case UP:
@@ -67,7 +72,6 @@ public class Player extends Entity {
                 // all redundant key inputs are sent here
                 break;
         }
-        Game.checkForChangeInView(x, y, this.getX(), this.getY());
     }
 
     // TODO - javadoc method comment
