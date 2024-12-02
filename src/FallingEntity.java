@@ -1,4 +1,7 @@
 import javafx.scene.image.Image;
+
+// TODO - proper javadoc comment
+
 /**
  * @author Joseph Vinson
  */
@@ -12,13 +15,13 @@ public abstract class FallingEntity extends Entity {
         this.entityType = entityType;
     }
 
+    // TODO - javadoc method comment
     public FallingType getEntityType() {
         return entityType;
     }
 
     public void fall() {
-        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is empty
-        //TODO - use transform from MagicWall if the tile below isInstanceOf(MagicWall)
-        //TODO - handle case where tile below isInstanceOf(Enemy)
+        //TODO - use replaceEntity to move it to the tile below, assuming the tile below is either empty or a magic wall
+        //TODO - handle case where entity below is either player or enemy
     }
 }
