@@ -21,7 +21,7 @@ public class View {
             case 2 -> new int[]{10, 39, 0, 15};
             case 3 -> new int[]{0, 29, 6, 21};
             case 4 -> new int[]{10, 39, 6, 21};
-            default -> null;
+            default -> throw new LiamWetFishException("HUH!?");
         };
     }
 
