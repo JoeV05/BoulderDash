@@ -15,7 +15,8 @@ public class MagicWall extends ActionWall {
 
     @Override
     public void tick() {
-        if (this.y > Game.GRID_HEIGHT - 2) {
+        // TODO - WHY THE FISH IS THIS -3 WHAT THE FISH IS WRONG WITHOUT OUR FISHING GAME
+        if (this.y > Game.GRID_HEIGHT - 3) {
             return;
         }
         Entity below = Game.getEntity(this.x, this.y + 1);
