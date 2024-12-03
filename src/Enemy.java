@@ -29,4 +29,11 @@ public abstract class Enemy extends Entity{
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
     public abstract int onDeathByFallingObject();
+
+    /**
+     * Moves the enemy
+     * @return void
+     */
+    public abstract void move();
+
 }

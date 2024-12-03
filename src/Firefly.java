@@ -21,6 +21,15 @@ public class Firefly extends Enemy {
     protected Firefly(int x, int y, Image image) {
         super(x, y, image);
     }
+
+    /**
+     *
+     */
+    @Override
+    public void move() {
+
+    }
+
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
