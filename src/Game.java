@@ -383,6 +383,14 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * Getter for map
+     * @return Entity [][] map
+     */
+    public static Entity[][] getMap(){
+        return map;
+    }
+
     public static void main(String[] args) {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
