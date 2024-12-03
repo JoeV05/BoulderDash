@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * Check Section 3.1 of the Functional Specification for detailed key and locked door mechanics
  */
 
-public class Key extends Tile {
+public class Key extends Walkable {
     /** The colour of the key which determines which locked door it can open. */
     private final Colour colour;
 
@@ -23,25 +23,23 @@ public class Key extends Tile {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, false, TileType.KEY, new Image("sprites/Door_Blue.png"));
-        switch(colour) {
-            case RED:
-                setSprite(new Image("sprites/Key_Red.png"));
-                break;
-            case YELLOW:
-                setSprite(new Image("sprites/Key_Yellow.png"));
-                break;
-            case GREEN:
-                setSprite(new Image("sprites/Key_Green.png"));
-                break;
-            case BLUE:
-                setSprite(new Image("sprites/Key_Blue.png"));
-                break;
-            default:
-                setSprite(new Image("./sprites/Titanium.png"));
-                break;
-        }
+        super(x, y, Key.spriteSwitch(colour));
         this.colour = colour;
+    }
+
+    private static Image spriteSwitch(Colour colour) {
+        switch (colour) {
+            case RED:
+                return new Image("sprites/Key_Red.png");
+            case YELLOW:
+                return new Image("sprites/Key_Yellow.png");
+            case GREEN:
+                return new Image("sprites/Key_Green.png");
+            case BLUE:
+                return new Image("sprites/Key_Blue.png");
+            default:
+                throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
+        }
     }
 
     /**
