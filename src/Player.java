@@ -88,16 +88,16 @@ public class Player extends Entity {
     private void spriteSwitch(Direction dir) {
         switch (dir) {
             case Direction.UP:
-                setSprite(new Image("./sprites/Player_Down.png"));
+                setSprite(new Image("./sprites/player_up.png"));
                 break;
             case Direction.DOWN:
-                setSprite(new Image("./sprites/Player_Up.png"));
+                setSprite(new Image("./sprites/player_down.png"));
                 break;
             case Direction.LEFT:
-                setSprite(new Image("./sprites/Player_Left.png"));
+                setSprite(new Image("./sprites/player_left.png"));
                 break;
             case Direction.RIGHT:
-                setSprite(new Image("./sprites/Player_Right.png"));
+                setSprite(new Image("./sprites/player_right.png"));
                 break;
             default:
                 System.out.println(dir);

@@ -9,6 +9,6 @@ import javafx.scene.image.Image;
 public class Path extends Walkable{
 
     public Path(int x, int y) {
-        super(x, y, true, TileType.PATH, new Image("./sprites/path.png"));
+        super(x, y, new Image("./sprites/path.png"));
     }
 }

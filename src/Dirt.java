@@ -9,6 +9,6 @@ import javafx.scene.image.Image;
 public class Dirt extends Walkable {
 
     public Dirt(int x, int y) {
-        super(x, y, true, TileType.DIRT, new Image("./sprites/dirt.png"));
+        super(x, y, new Image("./sprites/dirt.png"));
     }
 }

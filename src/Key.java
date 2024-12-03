@@ -23,7 +23,7 @@ public class Key extends Walkable {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, false, TileType.KEY, new Image("sprites/key_blue.png"));
+        super(x, y, new Image("sprites/key_blue.png"));
         switch(colour) {
             case RED:
                 setSprite(new Image("sprites/key_red.png"));
@@ -40,6 +40,7 @@ public class Key extends Walkable {
             default:
                 throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
+        this.colour = colour;
     }
 
     /**
