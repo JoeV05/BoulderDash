@@ -27,7 +27,6 @@ import static java.util.Objects.isNull;
 *The game a grid based level system with entities modelled on
 *top of it using javafx for rendering
 */
-
 /**
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
  * Represents the game state, stores level data and renders game window
