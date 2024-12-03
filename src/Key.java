@@ -24,7 +24,6 @@ public class Key extends Walkable {
      */
     public Key(int x, int y, Colour colour) {
         super(x, y, new Image("sprites/key_blue.png"));
-        this.colour = colour;
         switch(colour) {
             case RED:
                 setSprite(new Image("sprites/key_red.png"));

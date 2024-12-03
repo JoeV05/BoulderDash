@@ -33,6 +33,7 @@ public class Amoeba extends Tile {
      */
     private final int maximumSize;
 
+
     private ArrayList<Amoeba> group;
 
     /**
