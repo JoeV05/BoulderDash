@@ -6,9 +6,9 @@ import javafx.scene.image.Image;
  * @author Joseph Vinson
  */
 
-public class Path extends Tile{
+public class Path extends Walkable{
 
     public Path(int x, int y) {
-        super(x, y, true, TileType.PATH, new Image("./sprites/Path.png"));
+        super(x, y, new Image("./sprites/Path.png"));
     }
 }
