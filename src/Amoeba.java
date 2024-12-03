@@ -33,11 +33,6 @@ public class Amoeba extends Tile {
      */
     private final int maximumSize;
 
-    /**
-     * The size at which the amoeba transforms into boulders.
-     */
-    private final int transformToBouldersSize;
-
     private ArrayList<Amoeba> group;
 
     /**
@@ -48,7 +43,7 @@ public class Amoeba extends Tile {
      * @param maximumSize        The maximum size the amoeba can reach before transforming.
      * @param maximumSize The size at which the amoeba transforms into boulders.
      */
-    public Amoeba(int x, int y, int maximumSize, int transformToBouldersSize) {
+    public Amoeba(int x, int y, int maximumSize) {
         super(x, y, false, TileType.AMOEBA, new Image("sprites/amoeba.png"));
         this.maximumSize = maximumSize;
         this.size = 1; // Start with a size of 1
