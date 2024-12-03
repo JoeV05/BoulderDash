@@ -40,7 +40,6 @@ public class Key extends Walkable {
             default:
                 throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
-        this.colour = colour;
     }
 
     /**
