@@ -229,7 +229,7 @@ public class Game extends Application {
                         map[row][col] = new Frog(col, row);
                         break;
                     case 'A':
-                        map[row][col] = new Amoeba(col, row, 10, 10);
+                        map[row][col] = new Amoeba(col, row, 10);
                         break;
                     case 'P':
                         map[row][col] = Player.getPlayer(col, row);
