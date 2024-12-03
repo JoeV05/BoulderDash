@@ -2,7 +2,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -34,18 +33,10 @@ public class Game extends Application {
     // title.
     private static final String GAME_TITLE = "Boulder Dash";
 
-    // constants for game window and settings
-    private static final int WINDOW_WIDTH = 750;
-    private static final int WINDOW_HEIGHT = 400;
-
     // canvas. canvas is contained within window.
     private static final int CANVAS_WIDTH = 750;
     private static final int CANVAS_HEIGHT = 400;
     private Canvas canvas;
-
-    // constants for grid and cell sizes
-    private static final int CELL_WIDTH = 32;
-    private static final int CELL_HEIGHT = 32;
 
     // constants for grid and cell sizes
     public static final int GRID_WIDTH = 40;
@@ -59,10 +50,6 @@ public class Game extends Application {
 
     // the map of entities representing the game
     private static Entity[][] map;
-
-    // game timeline for peroidic updates
-    //TODO: unsure about this comment not sure how ticktimeLine works
-    private Timeline tickTimeline;
 
     // control registering -> actively held keys.
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
@@ -272,23 +259,6 @@ public class Game extends Application {
      */
     public static Entity getEntity(int x, int y) {
         return map[y][x];
-    }
-
-    // TODO - what is this for? looks like an artefact of devlin poopfishery based off the use of deltas
-    public static void swapEntities(int dy, int dx) {
-        boolean moved = !(dy == 0 && dx == 0);
-        if (moved) {
-            Player p = Player.getPlayer();
-            Entity a = map[p.getY()][p.getX()];
-            Entity b = map[p.getY() +dy][p.getX() +dx];
-            Entity c;
-            c = a;
-            map[p.getY()][p.getX()] = map[p.getY() +dy][p.getX() +dx];
-            map[p.getY() +dy][p.getX() +dx] = c;
-
-            p.setY(p.getY() + dy);
-            p.setX(p.getX() + dx);
-        }
     }
 
     /**
