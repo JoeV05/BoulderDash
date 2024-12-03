@@ -41,7 +41,7 @@ public class Player extends Entity {
         if (Game.isValidMove(this.x, this.y, moveDir)) {
             Game.updateLevel(nX, nY, this);
         }
-        Game.checkForChangeInView(oldX, oldY, this.x, this.y);
+        Main.checkForChangeInView(oldX, oldY, this.x, this.y);
     }
 
     // TODO - javadoc method comment
@@ -100,18 +100,13 @@ public class Player extends Entity {
                 setSprite(new Image("./sprites/player_right.png"));
                 break;
             default:
-                System.out.println(dir);
                 throw new LiamWetFishException("HOW THE FISH DID YOU MESS THIS UP SO BADLY!!!");
         }
     }
 
     // TODO - javadoc method comment
     public static Player getPlayer() {
-        if (thePlayer != null) {
-            return thePlayer;
-        } else {
-            return null;
-        }
+        return thePlayer;
     }
 
     // TODO - javadoc method comment
