@@ -36,7 +36,7 @@ public class Exit extends ActionWall {
     @Override
     public void tick(){
         if (this.walkable) {
-            Image sprite = new Image("./sprites/Exit_Unlocked.png");
+            Image sprite = new Image("./sprites/exit_unlocked.png");
             this.setSprite(sprite);
         }
     }

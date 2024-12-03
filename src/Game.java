@@ -13,12 +13,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-import static java.util.Objects.isNull;
 
 /**
 *Represents the main game logic and state managment for the Boulder Game
@@ -93,12 +91,14 @@ public class Game extends Application {
     //dir = the intended direction of the move
     // return true if the move is valid
     public static boolean isValidMove(int x, int y, Direction dir) {
+        if (!playerCanWalkOnTile(x, y, dir)) {
+            return false;
+        }
         switch (dir) {
             case UP:
                 return y > 0;
             case DOWN:
-                // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
-                //  WHAT THE FISH!!!
+                // Prevents the user from exceeding screen bottom edge
                 return y < (GRID_HEIGHT - 2);
             case LEFT:
                 return x > 0;
@@ -106,6 +106,22 @@ public class Game extends Application {
                 return x < (GRID_WIDTH - 1);
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+    }
+
+    private static boolean playerCanWalkOnTile(int x, int y, Direction dir) {
+        switch (dir) {
+            case UP:
+                y -= 1;// 2 works, 1 doesn't
+            case DOWN:
+                y += 1;
+            case LEFT:
+                x -= 1;// 2 works, 1 doesn't
+            case RIGHT:
+                x += 1;
+        }
+        Entity entity = map[y][x];
+        System.out.println(entity.getClass().getSimpleName());
+        return !(entity instanceof Wall);
     }
 
     /**
@@ -314,6 +330,14 @@ public class Game extends Application {
             fallingEntity.fall();
         }
 
+//        System.out.println(Player.getPlayer().getX() + " " + Player.getPlayer().getY());
+//        System.out.println(Arrays.deepToString(map));
+        for (int i = 0; i < GRID_HEIGHT - 1; i++) {
+            for (int j = 0; j < GRID_WIDTH - 1; j++) {
+                System.out.print(map[i][j].getClass().getSimpleName().charAt(1));
+            }
+            System.out.println();
+        }
         draw();
     }
 

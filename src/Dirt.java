@@ -9,6 +9,6 @@ import javafx.scene.image.Image;
 public class Dirt extends Tile {
 
     public Dirt(int x, int y) {
-        super(x, y, false, TileType.DIRT, new Image("./sprites/Dirt.png"));
+        super(x, y, true, TileType.DIRT, new Image("./sprites/dirt.png"));
     }
 }

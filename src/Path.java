@@ -9,6 +9,6 @@ import javafx.scene.image.Image;
 public class Path extends Tile{
 
     public Path(int x, int y) {
-        super(x, y, true, TileType.PATH, new Image("./sprites/Path.png"));
+        super(x, y, true, TileType.PATH, new Image("./sprites/path.png"));
     }
 }

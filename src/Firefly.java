@@ -14,7 +14,7 @@ public class Firefly extends Enemy {
      */
 
     public Firefly(int x, int y) {
-        super(x, y, new Image("./sprites/Firefly.png"));
+        super(x, y, new Image("./sprites/firefly.png"));
     }
 
     //to be used by butterfly inheritance to carry its sprite up the chain

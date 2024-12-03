@@ -23,22 +23,22 @@ public class Key extends Tile {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, false, TileType.KEY, new Image("sprites/Door_Blue.png"));
+        super(x, y, false, TileType.KEY, new Image("sprites/key_blue.png"));
         switch(colour) {
             case RED:
-                setSprite(new Image("sprites/Key_Red.png"));
+                setSprite(new Image("sprites/key_red.png"));
                 break;
             case YELLOW:
-                setSprite(new Image("sprites/Key_Yellow.png"));
+                setSprite(new Image("sprites/key_yellow.png"));
                 break;
             case GREEN:
-                setSprite(new Image("sprites/Key_Green.png"));
+                setSprite(new Image("sprites/key_green.png"));
                 break;
             case BLUE:
-                setSprite(new Image("sprites/Key_Blue.png"));
+                setSprite(new Image("sprites/key_blue.png"));
                 break;
             default:
-                setSprite(new Image("./sprites/Titanium.png"));
+                setSprite(new Image("./sprites/titanium.png"));
                 break;
         }
         this.colour = colour;

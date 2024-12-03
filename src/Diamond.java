@@ -13,7 +13,7 @@ import java.util.Random;
 public class Diamond extends FallingEntity {
 
     public Diamond(int x, int y) {
-        super(x, y, FallingType.DIAMOND, new Image("sprites/Diamond_Blue.png"));
+        super(x, y, FallingType.DIAMOND, new Image("sprites/diamond_Blue.png"));
         setSprite(randomSprite());
     }
 
@@ -21,10 +21,10 @@ public class Diamond extends FallingEntity {
     //Diamonds can have 1 of 4 variations, chosen at random, does not impact behaviour, only image
     private Image randomSprite() {
         List<Image> diamonds = new ArrayList<>();
-        diamonds.add(new Image("./sprites/Diamond_Blue.png"));
-        diamonds.add(new Image("./sprites/Diamond_Red.png"));
-        diamonds.add(new Image("./sprites/Diamond_Green.png"));
-        diamonds.add(new Image("./sprites/Diamond_White.png"));
+        diamonds.add(new Image("./sprites/diamond_Blue.png"));
+        diamonds.add(new Image("./sprites/diamond_Red.png"));
+        diamonds.add(new Image("./sprites/diamond_Green.png"));
+        diamonds.add(new Image("./sprites/diamond_White.png"));
         Random rand = new Random();
         return diamonds.get(rand.nextInt(diamonds.size()));
     }

@@ -7,7 +7,7 @@ public class Frog extends Enemy {
 
 
     public Frog(int x, int y) {
-        super(x, y, new Image("./sprites/Frog.png"));
+        super(x, y, new Image("./sprites/frog.png"));
     }
 
     /**

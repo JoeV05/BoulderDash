@@ -27,19 +27,19 @@ public class LockedDoor extends Wall {
         super(x, y, WallType.LOCKED_DOOR);
         switch(colour) {
             case RED:
-                setSprite(new Image("sprites/Door_Red.png"));
+                setSprite(new Image("sprites/door_red.png"));
                 break;
             case YELLOW:
-                setSprite(new Image("sprites/Door_Yellow.png"));
+                setSprite(new Image("sprites/door_yellow.png"));
                 break;
             case GREEN:
-                setSprite(new Image("sprites/Door_Green.png"));
+                setSprite(new Image("sprites/door_green.png"));
                 break;
             case BLUE:
-                setSprite(new Image("sprites/Door_Blue.png"));
+                setSprite(new Image("sprites/door_blue.png"));
                 break;
             default:
-                setSprite(new Image("./sprites/Titanium.png"));
+                setSprite(new Image("./sprites/titanium.png"));
                 break;
         }
         this.colour = colour;

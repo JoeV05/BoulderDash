@@ -19,16 +19,16 @@ public class Wall extends Tile {
         Image img;
         switch (wallType) {
             case WallType.NORMAL_WALL:
-                img = new Image("./sprites/Wall.png");
+                img = new Image("./sprites/wall.png");
                 break;
             case WallType.TITANIUM_WALL:
-                img = new Image("./sprites/Titanium.png");
+                img = new Image("./sprites/titanium.png");
                 break;
             case WallType.MAGIC_WALL:
                 img = new Image("./sprites/magic_wall.png");
                 break;
             case WallType.EXIT:
-                img = new Image("./sprites/Exit_Locked.png");
+                img = new Image("./sprites/exit_locked.png");
                 break;
             default:
                 System.out.println(wallType);

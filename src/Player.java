@@ -33,28 +33,28 @@ public class Player extends Entity {
         switch (key) {
             case UP:
             case W:
-                setSprite(new Image("./sprites/Player_Down.png"));
+                setSprite(new Image("./sprites/player_down.png"));
                 if (Game.isValidMove(x, y, Direction.UP)) {
                     Game.updateLevel(x, y - 1, this);
                 }
                 break;
             case DOWN:
             case S:
-                setSprite(new Image("./sprites/Player_Up.png"));
+                setSprite(new Image("./sprites/player_up.png"));
                 if (Game.isValidMove(x, y, Direction.DOWN)) {
                     Game.updateLevel(x, y + 1, this);
                 }
                 break;
             case LEFT:
             case A:
-                setSprite(new Image("./sprites/Player_Left.png"));
+                setSprite(new Image("./sprites/player_left.png"));
                 if (Game.isValidMove(x, y, Direction.LEFT)) {
                     Game.updateLevel(x - 1, y, this);
                 }
                 break;
             case RIGHT:
             case D:
-                setSprite(new Image("./sprites/Player_Right.png"));
+                setSprite(new Image("./sprites/player_right.png"));
                 if (Game.isValidMove(x, y, Direction.RIGHT)) {
                     Game.updateLevel(x + 1, y, this);
                 }

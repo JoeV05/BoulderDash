@@ -9,7 +9,7 @@ public class Butterfly extends Firefly {
      */
 
     public Butterfly(int x , int y) {
-        super(x, y, new Image("./sprites/Butterfly.png"));
+        super(x, y, new Image("./sprites/butterfly.png"));
     }
 
     /**
