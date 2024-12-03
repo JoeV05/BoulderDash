@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * Check Section 3.1 of the Functional Specification for detailed key and locked door mechanics
  */
 
-public class Key extends Tile {
+public class Key extends Walkable {
     /** The colour of the key which determines which locked door it can open. */
     private final Colour colour;
 
@@ -38,10 +38,8 @@ public class Key extends Tile {
                 setSprite(new Image("sprites/key_blue.png"));
                 break;
             default:
-                setSprite(new Image("./sprites/titanium.png"));
-                break;
+                throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
-        this.colour = colour;
     }
 
     /**

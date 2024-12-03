@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 // TODO - javadoc class comment
 
+/**
+ * @author James Harvey, Joseph Vinson, Joe Devlin
+ */
 public class Player extends Entity {
 
     private ArrayList<Key> keys = new ArrayList<>();
@@ -17,51 +20,88 @@ public class Player extends Entity {
 
     // TODO - javadoc method comment
     public void move(KeyCode key) {
-        int x = getX();
-        int y = getY();
-        if (x > Game.GRID_WIDTH - 1 || x < 0 || y > Game.GRID_HEIGHT - 1 || y < 0) {
-            throw new LiamWetFishException("IM GOING TO HIT YOU WITH A WET FISH!");
+        if (this.x > Game.GRID_WIDTH - 1 || this.x < 0 || this.y > Game.GRID_HEIGHT - 1 || this.y < 0) {
+            throw new LiamWetFishException("PLAYER POSITION INVALID!!! WHAT THE FISH DID YOU DO TO GET HERE!!!");
         }
-        this.moveSwitch(key);
-        Game.checkForChangeInView(x, y, this.getX(), this.getY());
+        Direction moveDir = this.dirSwitch(key);
+        if (moveDir == Direction.NONE) {
+            return;
+        }
+        this.spriteSwitch(moveDir);
+        int[] newCoordinates = this.moveSwitch(key);
+        int nX = newCoordinates[0];
+        int nY = newCoordinates[1];
+        this.validateMove(nX, nY, moveDir);
+    }
+
+    // TODO - javadoc method comment
+    private void validateMove(int nX, int nY, Direction moveDir) {
+        int oldX = this.x;
+        int oldY = this.y;
+        if (Game.isValidMove(this.x, this.y, moveDir)) {
+            Game.updateLevel(nX, nY, this);
+        }
+        Game.checkForChangeInView(oldX, oldY, this.x, this.y);
+    }
+
+    // TODO - javadoc method comment
+    private Direction dirSwitch(KeyCode key) {
+        switch (key) {
+            case KeyCode.UP:
+            case KeyCode.W:
+                return Direction.UP;
+            case KeyCode.DOWN:
+            case KeyCode.S:
+                return Direction.DOWN;
+            case KeyCode.LEFT:
+            case KeyCode.A:
+                return Direction.LEFT;
+            case KeyCode.RIGHT:
+            case KeyCode.D:
+                return Direction.RIGHT;
+            default:
+                return Direction.NONE;
+        }
     }
 
     // TODO - javadoc method comment
     // TODO - maybe only one set of keys for moving
-    private void moveSwitch(KeyCode key) {
-        Path p = new Path(x, y);
+    private int[] moveSwitch(KeyCode key) {
         switch (key) {
             case UP:
             case W:
-                setSprite(new Image("./sprites/player_down.png"));
-                if (Game.isValidMove(x, y, Direction.UP)) {
-                    Game.updateLevel(x, y - 1, this);
-                }
-                break;
+                return new int[]{this.x, this.y - 1};
             case DOWN:
             case S:
-                setSprite(new Image("./sprites/player_up.png"));
-                if (Game.isValidMove(x, y, Direction.DOWN)) {
-                    Game.updateLevel(x, y + 1, this);
-                }
-                break;
+                return new int[] {this.x, this.y + 1};
             case LEFT:
             case A:
-                setSprite(new Image("./sprites/player_left.png"));
-                if (Game.isValidMove(x, y, Direction.LEFT)) {
-                    Game.updateLevel(x - 1, y, this);
-                }
-                break;
+                return new int[] {this.x - 1, this.y};
             case RIGHT:
             case D:
-                setSprite(new Image("./sprites/player_right.png"));
-                if (Game.isValidMove(x, y, Direction.RIGHT)) {
-                    Game.updateLevel(x + 1, y, this);
-                }
+                return new int[] {this.x + 1, this.y};
+            default:
+                throw new LiamWetFishException("HOW DID YOU GET HERE!!! WHAT THE FISH!!!");
+        }
+    }
+
+    private void spriteSwitch(Direction dir) {
+        switch (dir) {
+            case Direction.UP:
+                setSprite(new Image("./sprites/Player_Down.png"));
+                break;
+            case Direction.DOWN:
+                setSprite(new Image("./sprites/Player_Up.png"));
+                break;
+            case Direction.LEFT:
+                setSprite(new Image("./sprites/Player_Left.png"));
+                break;
+            case Direction.RIGHT:
+                setSprite(new Image("./sprites/Player_Right.png"));
                 break;
             default:
-                // all redundant key inputs are sent here
-                break;
+                System.out.println(dir);
+                throw new LiamWetFishException("HOW THE FISH DID YOU MESS THIS UP SO BADLY!!!");
         }
     }
 

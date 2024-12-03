@@ -91,37 +91,19 @@ public class Game extends Application {
     //dir = the intended direction of the move
     // return true if the move is valid
     public static boolean isValidMove(int x, int y, Direction dir) {
-        if (!playerCanWalkOnTile(x, y, dir)) {
-            return false;
-        }
         switch (dir) {
             case UP:
-                return y > 0;
+                return y > 0 && (Game.getEntity(x, y - 1) instanceof Walkable);
             case DOWN:
-                // Prevents the user from exceeding screen bottom edge
-                return y < (GRID_HEIGHT - 2);
+                // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
+                //  WHAT THE FISH!!!
+                return y < (GRID_HEIGHT - 2)  && (Game.getEntity(x, y + 1) instanceof Walkable);
             case LEFT:
-                return x > 0;
+                return x > 0  && (Game.getEntity(x - 1, y) instanceof Walkable);
             case RIGHT:
-                return x < (GRID_WIDTH - 1);
+                return x < (GRID_WIDTH - 1)  && (Game.getEntity(x + 1, y) instanceof Walkable);
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
-    }
-
-    private static boolean playerCanWalkOnTile(int x, int y, Direction dir) {
-        switch (dir) {
-            case UP:
-                y -= 1;// 2 works, 1 doesn't
-            case DOWN:
-                y += 1;
-            case LEFT:
-                x -= 1;// 2 works, 1 doesn't
-            case RIGHT:
-                x += 1;
-        }
-        Entity entity = map[y][x];
-        System.out.println(entity.getClass().getSimpleName());
-        return !(entity instanceof Wall);
     }
 
     /**
@@ -245,7 +227,7 @@ public class Game extends Application {
                         map[row][col] = new Frog(col, row);
                         break;
                     case 'A':
-                        map[row][col] = new Amoeba(col, row, 10, 10);
+                        map[row][col] = new Amoeba(col, row, 10);
                         break;
                     case 'P':
                         map[row][col] = Player.getPlayer(col, row);
@@ -330,14 +312,6 @@ public class Game extends Application {
             fallingEntity.fall();
         }
 
-//        System.out.println(Player.getPlayer().getX() + " " + Player.getPlayer().getY());
-//        System.out.println(Arrays.deepToString(map));
-        for (int i = 0; i < GRID_HEIGHT - 1; i++) {
-            for (int j = 0; j < GRID_WIDTH - 1; j++) {
-                System.out.print(map[i][j].getClass().getSimpleName().charAt(1));
-            }
-            System.out.println();
-        }
         draw();
     }
 
@@ -405,6 +379,14 @@ public class Game extends Application {
                 view.changeViewMode(2);
             }
         }
+    }
+
+    /**
+     * Getter for map
+     * @return Entity [][] map
+     */
+    public static Entity[][] getMap(){
+        return map;
     }
 
     public static void main(String[] args) {

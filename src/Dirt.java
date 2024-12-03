@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
  * @author Joseph Vinson
  */
 
-public class Dirt extends Tile {
+public class Dirt extends Walkable {
 
     public Dirt(int x, int y) {
         super(x, y, true, TileType.DIRT, new Image("./sprites/dirt.png"));

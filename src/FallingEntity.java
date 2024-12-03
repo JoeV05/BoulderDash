@@ -25,6 +25,7 @@ public abstract class FallingEntity extends Entity {
         if (this.y > Game.GRID_HEIGHT) {
             throw new LiamWetFishException("HOT SINGLE FISH IN YOUR AREA");
         }
+        // TODO - WHY THE FISH IS THIS -2 ARGHHHHHHH
         if (this.y == Game.GRID_HEIGHT - 2) {
             return;
         }
