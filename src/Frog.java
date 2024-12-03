@@ -40,7 +40,7 @@ public class Frog extends Enemy {
      */
     @Override
     public void move() {
-
+        Entity[][] fakeGrid;//make fake grid to visualise how this is going to work
     }
 }
 
