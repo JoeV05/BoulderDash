@@ -10,19 +10,6 @@ public class Frog extends Enemy {
         super(x, y, new Image("./sprites/Frog.png"));
     }
 
-    /**
-     * Calculates movement of the frog
-     *
-     * @return int [] coordinates frog should move to
-     */
-    //@Override
-    //public int[] moveTo(int[][] gameState) {
-    //    return new int[2];
-    //}
-
-    /**
-     * A Test method designed to be used inside moveTo to test your movement is working correctly
-     */
     @Override
     public void movementTests() {
 
@@ -46,6 +33,14 @@ public class Frog extends Enemy {
     @Override
     public int onDeathByFallingObject() {
         return 0;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void move() {
+
     }
 }
 
