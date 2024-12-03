@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 // TODO - javadoc class comment
 
+/**
+ * @author James Harvey, Joseph Vinson, Joe Devlin
+ */
 public class Player extends Entity {
 
     private ArrayList<Key> keys = new ArrayList<>();
