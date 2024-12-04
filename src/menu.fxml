@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Canvas fx:id="menuCanvas" height="100.0" width="750.0" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="750.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGameButtonPress" prefHeight="50.0" prefWidth="400.0" text="Start Game">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="tutorialButton" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="50.0" prefWidth="400.0" text="Tutorial">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Button fx:id="loadSaveButton" mnemonicParsing="false" onAction="#loadSaveButtonPress" prefHeight="50.0" prefWidth="400.0" text="Load Save">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonPress" prefHeight="50.0" prefWidth="400.0" text="Exit">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
