@@ -10,7 +10,7 @@ public class Wall extends Tile {
     protected WallType wallType; // The specific type of this wall (e.g., Normal, Titanium, Magic, Locked Door).
 
     public Wall(int x, int y, WallType wallType) {
-        super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType)); //this type of tile is not walkable and it belongs to the wall type
+        super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType)); //this type of tile is not walkable, and it belongs to the wall type
 
         this.wallType = wallType; //sets the type of wall i.e. magic, titanium,door
     }

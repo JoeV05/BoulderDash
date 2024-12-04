@@ -9,7 +9,10 @@ import java.util.ArrayList;
  */
 public class Player extends Entity {
 
+    // TODO - make keys collectable
     private ArrayList<Key> keys = new ArrayList<>();
+    // TODO - make diamonds collectable
+    // TODO - make collecting diamonds increase the score
     private int diamonds = 0;
 
     private static Player thePlayer;
