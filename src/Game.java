@@ -1,23 +1,15 @@
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.input.*;
-import javafx.util.Duration;
-
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 // TODO - Redo the javadoc comment
 
 /**
- *Represents the main game logic and state managment for the Boulder Game
- *This class initilises the game window, recieves user input and
+ *Represents the main game logic and state management for the Boulder Game
+ *This class initialises the game window, receives user input and
  *handles the rendering and updating of game state
  *The game a grid based level system with entities modelled on
  *top of it using javafx for rendering
- */
-/**
+ *
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
  * Represents the game state, stores level data and renders game window
  */
@@ -31,14 +23,8 @@ public class Game {
     // the map of entities representing the game
     private static Entity[][] map;
 
-    // control registering -> actively held keys.
-    private final Queue<KeyCode> pressedKeys = new LinkedList<>();
-    private final HashSet<KeyCode> seenKeys = new HashSet<>();
-
-    // viewing system for managing the visible area of the game
-    private static final View view = new View(1);
     //list of entities requiring special logic
-    private static ArrayList<FallingEntity> fallingEntities;//entites effected by gravity
+    private static ArrayList<FallingEntity> fallingEntities;//entities effected by gravity
     private static ArrayList<ActionWall> actionWalls;//special attribute walls
 
     private Game() {
@@ -47,19 +33,18 @@ public class Game {
     }
 
     public static void addFallingEntity(FallingEntity e) {
-        fallingEntities.add(e);//Adds a falling entity to the list of entites effected by gravity
+        fallingEntities.add(e);//Adds a falling entity to the list of entities effected by gravity
     }
 
     public static void removeFallingEntity(FallingEntity e) {
-        if (fallingEntities.contains(e)) {//removes a falling entity from the list
-            fallingEntities.remove(e);
-        }
+        //removes a falling entity from the list
+        fallingEntities.remove(e);
     }
 
     // TODO - Check tile where they are trying to move, maybe split method up
     //Validates whether a move is allowed based on the current grid
-    //x = the current x coord of the entity
-    //y = the current y coord of the entity
+    //x = the current x coordinate of the entity
+    //y = the current y coordinate of the entity
     //dir = the intended direction of the move
     // return true if the move is valid
     public static boolean isValidMove(int x, int y, Direction dir) {

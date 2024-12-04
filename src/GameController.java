@@ -23,7 +23,8 @@ public class GameController {
     private static Canvas canvas;
 
     // TODO - javadoc method comment
-    @FXML
+    // TODO - maybe not needed anymore?
+    //@FXML
     // arrays work y then x.
     public static void drawGame(Entity[][] levelState) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -39,6 +40,7 @@ public class GameController {
     @FXML
     public void initialize() {
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        // TODO - gc maybe not needed?
         GraphicsContext gc = canvas.getGraphicsContext2D();
     }
 }

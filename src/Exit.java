@@ -33,6 +33,7 @@ public class Exit extends ActionWall {
     }
 
     //TODO: add code that changes the sprite when the player has fulfilled the conditions to exit
+    // TODO - check if the exit is still locked, then check player score against required score
     @Override
     public void tick(){
         if (this.walkable) {

@@ -15,6 +15,7 @@ public abstract class FallingEntity extends Entity {
         this.entityType = entityType;
     }
 
+    // TODO - is this method necessary
     // TODO - javadoc method comment
     public FallingType getEntityType() {
         return entityType;
