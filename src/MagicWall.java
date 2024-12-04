@@ -23,6 +23,9 @@ public class MagicWall extends ActionWall {
         if (this.hasEntityStored) {
             if (below instanceof Path) {
                 FallingEntity f = this.dropStored();
+                System.out.println("Dropped a: " + f
+                        + "\nDropped from: " + this.x + "," + this.y
+                        + "\nDropped to: " + this.x + ", " + (this.y + 1));
                 Game.replaceEntity(this.x, this.y + 1, f);
                 Game.addFallingEntity(f);
                 this.hasEntityStored = false;
@@ -38,6 +41,9 @@ public class MagicWall extends ActionWall {
     // TODO - think this is actually all fine, maybe a sanity check from Jamie and Tafara?
     // TODO - javadoc method comment
     public void transform(FallingEntity falling) {
+        if (this.hasEntityStored) {
+            return;
+        }
         Game.removeFallingEntity(falling);
         int fX = falling.getX();
         int fY = falling.getY();
@@ -65,7 +71,7 @@ public class MagicWall extends ActionWall {
     // TODO - javadoc method comment
     public FallingEntity dropStored() {
         if (this.y > Game.GRID_HEIGHT - 2) {
-            System.out.println("Liam is a wet fish");
+            System.out.println("I DONT KNOW WHAT THE FISH THIS EXCEPTION IS FOR ANYMORE!!!");
         }
         Entity below = Game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
@@ -76,9 +82,7 @@ public class MagicWall extends ActionWall {
                 f = new Diamond(this.x, this.y + 1);
             }
             return f;
-        }/* else if (below instanceof MagicWall) {
-            // TODO - somehow chain the effect of magic wall transformation
-        }*/
+        }
         return null;
     }
 }
