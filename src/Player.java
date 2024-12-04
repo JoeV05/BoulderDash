@@ -47,7 +47,7 @@ public class Player extends Entity {
         if (Game.isValidMove(this.x, this.y, moveDir)) {
             Game.updateLevel(nX, nY, this);
         }
-        Main.checkForChangeInView(oldX, oldY, this.x, this.y);
+        this.checkForChangeInView(oldX, oldY);
     }
 
     // TODO - javadoc method comment
@@ -119,5 +119,44 @@ public class Player extends Entity {
     public static Player getPlayer(int x, int y) {
         thePlayer = new Player(x, y);
         return thePlayer;
+    }
+
+    // TODO - obliterate magic numbers
+    /**
+     * Checks if the
+     * @param oldX x coordinate before player moves
+     * @param oldY y coordinate before player moves
+     */
+    public void checkForChangeInView(int oldX, int oldY) {
+        switch (Main.view.getView()) {
+            case 1:
+                if (oldX == 24 && this.x == 25) {
+                    Main.view.changeViewMode(2);
+                } else if (oldY == 13 && this.y == 14) {
+                    Main.view.changeViewMode(3);
+                }
+                break;
+            case 2:
+                if (oldX == 17 && this.x == 16) {
+                    Main.view.changeViewMode(1);
+                } else if (oldY == 13 && this.y == 14) {
+                    Main.view.changeViewMode(4);
+                }
+                break;
+            case 3:
+                if (oldX == 24 && this.x == 25) {
+                    Main.view.changeViewMode(4);
+                } else if (oldY == 8 && this.y == 7) {
+                    Main.view.changeViewMode(1);
+                }
+                break;
+            case 4:
+                if (oldX == 17 && this.x == 16) {
+                    Main.view.changeViewMode(3);
+                } else if (oldY == 8 && this.y == 7) {
+                    Main.view.changeViewMode(2);
+                }
+                break;
+        }
     }
 }

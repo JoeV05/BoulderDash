@@ -151,50 +151,7 @@ public class Main extends Application {
         }
     }
 
-    // TODO - maybe move this to the player class as a non static method (might require adding static getter to main for view)
-    //  this could reduce parameters as player already has direct access to its current position, and stores its old position
-    //  to call this method anyway
-    // TODO - obliterate magic numbers
-    /**
-     * Checks if the
-     * @param oldX x coordinate before player moves
-     * @param oldY y coordinate before player moves
-     * @param x x coordinate the player is currently at
-     * @param y y coordinate the player is currently at
-     */
-    public static void checkForChangeInView(int oldX, int oldY, int x, int y) {
-        switch (view.getView()) {
-            case 1:
-                if (oldX == 24 && x == 25) {
-                    view.changeViewMode(2);
-                } else if (oldY == 13 && y == 14) {
-                    view.changeViewMode(3);
-                }
-                break;
-            case 2:
-                if (oldX == 17 && x == 16) {
-                    view.changeViewMode(1);
-                } else if (oldY == 13 && y == 14) {
-                    view.changeViewMode(4);
-                }
-                break;
-            case 3:
-                if (oldX == 24 && x == 25) {
-                    view.changeViewMode(4);
-                } else if (oldY == 8 && y == 7) {
-                    view.changeViewMode(1);
-                }
-                break;
-            case 4:
-                if (oldX == 17 && x == 16) {
-                    view.changeViewMode(3);
-                } else if (oldY == 8 && y == 7) {
-                    view.changeViewMode(2);
-                }
-                break;
-        }
-    }
-
+    // TODO - javadoc method comment
     public static void main(String[] args) {
         Game.getGame();
         launch(args);
