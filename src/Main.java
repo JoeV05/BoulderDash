@@ -45,9 +45,10 @@ public class Main extends Application {
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
 
     // viewing system for managing the visible area of the game
-    public static final View VIEW = new View(1);
+    public static final View VIEW = new View(1); // TODO - this number seems suspiciously magical
 
     // TODO - maybe better description for the parameter tag
+    // TODO - guess who found a magic number in this method
     /**
      * Method used to set off the game. Sets up the GUI to display the current view,
      * tells Game to load the level, sets events to handle pressing and releasing keys
@@ -122,6 +123,7 @@ public class Main extends Application {
     // TODO - javadoc comment
     // TODO - display the score
     // TODO - better separation of responsibilities
+    // TODO - get these gosh darn mother fishing magic numbers outta here
     private void draw() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
