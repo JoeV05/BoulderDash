@@ -88,6 +88,8 @@ public class Main extends Application {
         }
         event.consume();
     }
+
+    // TODO - javadoc method comment
     public void handleKeyReleased(KeyEvent event) {
         pressedKeys.remove(event.getCode());
         seenKeys.remove(event.getCode());
@@ -95,10 +97,10 @@ public class Main extends Application {
     }
 
     /**
-     * This method is called periodically by the tick timeline
-     * and would for, example move, perform logic in the game,
-     * this might cause the bad guys to move (by e.g., looping
-     * over them all and calling their own tick method).
+     * This method is called periodically by the tick timeline,
+     * allowing the Game class to call its own tick function,
+     * which in turn triggers the tick function of any entity
+     * on the map that needs to be updated every tick
      */
     public void tick() {
         if (!pressedKeys.isEmpty()) {
@@ -112,6 +114,7 @@ public class Main extends Application {
 
     // TODO - javadoc comment
     // TODO - display the score
+    // TODO - better separation of responsibilities
     private void draw() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
