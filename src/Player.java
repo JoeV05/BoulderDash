@@ -22,6 +22,9 @@ public class Player extends Entity {
     }
 
     // TODO - javadoc method comment
+    // TODO - player can push boulders
+    // TODO - player can open doors if they have the right key
+    // TODO - player can exit the level if they have enough diamonds
     public void move(KeyCode key) {
         if (this.x > Game.GRID_WIDTH - 1 || this.x < 0 || this.y > Game.GRID_HEIGHT - 1 || this.y < 0) {
             throw new LiamWetFishException("PLAYER POSITION INVALID!!! WHAT THE FISH DID YOU DO TO GET HERE!!!");
