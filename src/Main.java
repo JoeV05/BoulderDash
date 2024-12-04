@@ -16,7 +16,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
 
-
+// TODO - Redo the javadoc comment (THIS POOP IS SO FISHED UP)
 /**
  *Represents the main game logic and state managment for the Boulder Game
  *This class initilises the game window, recieves user input and
@@ -30,25 +30,22 @@ import java.util.*;
 public class Main extends Application {
 
     // title.
-    private static final String GAME_TITLE = "Boulder Dash";
+    public static final String GAME_TITLE = "Boulder Dash";
 
     // canvas. canvas is contained within window.
-    private static final int CANVAS_WIDTH = 750;
-    private static final int CANVAS_HEIGHT = 400;
+    public static final int CANVAS_WIDTH = 750;
+    public static final int CANVAS_HEIGHT = 400;
     private Canvas canvas;
 
-    //TODO: Remove, set sprites to 32px
-    // TODO - There are already variables for 32px, can whoever added the comment
-    //  explain what it means on the discord
-    private static final int GRID_CELL_WIDTH = 25;
-    private static final int GRID_CELL_HEIGHT = 25;
+    public static final int GRID_CELL_WIDTH = 25;
+    public static final int GRID_CELL_HEIGHT = 25;
 
     // control registering -> actively held keys.
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
 
     // viewing system for managing the visible area of the game
-    private static final View view = new View(1);
+    public static final View view = new View(1);
 
     /**
      *
@@ -132,7 +129,6 @@ public class Main extends Application {
         for (int y = yStart; y <= yEnd; y++) {
             for (int x = xStart; x <= xEnd; x++) {
                 mapWeCanSee[y - yStart][x - xStart] = Game.getGame().getMap()[y][x];
-
             }
         }
 
