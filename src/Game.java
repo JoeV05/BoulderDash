@@ -204,7 +204,7 @@ public class Game {
      * Getter for map
      * @return Entity [][] map
      */
-    public static Entity[][] getMap(){
+    public Entity[][] getMap(){
         return map;
     }
 
