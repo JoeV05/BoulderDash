@@ -1,6 +1,4 @@
-// TODO - currently no uses, is this needed?
-//  nevermind this is good
-//  Also i added something to it because im evil and lazy (sorry)
+// TODO - javadoc comments
 
 public enum Direction {
     UP,

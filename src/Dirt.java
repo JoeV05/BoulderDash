@@ -1,6 +1,6 @@
 import javafx.scene.image.Image;
 
-// TODO - proper class comment
+// TODO - javadoc class comment
 
 /**
  * @author Joseph Vinson

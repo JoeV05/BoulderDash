@@ -2,6 +2,7 @@ import javafx.scene.image.Image;
 
 public class Butterfly extends Firefly {
 
+    // TODO - maybe remove comment?
     /**
      * pending image
      *

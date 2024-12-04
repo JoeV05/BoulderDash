@@ -16,12 +16,14 @@ public abstract class Enemy extends Entity{
     /**
      * A Test method designed to be used inside moveTo to test your movement is working correctly
      */
+
     @Test
     public abstract void movementTests();
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
+
     public abstract int onDeathByHazard();
 
     /**
@@ -30,6 +32,7 @@ public abstract class Enemy extends Entity{
      */
     public abstract int onDeathByFallingObject();
 
+    // TODO - void methods shouldn't really have return in javadoc comment
     /**
      * Moves the enemy
      * @return void
