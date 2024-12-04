@@ -13,11 +13,13 @@ public class MagicWall extends ActionWall {
 
     @Override
     public void tick() {
+        Game game = Game.getGame();
         // TODO - WHY THE FISH IS THIS -3 WHAT THE FISH IS WRONG WITHOUT OUR FISHING GAME
         if (this.y > Game.GRID_HEIGHT - 3) {
             return;
         }
-        Entity below = Game.getEntity(this.x, this.y + 1);
+        Entity below = game.getEntity(this.x, this.y + 1);
+
         if (this.hasEntityStored) {
             if (below instanceof Path) {
                 FallingEntity f = this.dropStored();
@@ -68,10 +70,11 @@ public class MagicWall extends ActionWall {
     //  if there is one beneath this one (make use of static methods in Game)
     // TODO - javadoc method comment
     public FallingEntity dropStored() {
+        Game game = Game.getGame();
         if (this.y > Game.GRID_HEIGHT - 2) {
             System.out.println("I DONT KNOW WHAT THE FISH THIS EXCEPTION IS FOR ANYMORE!!!");
         }
-        Entity below = Game.getEntity(this.x, this.y + 1);
+        Entity below = game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
             FallingEntity f;
             if (this.stored == FallingType.BOULDER) {

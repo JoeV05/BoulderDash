@@ -23,6 +23,7 @@ public abstract class FallingEntity extends Entity {
 
     // TODO - javadoc method comment
     public void fall() {
+        Game game = Game.getGame();
         if (this.y > Game.GRID_HEIGHT) {
             throw new LiamWetFishException("HOT SINGLE FISH IN YOUR AREA");
         }
@@ -30,7 +31,7 @@ public abstract class FallingEntity extends Entity {
         if (this.y == Game.GRID_HEIGHT - 2) {
             return;
         }
-        Entity below = Game.getEntity(this.x, this.y + 1);
+        Entity below = game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
             Game.updateLevel(x, y + 1, this);
         }

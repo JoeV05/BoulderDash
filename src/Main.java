@@ -132,6 +132,7 @@ public class Main extends Application {
         for (int y = yStart; y <= yEnd; y++) {
             for (int x = xStart; x <= xEnd; x++) {
                 mapWeCanSee[y - yStart][x - xStart] = Game.getGame().getMap()[y][x];
+
             }
         }
 

@@ -50,15 +50,15 @@ public class Game {
     public static boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
             case UP:
-                return y > 0 && (Game.getEntity(x, y - 1) instanceof Walkable);
+                return y > 0 && (getGame().getEntity(x, y - 1) instanceof Walkable);
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
-                return y < (GRID_HEIGHT - 2)  && (Game.getEntity(x, y + 1) instanceof Walkable);
+                return y < (GRID_HEIGHT - 2)  && (getGame().getEntity(x, y + 1) instanceof Walkable);
             case LEFT:
-                return x > 0  && (Game.getEntity(x - 1, y) instanceof Walkable);
+                return x > 0  && (getGame().getEntity(x - 1, y) instanceof Walkable);
             case RIGHT:
-                return x < (GRID_WIDTH - 1)  && (Game.getEntity(x + 1, y) instanceof Walkable);
+                return x < (GRID_WIDTH - 1)  && (getGame().getEntity(x + 1, y) instanceof Walkable);
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
     }
@@ -180,7 +180,7 @@ public class Game {
      * Returns the entity at the given x/y coordinates
      * @return Entity to be moved
      */
-    public static Entity getEntity(int x, int y) {
+    public Entity getEntity(int x, int y) {
         return map[y][x];
     }
 
