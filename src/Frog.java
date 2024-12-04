@@ -1,6 +1,9 @@
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // TODO - javadoc class comment
 // TODO - maybe tidy up comments?
@@ -63,7 +66,18 @@ public class Frog extends Enemy {
             }
 
         }
-        //START OF PATHFINDING
+        //START OF PATHFINDING implementing bfs and then querying the position of the player
+        Entity startLocation = currentLevelState[getY()][getX()];
+        Queue<Integer[]> queue = new LinkedList<>();
+        Integer[] startingLocation = {getX(),getY()};
+        queue.add(startingLocation);
+        ArrayList<Integer[]> visited = new ArrayList<>();
+        while (queue.size() > 0){
+            visited.add(queue.poll());
+        }
+
+
+
 
     }
 
