@@ -36,7 +36,7 @@ public class RuinedDoor extends Walkable {
             case YELLOW:
                 return new Image("sprites/door_yellow_ruined.png"); // Yellow ruined door sprite
             default:
-                throw new IllegalArgumentException("Invalid colour for RuinedDoor"); // Handle invalid colour
+                throw new LiamWetFishException("Invalid colour for RuinedDoor"); // Handle invalid colour
         }
     }
 }
