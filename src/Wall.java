@@ -37,4 +37,7 @@ public class Wall extends Tile {
         return img;
     }
 
+    public WallType getWallType() {
+        return this.wallType;
+    }
 }
