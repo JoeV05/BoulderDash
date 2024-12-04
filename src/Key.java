@@ -24,23 +24,23 @@ public class Key extends Walkable {
      */
     public Key(int x, int y, Colour colour) {
         super(x, y, new Image("sprites/key_blue.png"));
+        this.colour = colour;
+    }
+
+    // TODO - javadoc method comment
+    private Image spriteSwitch(Colour colour) {
         switch(colour) {
             case RED:
-                setSprite(new Image("sprites/key_red.png"));
-                break;
+                return new Image("sprites/key_red.png");
             case YELLOW:
-                setSprite(new Image("sprites/key_yellow.png"));
-                break;
+                return new Image("sprites/key_yellow.png");
             case GREEN:
-                setSprite(new Image("sprites/key_green.png"));
-                break;
+                return new Image("sprites/key_green.png");
             case BLUE:
-                setSprite(new Image("sprites/key_blue.png"));
-                break;
+                return new Image("sprites/key_blue.png");
             default:
                 throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
-        this.colour = colour;
     }
 
     /**

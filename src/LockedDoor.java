@@ -25,24 +25,24 @@ public class LockedDoor extends Wall {
      */
     public LockedDoor(int x, int y, Colour colour) {
         super(x, y, WallType.LOCKED_DOOR);
+        this.colour = colour;
+        this.setSprite(this.spriteSwitch(this.colour));
+    }
+
+    // TODO - javadoc method comment
+    private Image spriteSwitch(Colour colour) {
         switch(colour) {
             case RED:
-                setSprite(new Image("sprites/door_red.png"));
-                break;
+                return new Image("sprites/door_red.png");
             case YELLOW:
-                setSprite(new Image("sprites/door_yellow.png"));
-                break;
+                return new Image("sprites/door_yellow.png");
             case GREEN:
-                setSprite(new Image("sprites/door_green.png"));
-                break;
+                return new Image("sprites/door_green.png");
             case BLUE:
-                setSprite(new Image("sprites/door_blue.png"));
-                break;
+                return new Image("sprites/door_blue.png");
             default:
-                setSprite(new Image("./sprites/titanium.png"));
-                break;
+                throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
-        this.colour = colour;
     }
 
     /**
