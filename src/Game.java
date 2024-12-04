@@ -62,18 +62,21 @@ public class Game {
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
     }
-
+    //loads a level from the text file and initializes the game state
+    //interpreting characters as game entities
     public static void loadingCave() throws FileNotFoundException {
+        //initalize the cave from the specified file
         Cave charCave = new Cave("Cave1", "level-1.txt");
         //TODO: Add automatic cave generation, see cave class
         map = new Entity[charCave.getTilesTall()][charCave.getTilesWide()];
+        //creates a map based on the caves dimensions
         charCave.printCave();
         char[][] reduceGets = charCave.getCave();
-
+        //loops through the cave layout adding tiles to the map
         for (int row = 0; row < charCave.getTilesTall(); row++) {
             for (int col = 0; col < charCave.getTilesWide(); col++) {
                 char tileChar = reduceGets[row][col];
-
+                //assign entities based on character symbols
                 switch(tileChar) {
                     case '#':
                         map[row][col] = new Wall(col, row, WallType.NORMAL_WALL);
@@ -155,7 +158,8 @@ public class Game {
     }
 
     /**
-     * Change the position of an Entity in the levelState
+     * Updates the position of an entity on the game map
+     *replacing the previous position with a path entity
      */
     public static void updateLevel(int newX, int newY, Entity entity) {
         int oldX = entity.getX();
