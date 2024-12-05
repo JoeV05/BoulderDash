@@ -63,17 +63,4 @@ public class Key extends Walkable {
     public boolean canUnlock(LockedDoor lockedDoor) {
         return lockedDoor.getColour() == this.colour;
     }
-
-    // TODO - w
-    /**
-     * Attempts to use the key to unlock a specific locked door.
-     * If the key's colour matches the door's colour, the door is unlocked.
-     *
-     * @param lockedDoor The locked door to attempt to unlock
-     */
-    public void use(LockedDoor lockedDoor) {
-        if (canUnlock(lockedDoor)) {
-            lockedDoor.unlock();
-        }
-    }
 }
