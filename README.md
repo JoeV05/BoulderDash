@@ -16,8 +16,8 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Titanium walls implemented
 - [x] Magic walls implemented
 - [ ] Exit implemented
-- [ ] Keys implemented
-- [ ] Locked doors implemented
+- [x] Keys implemented
+- [x] Locked doors implemented
 - [x] Player can move using the keyboard
 - [x] Boulders fall
 - [ ] Boulders kill player
