@@ -1,21 +1,15 @@
 import javafx.scene.image.Image;
 
 /**
- * Represents a locked door tile.
- *
- * Locked doors are a type of wall that can be opened by a key of a matching colour.
- * Initially acts as a wall, but can be unlocked to become a walkable path.
- *
+ * Represents a locked door tile. Locked doors are a type of wall that can be opened by a key of a
+ * matching colour. Initially acts as a wall, but can be unlocked to become a walkable path.
  * @author Joseph Vinson, Tafara Gonese
- * Check Section 3.1 of the Functional Specification for detailed locked door behavior and key interactions
- *
  */
 
 public class LockedDoor extends Wall {
     /** The colour of the locked door which determines which key can open it. */
     private final Colour colour;
 
-    // TODO - Same thing as key with the switch
     /**
      * Constructs a new Locked Door with a specific position and colour.
      *
@@ -24,7 +18,7 @@ public class LockedDoor extends Wall {
      * @param colour The colour of the locked door
      */
     public LockedDoor(int x, int y, Colour colour) {
-        super(x, y, WallType.LOCKED_DOOR);
+        super(x, y, WallType.TITANIUM_WALL);
         this.colour = colour;
         this.setSprite(this.spriteSwitch(this.colour));
     }
@@ -43,16 +37,6 @@ public class LockedDoor extends Wall {
             default:
                 throw new LiamWetFishException("BAD KEY COLOUR, THE FISH ARE COMING FOR YOU");
         }
-    }
-
-    /**
-     * Checks if the given key can unlock this door.
-     *
-     * @param key The key attempting to unlock the door
-     * @return true if the key's colour matches the door's colour, false otherwise
-     */
-    public boolean canUnlock(Key key) {
-        return this.colour == key.getColour();
     }
 
     /**
