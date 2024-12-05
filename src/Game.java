@@ -54,15 +54,15 @@ public class Game {
         switch (dir) {
             case UP:
                 int nY = y - 1;
-                return y > 0 && ((getGame().getEntity(x, nY) instanceof Walkable) || (getGame().getEntity(x, nY) instanceof LockedDoor));
+                return y > 0 && ((getEntity(x, nY) instanceof Walkable) || (getEntity(x, nY) instanceof LockedDoor));
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
-                return y < (GRID_HEIGHT - 2)  && (getGame().getEntity(x, y + 1) instanceof Walkable);
+                return y < (GRID_HEIGHT - 2)  && (getEntity(x, y + 1) instanceof Walkable);
             case LEFT:
-                return x > 0  && (getGame().getEntity(x - 1, y) instanceof Walkable);
+                return x > 0  && (getEntity(x - 1, y) instanceof Walkable);
             case RIGHT:
-                Entity target = getGame().getEntity(x + 1, y);
+                Entity target = getEntity(x + 1, y);
                 return x < (GRID_WIDTH - 1)  && target instanceof Walkable;
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
