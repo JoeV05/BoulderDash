@@ -26,8 +26,8 @@ public class MagicWall extends ActionWall {
                 System.out.println("Dropped a: " + f
                         + "\nDropped from: " + this.x + "," + this.y
                         + "\nDropped to: " + this.x + ", " + (this.y + 1));
-                Game.replaceEntity(this.x, this.y + 1, f);
-                Game.addFallingEntity(f);
+                Game.getGame().replaceEntity(this.x, this.y + 1, f);
+                Game.getGame().addFallingEntity(f);
                 this.hasEntityStored = false;
                 this.stored = null;
             } else if (below instanceof MagicWall) {
@@ -44,15 +44,15 @@ public class MagicWall extends ActionWall {
         if (this.hasEntityStored) {
             return;
         }
-        Game.removeFallingEntity(falling);
+        Game.getGame().removeFallingEntity(falling);
         int fX = falling.getX();
         int fY = falling.getY();
         if (falling instanceof Boulder) {
             this.stored = FallingType.DIAMOND;
-            Game.replaceEntity(fX, fY, new Path(fX, fY));
+            Game.getGame().replaceEntity(fX, fY, new Path(fX, fY));
         } else {
             this.stored = FallingType.BOULDER;
-            Game.replaceEntity(fX, fY, new Path(fX, fY));
+            Game.getGame().replaceEntity(fX, fY, new Path(fX, fY));
         }
         this.hasEntityStored = true;
     }

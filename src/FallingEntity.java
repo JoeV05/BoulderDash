@@ -33,7 +33,7 @@ public abstract class FallingEntity extends Entity {
         }
         Entity below = game.getEntity(this.x, this.y + 1);
         if (below instanceof Path) {
-            Game.updateLevel(x, y + 1, this);
+            Game.getGame().updateLevel(x, y + 1, this);
         }
         if (below instanceof MagicWall) {
             ((MagicWall) below).transform(this);

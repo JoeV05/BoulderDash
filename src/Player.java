@@ -49,8 +49,8 @@ public class Player extends Entity {
     private void validateMove(int nX, int nY, Direction moveDir) {
         int oldX = this.x;
         int oldY = this.y;
-        if (Game.isValidMove(this.x, this.y, moveDir)) {
-            Game.updateLevel(nX, nY, this);
+        if (Game.getGame().isValidMove(this.x, this.y, moveDir)) {
+            Game.getGame().updateLevel(nX, nY, this);
         }
         this.checkForChangeInView(oldX, oldY);
     }

@@ -21,36 +21,40 @@ public class Game {
     public static final int GRID_HEIGHT = 23;
 
     // the map of entities representing the game
-    private static Entity[][] map;
+    private Entity[][] map;
 
     //list of entities requiring special logic
-    private static ArrayList<FallingEntity> fallingEntities;//entities effected by gravity
-    private static ArrayList<ActionWall> actionWalls;//special attribute walls
+    private ArrayList<FallingEntity> fallingEntities;//entities effected by gravity
+    private ArrayList<ActionWall> actionWalls;//special attribute walls
 
     private Game() {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
     }
 
-    public static void addFallingEntity(FallingEntity e) {
+    // TODO - javadoc method comment
+    public void addFallingEntity(FallingEntity e) {
         fallingEntities.add(e);//Adds a falling entity to the list of entities effected by gravity
     }
 
-    public static void removeFallingEntity(FallingEntity e) {
+    // TODO - javadoc method comment
+    public void removeFallingEntity(FallingEntity e) {
         //removes a falling entity from the list
         fallingEntities.remove(e);
     }
 
-    // TODO - Check tile where they are trying to move, maybe split method up
+    // TODO - Maybe split method up
+    // TODO - javadoc method comment
     //Validates whether a move is allowed based on the current grid
     //x = the current x coordinate of the entity
     //y = the current y coordinate of the entity
     //dir = the intended direction of the move
     // return true if the move is valid
-    public static boolean isValidMove(int x, int y, Direction dir) {
+    public boolean isValidMove(int x, int y, Direction dir) {
         switch (dir) {
             case UP:
-                return y > 0 && (getGame().getEntity(x, y - 1) instanceof Walkable);
+                int nY = y - 1;
+                return y > 0 && ((getGame().getEntity(x, nY) instanceof Walkable) || (getGame().getEntity(x, nY) instanceof LockedDoor));
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
@@ -58,13 +62,24 @@ public class Game {
             case LEFT:
                 return x > 0  && (getGame().getEntity(x - 1, y) instanceof Walkable);
             case RIGHT:
-                return x < (GRID_WIDTH - 1)  && (getGame().getEntity(x + 1, y) instanceof Walkable);
+                Entity target = getGame().getEntity(x + 1, y);
+                return x < (GRID_WIDTH - 1)  && target instanceof Walkable;
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
     }
+
+    // TODO - javadoc method comment
+    private boolean playerCanUnlockDoor() {
+        LockedDoor targetDoor;
+        return false;
+    }
+
+    // TODO - javadoc method comment
+    // TODO - better separation of responsibilities
+    //  Game.loadingCave())
     //loads a level from the text file and initializes the game state
     //interpreting characters as game entities
-    public static void loadingCave() throws FileNotFoundException {
+    public void loadingCave() throws FileNotFoundException {
         //initalize the cave from the specified file
         Cave charCave = new Cave("Cave1", "level-1.txt");
         //TODO: Add automatic cave generation, see cave class
@@ -149,6 +164,7 @@ public class Game {
                     case 'D':
                         map[row][col] = new Dirt(col, row);
                         break;
+                    // TODO - maybe better practice to have specific path letter and throw error otherwise?
                     default:
                         map[row][col] = new Path(col, row);
                         break;
@@ -159,9 +175,10 @@ public class Game {
 
     /**
      * Updates the position of an entity on the game map
-     *replacing the previous position with a path entity
+     * replacing the previous position with a path entity,
+     * used for movement
      */
-    public static void updateLevel(int newX, int newY, Entity entity) {
+    public void updateLevel(int newX, int newY, Entity entity) {
         int oldX = entity.getX();
         int oldY = entity.getY();
         replaceEntity(newX, newY, entity);
@@ -171,12 +188,15 @@ public class Game {
     }
 
     /**
-     * Changes the entity type in the levelState at x,y
+     * Changes the entity on the map at x,y
      * @param x new x position to be moved to
      * @param y new y position to be moved to
      * @param entity to be replaced with
      */
-    public static void replaceEntity(int x, int y, Entity entity) {
+    public
+
+
+    void replaceEntity(int x, int y, Entity entity) {
         map[y][x] = entity;
     }
 
