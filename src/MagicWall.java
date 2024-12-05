@@ -23,9 +23,6 @@ public class MagicWall extends ActionWall {
         if (this.hasEntityStored) {
             if (below instanceof Path) {
                 FallingEntity f = this.dropStored();
-                System.out.println("Dropped a: " + f
-                        + "\nDropped from: " + this.x + "," + this.y
-                        + "\nDropped to: " + this.x + ", " + (this.y + 1));
                 Game.getGame().replaceEntity(this.x, this.y + 1, f);
                 Game.getGame().addFallingEntity(f);
                 this.hasEntityStored = false;
