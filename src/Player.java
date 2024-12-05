@@ -67,8 +67,6 @@ public class Player extends Entity {
             if (this.canUnlock(door)) {
                 door.unlock();
                 this.burnKey(door.getColour());
-                Game.getGame().updateLevel(nX, nY, this);
-                this.checkForChangeInView(oX, oY);
             }
         }
     }
