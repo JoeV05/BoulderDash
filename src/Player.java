@@ -26,6 +26,10 @@ public class Player extends Entity {
         return this.keys;
     }
 
+    private void addKey(Key key) {
+        this.keys.add(key);
+    }
+
     // TODO - javadoc method comment
     // TODO - player can push boulders
     // TODO - player can open doors if they have the right key
@@ -40,19 +44,56 @@ public class Player extends Entity {
         }
         this.spriteSwitch(moveDir);
         int[] newCoordinates = this.moveSwitch(key);
+        int oX = this.x;
+        int oY = this.y;
         int nX = newCoordinates[0];
         int nY = newCoordinates[1];
-        this.validateMove(nX, nY, moveDir);
+        if (!this.validateMove(moveDir)) {
+            return;
+        }
+        Entity target = Game.getGame().getEntity(nX, nY);
+        if (target instanceof Walkable) {
+            Game.getGame().updateLevel(nX, nY, this);
+            this.checkForChangeInView(oX, oY);
+            if (target instanceof Key) {
+                this.addKey((Key) target);
+            }
+        } else if (target instanceof LockedDoor) {
+            LockedDoor door = (LockedDoor) target;
+            if (!door.isLocked()) {
+                Game.getGame().updateLevel(nX, nY, this);
+                this.checkForChangeInView(oX, oY);
+            }
+            if (this.canUnlock(door)) {
+                door.unlock();
+                this.burnKey(door.getColour());
+                Game.getGame().updateLevel(nX, nY, this);
+                this.checkForChangeInView(oX, oY);
+            }
+        }
+    }
+
+    private void burnKey(Colour colour) {
+        for (int i = 0; i < this.keys.size(); i++) {
+            if (this.keys.get(i).getColour() == colour) {
+                this.keys.remove(i);
+                return;
+            }
+        }
+    }
+
+    private boolean canUnlock(LockedDoor door) {
+        for (int i = 0; i < this.keys.size(); i++) {
+            if (this.keys.get(i).canUnlock(door)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // TODO - javadoc method comment
-    private void validateMove(int nX, int nY, Direction moveDir) {
-        int oldX = this.x;
-        int oldY = this.y;
-        if (Game.getGame().isValidMove(this.x, this.y, moveDir)) {
-            Game.getGame().updateLevel(nX, nY, this);
-        }
-        this.checkForChangeInView(oldX, oldY);
+    private boolean validateMove(Direction moveDir) {
+        return Game.getGame().isValidMove(this.x, this.y, moveDir);
     }
 
     // TODO - javadoc method comment
