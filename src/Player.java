@@ -22,6 +22,11 @@ public class Player extends Entity {
     }
 
     // TODO - javadoc method comment
+    public ArrayList<Key> getKeys() {
+        return this.keys;
+    }
+
+    // TODO - javadoc method comment
     // TODO - player can push boulders
     // TODO - player can open doors if they have the right key
     // TODO - player can exit the level if they have enough diamonds
