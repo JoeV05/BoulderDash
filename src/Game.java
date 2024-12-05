@@ -26,6 +26,7 @@ public class Game {
     //list of entities requiring special logic
     private ArrayList<FallingEntity> fallingEntities;//entities effected by gravity
     private ArrayList<ActionWall> actionWalls;//special attribute walls
+    private ArrayList<Enemy> enemies;
 
     private Game() {
         fallingEntities = new ArrayList<>();
@@ -41,6 +42,10 @@ public class Game {
     public void removeFallingEntity(FallingEntity e) {
         //removes a falling entity from the list
         fallingEntities.remove(e);
+    }
+
+    public void removeEnemy(Enemy e) {
+        enemies.remove(e);
     }
 
     // TODO - Maybe split method up
@@ -229,6 +234,10 @@ public class Game {
 
         for (int i = 0; i < fallingEntities.size(); i++) {
             fallingEntities.get(i).fall();
+        }
+
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i);// TODO - Use this for enemy update on tick
         }
     }
 
