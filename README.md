@@ -10,27 +10,27 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [ ] Game comprises multiple levels
 - [ ] PLayer plays one level at a time
 - [ ] Player can progress to next level upon reaching the exit
-- [ ] Path implemented
-- [ ] Dirt implemented
-- [ ] Normal walls implemented
-- [ ] Titanium walls implemented
-- [ ] Magic walls implemented
+- [x] Path implemented
+- [x] Dirt implemented
+- [x] Normal walls implemented
+- [x] Titanium walls implemented
+- [x] Magic walls implemented
 - [ ] Exit implemented
 - [ ] Keys implemented
 - [ ] Locked doors implemented
-- [ ] Player can move using the keyboard
-- [ ] Boulders fall
+- [x] Player can move using the keyboard
+- [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
 - [ ] Boulders roll
 - [ ] Boulders can be pushed
-- [ ] Boulders can be transformed by magic walls
-- [ ] Diamonds fall
+- [x] Boulders can be transformed by magic walls
+- [x] Diamonds fall
 - [ ] Diamonds kill player
 - [ ] Diamonds explode enemies
 - [ ] Diamonds roll
 - [ ] Diamonds can be collected
-- [ ] Diamonds can be transformed by magic walls
+- [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
 - [ ] Butterfly follows left or right edge
 - [ ] Firefly implemented
@@ -44,12 +44,12 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [ ] Amoeba transform into boulders when maximum size is reached
 - [ ] Amoeba kill enemies they touch
 - [ ] Amoeba can be destroyed by explosion
-- [ ] Game has ticks (spec says e.g. 200ms, movement might not happen every tick)
+- [x] Game has ticks (spec says e.g. 200ms, movement might not happen every tick)
 - [ ] Level time limit read from level file
 - [ ] Level has time limit
 - [ ] Score displayed
 - [ ] Level file stores width and height of level
-- [ ] Level file stores all tiles and their locations
+- [x] Level file stores all tiles and their locations
 - [ ] Level file stores data for enemies
 - [ ] Level file stores time limit
 - [ ] Level file stores number of diamonds needed
