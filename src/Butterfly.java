@@ -37,7 +37,7 @@ public class Butterfly extends Firefly {
      *  butterfly will differ by replacing the path with diamonds instead
      */
 
-     @Override
+    //@Override
     public int onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
         int positionY= below.getY();
@@ -100,7 +100,7 @@ public class Butterfly extends Firefly {
         return 0;
     }
 
-    @Override
+    //@Override
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit ){
