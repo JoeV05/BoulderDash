@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.*;
+import javafx.scene.image.Image;
 
 // TODO - Redo the javadoc comment
 
@@ -57,19 +58,23 @@ public class Game {
     //dir = the intended direction of the move
     // return true if the move is valid
     public boolean isValidMove(int x, int y, Direction dir) {
+        int nY;
+        int nX;
         switch (dir) {
             case UP:
-                int nY = y - 1;
+                nY = y - 1;
                 return y > 0 && ((getEntity(x, nY) instanceof Walkable) || playerCanUnlockDoor(x, nY));
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
-                return y < (GRID_HEIGHT - 2)  && (getEntity(x, y + 1) instanceof Walkable);
+                nY = y + 1;
+                return y < (GRID_HEIGHT - 2)  && (getEntity(x, nY) instanceof Walkable || playerCanUnlockDoor(x, nY));
             case LEFT:
-                return x > 0  && (getEntity(x - 1, y) instanceof Walkable);
+                nX = x - 1;
+                return x > 0  && ((getEntity(nX, y) instanceof Walkable) || playerCanUnlockDoor(nX, y));
             case RIGHT:
-                Entity target = getEntity(x + 1, y);
-                return x < (GRID_WIDTH - 1)  && target instanceof Walkable;
+                nX = x + 1;
+                return x < (GRID_WIDTH - 1)  && (getEntity(nX, y) instanceof Walkable || playerCanUnlockDoor(nX, y));
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
     }
@@ -81,8 +86,8 @@ public class Game {
             return false;
         }
         LockedDoor door = (LockedDoor) target;
-        for (Key key : Player.getPlayer().getKeys()) {
-            if (key.canUnlock(door)) {
+        for (int i = 0; i < Player.getPlayer().getKeys().size(); i++) {
+            if (Player.getPlayer().getKeys().get(i).canUnlock(door)) {
                 return true;
             }
         }
@@ -238,7 +243,7 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i);// TODO - Use this for enemy update on tick
+            enemies.get(i);// TODO - Use this for enemy update on tick, e.g. enemies.get(i).move()
         }
     }
 
