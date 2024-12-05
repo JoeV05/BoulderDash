@@ -31,6 +31,7 @@ public class Game {
     private Game() {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
+        enemies = new ArrayList<>();
     }
 
     // TODO - javadoc method comment
