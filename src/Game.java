@@ -54,7 +54,7 @@ public class Game {
         switch (dir) {
             case UP:
                 int nY = y - 1;
-                return y > 0 && ((getEntity(x, nY) instanceof Walkable) || (getEntity(x, nY) instanceof LockedDoor));
+                return y > 0 && ((getEntity(x, nY) instanceof Walkable) || playerCanUnlockDoor(x, nY));
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
@@ -69,14 +69,22 @@ public class Game {
     }
 
     // TODO - javadoc method comment
-    private boolean playerCanUnlockDoor() {
-        LockedDoor targetDoor;
+    private boolean playerCanUnlockDoor(int x, int y) {
+        Entity target = getEntity(x, y);
+        if (!(target instanceof LockedDoor)) {
+            return false;
+        }
+        LockedDoor door = (LockedDoor) target;
+        for (Key key : Player.getPlayer().getKeys()) {
+            if (key.canUnlock(door)) {
+                return true;
+            }
+        }
         return false;
     }
 
     // TODO - javadoc method comment
     // TODO - better separation of responsibilities
-    //  Game.loadingCave())
     //loads a level from the text file and initializes the game state
     //interpreting characters as game entities
     public void loadingCave() throws FileNotFoundException {
@@ -215,12 +223,12 @@ public class Game {
      * over them all and calling their own tick method).
      */
     public void tick() {
-        for (ActionWall actionWall : actionWalls) {
-            actionWall.tick();
+        for (int i = 0; i < actionWalls.size(); i++) {
+            actionWalls.get(i).tick();
         }
 
-        for (FallingEntity fallingEntity : fallingEntities) {
-            fallingEntity.fall();
+        for (int i = 0; i < fallingEntities.size(); i++) {
+            fallingEntities.get(i).fall();
         }
     }
 
