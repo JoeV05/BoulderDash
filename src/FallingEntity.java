@@ -93,4 +93,9 @@ public abstract class FallingEntity extends Entity {
     private boolean emptyDownRight() {
         return Game.getGame().getEntity(this.x + 1, this.y + 1) instanceof Path;
     }
+
+    // TODO - javadoc method comment
+    public boolean isFalling() {
+        return falling;
+    }
 }
