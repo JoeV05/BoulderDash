@@ -28,7 +28,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="loadSaveButton" mnemonicParsing="false" onAction="#loadSaveButtonPress" prefHeight="50.0" prefWidth="400.0" text="Load Save">
+            <Button fx:id="tutorialButton" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="50.0" prefWidth="400.0" text="Tutorial">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -36,7 +36,7 @@
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button fx:id="tutorialButton" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="50.0" prefWidth="400.0" text="Tutorial">
+            <Button fx:id="loadSaveButton" mnemonicParsing="false" onAction="#loadSaveButtonPress" prefHeight="50.0" prefWidth="400.0" text="Load Save">
                <font>
                   <Font size="30.0" />
                </font>

@@ -1,5 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.*;
 
 // TODO - Redo the javadoc comment
 
@@ -58,19 +58,13 @@ public class Game {
     //dir = the intended direction of the move
     // return true if the move is valid
     public boolean isValidMove(int x, int y, Direction dir) {
-        switch (dir) {
-            case UP:
-                return validMoveUp(x, y);
-            case DOWN:
-                // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
-                //  WHAT THE FISH!!!
-                return validMoveDown(x, y);
-            case LEFT:
-                return validMoveLeft(x, y);
-            case RIGHT:
-                return validMoveRight(x, y);
-        }
-        throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+        return switch (dir) {
+            case UP -> validMoveUp(x, y);
+            case DOWN -> validMoveDown(x, y);
+            case LEFT -> validMoveLeft(x, y);
+            case RIGHT -> validMoveRight(x, y);
+            default -> throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+        };
     }
 
     // TODO - javadoc method comment
@@ -108,7 +102,7 @@ public class Game {
 
     // TODO - javadoc method comment
     private boolean moveOnValidation(Entity target, int x, int y) {
-        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y);
+        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y) || (target instanceof Exit && ((Exit) target).walkable);
     }
 
     // TODO - javadoc method comment
@@ -138,7 +132,7 @@ public class Game {
     //interpreting characters as game entities
     public void loadingCave() throws FileNotFoundException {
         //initialise the cave from the specified file
-        Cave charCave = new Cave("Cave1", "level-1.txt");
+        Cave charCave = new Cave() ;
         //TODO: Add automatic cave generation, see cave class
         map = new Entity[charCave.getTilesTall()][charCave.getTilesWide()];
         //creates a map based on the caves dimensions
@@ -162,7 +156,7 @@ public class Game {
                         actionWalls.add(m);
                         break;
                     case 'E':
-                        Exit e = new Exit(col, row, 5);
+                        Exit e = new Exit(col, row, 0);
                         map[row][col] = e;
                         actionWalls.add(e);
                         break;
@@ -242,14 +236,23 @@ public class Game {
     public void updateLevel(int newX, int newY, Entity entity) {
         int oldX = entity.getX();
         int oldY = entity.getY();
-        replaceEntity(newX, newY, entity);
-        entity.setX(newX);
-        entity.setY(newY);
-        replaceEntity(oldX, oldY, new Path(oldX, oldY));
+        if (getEntity(newX, newY) instanceof Exit) {
+            try {
+                nextLevel();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            replaceEntity(newX, newY, entity);
+            entity.setX(newX);
+            entity.setY(newY);
+            replaceEntity(oldX, oldY, new Path(oldX, oldY));
+        }
+
     }
 
     /**
-     * Changes the entity on the map at x,y
+     * Changes the entity type in the levelState at x,y
      * @param x new x position to be moved to
      * @param y new y position to be moved to
      * @param entity to be replaced with
@@ -267,6 +270,10 @@ public class Game {
      */
     public Entity getEntity(int x, int y) {
         return map[y][x];
+    }
+
+    public void nextLevel() throws FileNotFoundException {
+        loadingCave();
     }
 
     /**
