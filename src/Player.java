@@ -59,7 +59,6 @@ public class Player extends Entity {
                 this.addKey((Key) target);
             } else if (target instanceof Diamond) {
                 this.diamonds += 1;
-                System.out.println(this.diamonds);
             }
         } else if (target instanceof LockedDoor) {
             LockedDoor door = (LockedDoor) target;

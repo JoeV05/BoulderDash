@@ -50,7 +50,7 @@ public class Game {
         enemies.remove(e);
     }
 
-    // TODO - Maybe split method up
+    // TODO - better separation of responsibilities
     // TODO - javadoc method comment
     //Validates whether a move is allowed based on the current grid
     //x = the current x coordinate of the entity
@@ -60,23 +60,34 @@ public class Game {
     public boolean isValidMove(int x, int y, Direction dir) {
         int nY;
         int nX;
+        Entity target;
         switch (dir) {
             case UP:
                 nY = y - 1;
-                return y > 0 && ((getEntity(x, nY) instanceof Walkable) || playerCanUnlockDoor(x, nY));
+                target = getEntity(x, nY);
+                return y > 0 && (target instanceof Walkable || (target instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(x, nY));
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
                 nY = y + 1;
-                return y < (GRID_HEIGHT - 2)  && (getEntity(x, nY) instanceof Walkable || playerCanUnlockDoor(x, nY));
+                target = getEntity(x, nY);
+                return y < (GRID_HEIGHT - 2)  && (target instanceof Walkable || (target instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(x, nY));
             case LEFT:
                 nX = x - 1;
-                return x > 0  && ((getEntity(nX, y) instanceof Walkable) || playerCanUnlockDoor(nX, y));
+                target = getEntity(nX, y);
+                return x > 0  && (target instanceof Walkable || (getEntity(nX, y) instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(nX, y));
             case RIGHT:
                 nX = x + 1;
-                return x < (GRID_WIDTH - 1)  && (getEntity(nX, y) instanceof Walkable || playerCanUnlockDoor(nX, y));
+                target = getEntity(nX, y);
+                return x < (GRID_WIDTH - 1)  && (getEntity(nX, y) instanceof Walkable || (getEntity(nX, y) instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(nX, y));
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+    }
+
+    // TODO - javadoc method comment
+    private boolean isFallingDiamond(Entity entity) {
+        Diamond diamond = (Diamond) entity;
+        return diamond.isFalling();
     }
 
     // TODO - javadoc method comment
