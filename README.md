@@ -19,7 +19,7 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Keys implemented
 - [x] Locked doors implemented
 - [x] Player can move using the keyboard
-- [ ] FallingEntity can roll
+- [x] FallingEntity can roll
 - [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
