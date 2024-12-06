@@ -19,16 +19,15 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Keys implemented
 - [x] Locked doors implemented
 - [x] Player can move using the keyboard
+- [ ] FallingEntity can roll
 - [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
-- [ ] Boulders roll
 - [ ] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
 - [ ] Diamonds kill player
 - [ ] Diamonds explode enemies
-- [ ] Diamonds roll
 - [ ] Diamonds can be collected
 - [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
