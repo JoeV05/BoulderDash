@@ -113,7 +113,6 @@ public abstract class FallingEntity extends Entity {
         Game.getGame().updateLevel(nX, this.y, this);
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the falling entity can roll to the left.
      * @return true or false
@@ -122,7 +121,6 @@ public abstract class FallingEntity extends Entity {
         return this.emptyLeft() && this.emptyDownLeft();
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the falling entity can roll to the right.
      * @return true or false
@@ -131,7 +129,6 @@ public abstract class FallingEntity extends Entity {
         return this.emptyRight() && emptyDownRight();
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the tile to the left is empty.
      * @return true or false
@@ -140,7 +137,6 @@ public abstract class FallingEntity extends Entity {
         return Game.getGame().getEntity(this.x - 1, this.y) instanceof Path;
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the tile to the right is empty.
      * @return true or false
@@ -149,7 +145,6 @@ public abstract class FallingEntity extends Entity {
         return Game.getGame().getEntity(this.x + 1, this.y) instanceof Path;
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the tile down and to the left is empty.
      * @return true or false
@@ -158,7 +153,6 @@ public abstract class FallingEntity extends Entity {
         return Game.getGame().getEntity(this.x - 1, this.y + 1) instanceof Path;
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the tile down and to the right is empty.
      * @return true or false
@@ -167,7 +161,6 @@ public abstract class FallingEntity extends Entity {
         return Game.getGame().getEntity(this.x + 1, this.y + 1) instanceof Path;
     }
 
-    // TODO - javadoc method comment
     /**
      * Checks if the falling entity is currently falling.
      * @return true or false
