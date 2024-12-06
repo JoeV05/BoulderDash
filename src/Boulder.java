@@ -8,6 +8,6 @@ import javafx.scene.image.Image;
 public class Boulder extends FallingEntity {
 
     public Boulder(int x, int y) {
-        super(x, y, FallingType.BOULDER, new Image("./sprites/boulder.png"));
+        super(x, y, new Image("./sprites/boulder.png"));
     }
 }

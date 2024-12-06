@@ -13,7 +13,7 @@ import java.util.Random;
 public class Diamond extends FallingEntity {
 
     public Diamond(int x, int y) {
-        super(x, y, FallingType.DIAMOND, new Image("sprites/diamond_Blue.png"));
+        super(x, y, new Image("sprites/diamond_Blue.png"));
         setSprite(randomSprite());
     }
 
