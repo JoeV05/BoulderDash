@@ -46,6 +46,7 @@ public class Game {
         fallingEntities.remove(e);
     }
 
+    // TODO - javadoc method comment
     public void removeEnemy(Enemy e) {
         enemies.remove(e);
     }
@@ -63,25 +64,55 @@ public class Game {
         Entity target;
         switch (dir) {
             case UP:
-                nY = y - 1;
-                target = getEntity(x, nY);
-                return y > 0 && (target instanceof Walkable || (target instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(x, nY));
+                return validMoveUp(x, y);
             case DOWN:
                 // TODO - WHY DOES THIS NEED TO BE -2 INSTEAD OF -1
                 //  WHAT THE FISH!!!
-                nY = y + 1;
-                target = getEntity(x, nY);
-                return y < (GRID_HEIGHT - 2)  && (target instanceof Walkable || (target instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(x, nY));
+                return validMoveDown(x, y);
             case LEFT:
-                nX = x - 1;
-                target = getEntity(nX, y);
-                return x > 0  && (target instanceof Walkable || (getEntity(nX, y) instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(nX, y));
+                return validMoveLeft(x, y);
             case RIGHT:
-                nX = x + 1;
-                target = getEntity(nX, y);
-                return x < (GRID_WIDTH - 1)  && (getEntity(nX, y) instanceof Walkable || (getEntity(nX, y) instanceof Diamond && !isFallingDiamond(target)) || playerCanUnlockDoor(nX, y));
+                return validMoveRight(x, y);
         }
         throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+    }
+
+    // TODO - javadoc method comment
+    private boolean validMoveUp(int x, int y) {
+        int nY = y - 1;
+        Entity target = getEntity(x, nY);
+        return y > 0 && moveOnValidation(target, x, nY);
+    }
+
+    // TODO - javadoc method comment
+    private boolean validMoveDown(int x, int y) {
+        int nY = y + 1;
+        Entity target = getEntity(x, nY);
+        return y < (GRID_HEIGHT - 2) && moveOnValidation(target, x, nY);
+    }
+
+    // TODO - javadoc method comment
+    private boolean validMoveLeft(int x, int y) {
+        int nX = x - 1;
+        Entity target = getEntity(nX, y);
+        return x > 0 && moveOnValidation(target, nX, y);
+    }
+
+    // TODO - javadoc method comment
+    private boolean validMoveRight(int x, int y) {
+        int nX = x + 1;
+        Entity target = getEntity(nX, y);
+        return x < (GRID_WIDTH - 1) && moveOnValidation(target, nX, y);
+    }
+
+    // TODO - javadoc method comment
+    private boolean canMoveOnDiamond(Entity target) {
+        return target instanceof Diamond && !isFallingDiamond(target);
+    }
+
+    // TODO - javadoc method comment
+    private boolean moveOnValidation(Entity target, int x, int y) {
+        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y);
     }
 
     // TODO - javadoc method comment
@@ -203,10 +234,14 @@ public class Game {
         }
     }
 
+    // TODO - finish javadoc method comment
     /**
      * Updates the position of an entity on the game map
      * replacing the previous position with a path entity,
      * used for movement
+     * @param newX
+     * @param newY
+     * @param entity
      */
     public void updateLevel(int newX, int newY, Entity entity) {
         int oldX = entity.getX();
@@ -223,15 +258,15 @@ public class Game {
      * @param y new y position to be moved to
      * @param entity to be replaced with
      */
-    public
-
-
-    void replaceEntity(int x, int y, Entity entity) {
+    public void replaceEntity(int x, int y, Entity entity) {
         map[y][x] = entity;
     }
 
+    // TODO - finish javadoc method comment
     /**
      * Returns the entity at the given x/y coordinates
+     * @param x
+     * @param y
      * @return Entity to be moved
      */
     public Entity getEntity(int x, int y) {
@@ -260,6 +295,7 @@ public class Game {
         }
     }
 
+    // TODO - better javadoc method comment
     /**
      * Getter for map
      * @return Entity [][] map
@@ -268,10 +304,12 @@ public class Game {
         return map;
     }
 
+    // TODO - javadoc method comment
     public static boolean isRound(Entity entity) {
         return (entity instanceof FallingEntity) || (entity instanceof Wall && !(entity instanceof MagicWall));
     }
 
+    // TODO - javadoc method comment
     public static Game getGame() {
         if (theGame == null) {
             theGame = new Game();
