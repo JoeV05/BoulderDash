@@ -52,11 +52,14 @@ public class Player extends Entity {
             return;
         }
         Entity target = Game.getGame().getEntity(nX, nY);
-        if (target instanceof Walkable) {
+        if (target instanceof Walkable || target instanceof Diamond) {
             Game.getGame().updateLevel(nX, nY, this);
             this.checkForChangeInView(oX, oY);
             if (target instanceof Key) {
                 this.addKey((Key) target);
+            } else if (target instanceof Diamond) {
+                this.diamonds += 1;
+                System.out.println(this.diamonds);
             }
         } else if (target instanceof LockedDoor) {
             LockedDoor door = (LockedDoor) target;
