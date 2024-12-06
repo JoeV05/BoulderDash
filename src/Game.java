@@ -254,7 +254,9 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i);// TODO - Use this for enemy update on tick, e.g. enemies.get(i).move()
+            //enemies.get(i).???
+            // TODO - Use this for enemy update on tick, e.g. enemies.get(i).move()
+            //  (preferably enemies.get(i).tick() but it's up to hazards people)
         }
     }
 
