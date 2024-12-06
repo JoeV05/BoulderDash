@@ -239,7 +239,7 @@ public class Game {
         }
 
         for (int i = 0; i < fallingEntities.size(); i++) {
-            fallingEntities.get(i).fall();
+            fallingEntities.get(i).tick();
         }
 
         for (int i = 0; i < enemies.size(); i++) {
@@ -253,6 +253,10 @@ public class Game {
      */
     public Entity[][] getMap(){
         return map;
+    }
+
+    public static boolean isRound(Entity entity) {
+        return (entity instanceof FallingEntity) || (entity instanceof Wall && !(entity instanceof MagicWall));
     }
 
     public static Game getGame() {
