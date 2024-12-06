@@ -31,6 +31,7 @@ public class Wall extends Tile {
                 img = new Image("./sprites/exit_locked.png");
                 break;
             default:
+                System.out.println(wallType);
                 throw new LiamWetFishException("WHAT THE FISH??? WHERES THE FISHING WALLTYPE???");
         }
         return img;

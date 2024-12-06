@@ -71,6 +71,12 @@ public class Player extends Entity {
                 door.unlock();
                 this.burnKey(door.getColour());
             }
+        } else if (target instanceof Exit) {
+            Exit exit = (Exit) target;
+            if (exit.canExit(this.diamonds)) {
+                Game.getGame().updateLevel(nX, nY, this);
+                this.checkForChangeInView(oX, oY);
+            }
         }
     }
 
@@ -166,6 +172,10 @@ public class Player extends Entity {
     public static Player getPlayer(int x, int y) {
         thePlayer = new Player(x, y);
         return thePlayer;
+    }
+
+    public int getDiamonds() {
+        return diamonds;
     }
 
     // TODO - obliterate magic numbers

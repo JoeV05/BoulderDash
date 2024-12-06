@@ -16,40 +16,29 @@ public class MenuController {
     public Button startGameButton;
 
     @FXML
-    public Button tutorialButton;
-
-    @FXML
     public Button exitButton;
 
-    // TODO - javadoc method comment
     @FXML
     public void startGameButtonPress(ActionEvent actionEvent) throws IOException {
-        //Get the stage (i.e. the window)
         Stage primaryStage = (Stage) startGameButton.getScene().getWindow();
 
-        //Load the fxml layout
         BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
         Scene scene = new Scene(root, Main.CANVAS_WIDTH, Main.CANVAS_HEIGHT);
 
-        //Set the scene to the new layout
         primaryStage.setTitle(Main.GAME_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //???
         root.setCenter(Main.getCanvas());
-        //Set the game to allow ticks
         Main.setInLevel(true);
-        //Add keyboard listeners to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, Main.getMain()::handleKeyPressed);
         scene.addEventFilter(KeyEvent.KEY_RELEASED, Main.getMain()::handleKeyReleased);
-        //Set the game off
+        Game.getGame();
         Game.getGame().loadingCave();
     }
 
     @FXML
     public void tutorialButtonPress(ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) tutorialButton.getScene().getWindow();
     }
 
     @FXML

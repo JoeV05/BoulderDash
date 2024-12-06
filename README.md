@@ -7,15 +7,16 @@ PLEASE IF ITS SAYING FORCE PUSH DONT DO IT AND COME AND LET SOMEONE IN THE GROUP
 
 CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 
-- [ ] Game comprises multiple levels
-- [ ] PLayer plays one level at a time
-- [ ] Player can progress to next level upon reaching the exit
+- [ ] Game does not crash if you exceed the number of currently-available levels
+- [x] Game comprises multiple levels
+- [x] PLayer plays one level at a time
+- [x] Player can progress to next level upon reaching the exit
 - [x] Path implemented
 - [x] Dirt implemented
 - [x] Normal walls implemented
 - [x] Titanium walls implemented
 - [x] Magic walls implemented
-- [ ] Exit implemented
+- [x] Exit implemented
 - [x] Keys implemented
 - [x] Locked doors implemented
 - [x] Player can move using the keyboard

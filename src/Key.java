@@ -23,12 +23,12 @@ public class Key extends Walkable {
      * @param y The y-coordinate of the key on the game map
      */
     public Key(int x, int y, Colour colour) {
-        super(x, y, Key.spriteSwitch(colour));
+        super(x, y, new Image("sprites/key_blue.png"));
         this.colour = colour;
     }
 
     // TODO - javadoc method comment
-    private static Image spriteSwitch(Colour colour) {
+    private Image spriteSwitch(Colour colour) {
         switch(colour) {
             case RED:
                 return new Image("sprites/key_red.png");
@@ -62,5 +62,18 @@ public class Key extends Walkable {
      */
     public boolean canUnlock(LockedDoor lockedDoor) {
         return lockedDoor.getColour() == this.colour;
+    }
+
+    // TODO - what
+    /**
+     * Attempts to use the key to unlock a specific locked door.
+     * If the key's colour matches the door's colour, the door is unlocked.
+     *
+     * @param lockedDoor The locked door to attempt to unlock
+     */
+    public void use(LockedDoor lockedDoor) {
+        if (canUnlock(lockedDoor)) {
+            lockedDoor.unlock();
+        }
     }
 }
