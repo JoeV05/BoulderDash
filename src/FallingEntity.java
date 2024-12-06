@@ -1,32 +1,48 @@
 import javafx.scene.image.Image;
-
 import java.util.Random;
 
-// TODO - proper javadoc comment
-
 /**
+ * Represents an object within the game that is able to fall. More specifically
+ * the boulders and diamonds that must be capable of moving downwards each tick
+ * if the tile beneath them is either a path tile, in which case it simply
+ * inhabits the tile, or a magic wall, in which case it must be transformed
+ * by the magic wall.
  * @author Joseph Vinson
+ * @version 1.3
  */
 
 public abstract class FallingEntity extends Entity {
-    protected boolean falling;
-
     public static final int[] ROLLING_CHOICES = {-1, 1};
+    private boolean falling;
 
-    public FallingEntity(int x, int y, Image image) {
-        super(x, y,image);
+    /**
+     * Creates a new falling entity with specified x and y coordinates, as
+     * well as a sprite, and assumes that the falling entity is not falling
+     * when it is created.
+     * @param x x coordinate of the falling entity
+     * @param y y coordinate of the falling entity
+     * @param sprite The sprite of the falling entity
+     */
+    public FallingEntity(int x, int y, Image sprite) {
+        super(x, y, sprite);
 
         this.falling = false;
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Checks whether the falling entity needs to roll, fall or be transformed,
+     * then calls the appropriate helper function for the required action.
+     * @throws IllegalStateException Exception thrown if the falling entity has
+     * fallen past the border of the map.
+     */
     public void tick() {
-        if (this.y > Game.GRID_HEIGHT) {
-            throw new IllegalStateException("FallingEntity " + this + " out of bounds at\nx = " + this.x + "\ny = " + this.y);
+        if (this.y > Game.GRID_HEIGHT - 2) {
+            throw new IllegalStateException(this + " out of bounds at"
+                    + "\nx = " + this.x
+                    + "\ny = " + this.y
+            );
         }
-        // TODO - investigate why this is -2 instead of -1
-        // TODO - remove magic number maybe?
-        if (this.y == Game.GRID_HEIGHT - 2) {
+        if (this.y == Game.MAX_HEIGHT_INDEX) {
             return;
         }
         Entity below = Game.getGame().getEntity(this.x, this.y + 1);
@@ -47,55 +63,115 @@ public abstract class FallingEntity extends Entity {
         // TODO - handle case where entity below is either player or enemy
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Handles the rolling behaviour of falling entities. Checks if the
+     * falling entity can roll right, then if it can also roll left
+     * (in which case it will randomly roll in one of the two directions),
+     * otherwise it will roll right if possible, and if not it will check
+     * if it can roll left, and if possible roll left. Sets the falling
+     * status to false, allowing the falling entity to resume normal behaviour.
+     */
     public void roll() {
         if (this.x < Game.GRID_WIDTH - 1 && this.canRollRight()) {
             if (this.x > 0 && this.canRollLeft()) {
-                Random r = new Random();
-                int dX = FallingEntity.ROLLING_CHOICES[r.nextInt(FallingEntity.ROLLING_CHOICES.length)];
-                Game.getGame().updateLevel(this.x + dX, this.y, this);
+                this.rollEitherWay();
                 return;
+            } else {
+                this.rollRight();
             }
-            int nX = this.x + 1;
-            Game.getGame().updateLevel(nX, this.y, this);
         } else if (this.x > 0 && this.canRollLeft()) {
-            int nX = this.x - 1;
-            Game.getGame().updateLevel(nX, this.y, this);
+            this.rollLeft();
         }
         this.falling = false;
     }
 
+    /**
+     * Randomly selects whether to roll the falling entity to the
+     * right or the left, then rolls the falling entity in the chosen
+     * direction.
+     */
+    private void rollEitherWay() {
+        Random rand = new Random();
+        int randIndex = rand.nextInt(ROLLING_CHOICES.length);
+        int dX = ROLLING_CHOICES[randIndex];
+        Game.getGame().updateLevel(this.x + dX, this.y, this);
+    }
+
+    /**
+     * Rolls the falling entity to the right.
+     */
+    private void rollRight() {
+        int nX = this.x + 1;
+        Game.getGame().updateLevel(nX, this.y, this);
+    }
+
+    /**
+     * Rolls the falling entity to the left.
+     */
+    private void rollLeft() {
+        int nX = this.x - 1;
+        Game.getGame().updateLevel(nX, this.y, this);
+    }
+
     // TODO - javadoc method comment
+    /**
+     * Checks if the falling entity can roll to the left.
+     * @return true or false
+     */
     private boolean canRollLeft() {
         return this.emptyLeft() && this.emptyDownLeft();
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the falling entity can roll to the right.
+     * @return true or false
+     */
     private boolean canRollRight() {
         return this.emptyRight() && emptyDownRight();
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the tile to the left is empty.
+     * @return true or false
+     */
     private boolean emptyLeft() {
         return Game.getGame().getEntity(this.x - 1, this.y) instanceof Path;
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the tile to the right is empty.
+     * @return true or false
+     */
     private boolean emptyRight() {
         return Game.getGame().getEntity(this.x + 1, this.y) instanceof Path;
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the tile down and to the left is empty.
+     * @return true or false
+     */
     private boolean emptyDownLeft() {
         return Game.getGame().getEntity(this.x - 1, this.y + 1) instanceof Path;
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the tile down and to the right is empty.
+     * @return true or false
+     */
     private boolean emptyDownRight() {
         return Game.getGame().getEntity(this.x + 1, this.y + 1) instanceof Path;
     }
 
     // TODO - javadoc method comment
+    /**
+     * Checks if the falling entity is currently falling.
+     * @return true or false
+     */
     public boolean isFalling() {
         return falling;
     }
