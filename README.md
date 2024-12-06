@@ -28,7 +28,7 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Diamonds fall
 - [ ] Diamonds kill player
 - [ ] Diamonds explode enemies
-- [ ] Diamonds can be collected
+- [x] Diamonds can be collected
 - [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
 - [ ] Butterfly follows left or right edge
