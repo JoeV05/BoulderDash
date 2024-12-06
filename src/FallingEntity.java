@@ -62,6 +62,7 @@ public abstract class FallingEntity extends Entity {
             int nX = this.x - 1;
             Game.getGame().updateLevel(nX, this.y, this);
         }
+        this.falling = false;
     }
 
     // TODO - javadoc method comment
