@@ -16,7 +16,7 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Normal walls implemented
 - [x] Titanium walls implemented
 - [x] Magic walls implemented
-- [ ] Exit implemented
+- [x] Exit implemented
 - [x] Keys implemented
 - [x] Locked doors implemented
 - [x] Player can move using the keyboard
