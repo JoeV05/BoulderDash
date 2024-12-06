@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.*;
-import javafx.scene.image.Image;
+import java.util.ArrayList;
 
 // TODO - Redo the javadoc comment
 
@@ -59,9 +58,6 @@ public class Game {
     //dir = the intended direction of the move
     // return true if the move is valid
     public boolean isValidMove(int x, int y, Direction dir) {
-        int nY;
-        int nX;
-        Entity target;
         switch (dir) {
             case UP:
                 return validMoveUp(x, y);
@@ -141,7 +137,7 @@ public class Game {
     //loads a level from the text file and initializes the game state
     //interpreting characters as game entities
     public void loadingCave() throws FileNotFoundException {
-        //initalize the cave from the specified file
+        //initialise the cave from the specified file
         Cave charCave = new Cave("Cave1", "level-1.txt");
         //TODO: Add automatic cave generation, see cave class
         map = new Entity[charCave.getTilesTall()][charCave.getTilesWide()];
