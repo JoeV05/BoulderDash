@@ -42,10 +42,20 @@ public class Firefly extends Enemy {
     }
 
     /**
+     * Performs any actions done when an enemy dies by a hazard and returns
+     * what they should drop on their death.
+     *
+     * @return int representing a particular item or set of items to be dropped on enemy death
+     */
+    @Override
+    public int onDeathByHazard() {
+        return 0;
+    }
+
+    /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
-
     @Override
     public int onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
@@ -108,7 +118,6 @@ public class Firefly extends Enemy {
         return 0;
     }
 
-    @Override
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit ){
@@ -129,13 +138,4 @@ public class Firefly extends Enemy {
         }
     }
     
-    /**
-     * Getter for Position
-     * @return Int[] Position
-     */
-
-    @Override
-    public int onDeathByFallingObject() {
-        return 0;
-    }
 }

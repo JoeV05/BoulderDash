@@ -1,7 +1,6 @@
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -35,64 +34,64 @@ public class Frog extends Enemy {
      *
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
-     @Override
+    @Override
     public int onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
-        int positionY= below.getY();
-        if(checker(positionX, positionY) == true){
+        int positionY = below.getY();
+        if (checker(positionX, positionY) == true) {
             Game.getGame().updateLevel(positionX, positionY, below);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
+            positionX = positionX + 1;
+        } else {
+            positionX = positionX + 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY+1;
-        }else{
-            positionY= positionY+1;
+            positionY = positionY + 1;
+        } else {
+            positionY = positionY + 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX-1;
-        }else{
-            positionX= positionX-1;
+            positionX = positionX - 1;
+        } else {
+            positionX = positionX - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX-1;
-        }else{
-            positionX= positionX-1;
+            positionX = positionX - 1;
+        } else {
+            positionX = positionX - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY-1;
-        }else{
-            positionY= positionY-1;
+            positionY = positionY - 1;
+        } else {
+            positionY = positionY - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY-1;
-        }else{
-            positionY= positionY-1;
+            positionY = positionY - 1;
+        } else {
+            positionY = positionY - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
+            positionX = positionX + 1;
+        } else {
+            positionX = positionX + 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
+            positionX = positionX + 1;
+        } else {
+            positionX = positionX + 1;
         }
         return 0;
     }
@@ -100,40 +99,46 @@ public class Frog extends Enemy {
     @Override
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
-        if (check instanceof Exit ){
+        if (check instanceof Exit) {
             return false;
-        } else if(check instanceof Wall){
-            WallType notUnbreakable =((Wall)check).getWallType();
-            if (notUnbreakable == WallType.TITANIUM_WALL){
+        } else if (check instanceof Wall) {
+            WallType notUnbreakable = ((Wall) check).getWallType();
+            if (notUnbreakable == WallType.TITANIUM_WALL) {
                 return false;
-            }else{
+            } else {
                 return true;
-            }  
-        } else if (check instanceof Butterfly){
+            }
+        } else if (check instanceof Butterfly) {
             Diamond dropedDiamond = new Diamond(x, y);
             Game.getGame().replaceEntity(x, y, dropedDiamond);
             return false;
-        } else{
+        } else {
             return true;
         }
     }
 
+
     /**
-     *
+     * Moves the frog to be called in main
      */
     @Override
     public void move() {
         Game game = Game.getGame();
         Entity[][] currentLevelState = game.getMap();
+        GraphNode[][] graphedLevelState = new GraphNode[currentLevelState.length][currentLevelState[0].length];
+
         int x = 0;
         int y = 0;
         //Goes through everything that is not a path or player and changes it to null
         for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
             System.out.println("Resetting");
             boolean reset = false;
-            if (!(currentLevelState[y][x] instanceof Player) && !(currentLevelState[y][x] instanceof Path)){
-                currentLevelState[y][x] = null;
+            if (currentLevelState[y][x] instanceof Player) {
+                graphedLevelState[y][x] = new GraphNode(true, y, x);
+            } else if (currentLevelState[y][x] instanceof Path) {
+                graphedLevelState[y][x] = new GraphNode(false, y, x);
             }
+
             if (x == currentLevelState.length) {
                 y++;
                 x = 0;
@@ -145,20 +150,22 @@ public class Frog extends Enemy {
 
         }
         //START OF PATHFINDING implementing bfs and then querying the position of the player
-        Entity startLocation = currentLevelState[getY()][getX()];
-        Queue<Integer[]> queue = new LinkedList<>();
-        Integer[] startingLocation = {getX(),getY()};
-        queue.add(startingLocation);
-        ArrayList<Integer[]> visited = new ArrayList<>();
-        while (queue.size() > 0){
-            visited.add(queue.poll());
+        GraphNode startLocation = graphedLevelState[getY()][getX()];
+        Queue<GraphNode> queue = new LinkedList<>();
+        queue.add(new GraphNode(false, getY(), getX()));
+        ArrayList<GraphNode> visited = new ArrayList<>();
+        while (queue.size() > 0) {
+            GraphNode currentNode = queue.poll();
+            visited.add(currentNode);
+            for (int i = 0; i < Neighbours(currentNode, graphedLevelState); i++) {
+
+            }
         }
 
 
-
-
     }
-
 }
+
+
 
 
