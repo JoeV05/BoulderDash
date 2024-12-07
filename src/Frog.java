@@ -1,5 +1,7 @@
 import javafx.scene.image.Image;
 
+import javax.crypto.AEADBadTagException;
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -96,7 +98,6 @@ public class Frog extends Enemy {
         return 0;
     }
 
-    @Override
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit) {
@@ -117,7 +118,52 @@ public class Frog extends Enemy {
         }
     }
 
+    /**
+     * Get the neighbours of a specific node which are not null designed to be used for shortest path in move
+     * @param target GraphNode node you are getting the neighbours of
+     * @param graphedLevelState GraphNode[][] the graph the target is in
+     * @return ArrayList<GraphNode> Neighbours of target which are not null
+     */
+    private ArrayList<GraphNode> getNeighbours(GraphNode target, GraphNode[][] graphedLevelState){
+        ArrayList<GraphNode> output = new ArrayList<>();
+        Integer[] neighbour1 = {target.getY() + 1,target.getX() + 1};
+        Integer[] neighbour2 = {target.getY() - 1,target.getX() +1};
+        Integer[] neighbour3 = {target.getY() -1,target.getX() -1};
+        Integer[] neighbour4 = {target.getY() + 1,target.getX() -1};
+        //Outer if statements make sure that each neighbour is an index in the graphed level state array
+        //Inner if statements check that the neighbour is not null
+        if (neighbour1[0] <= graphedLevelState[0].length -1 &&  neighbour1[1] <= graphedLevelState.length - 1
+                && neighbour1[0] >= 0 && neighbour1[1] >= 0){
+            if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
+                output.add(graphedLevelState[neighbour1[0]][neighbour1[1]]);
+            }
+        }
 
+        if (neighbour2[0] <= graphedLevelState[0].length -1 &&  neighbour2[1] <= graphedLevelState.length - 1
+                && neighbour2[0] >= 0 && neighbour2[1] >= 0){
+            if (graphedLevelState[neighbour2[0]][neighbour2[1]] != null){
+                output.add(graphedLevelState[neighbour2[0]][neighbour2[1]]);
+            }
+
+        }
+
+        if (neighbour3[0] <= graphedLevelState[0].length -1 &&  neighbour3[1] <= graphedLevelState.length - 1
+                && neighbour3[0] >= 0 && neighbour3[1] >= 0){
+
+            if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
+                output.add(graphedLevelState[neighbour3[0]][neighbour3[1]]);
+            }
+        }
+
+        if (neighbour4[0] <= graphedLevelState[0].length -1 &&  neighbour4[1] <= graphedLevelState.length - 1
+                && neighbour4[0] >= 0 && neighbour4[1] >= 0){
+
+            if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
+                output.add(graphedLevelState[neighbour1[0]][neighbour4[1]]);
+            }
+        }
+        return output;
+    }
     /**
      * Moves the frog to be called in main
      */
@@ -154,11 +200,13 @@ public class Frog extends Enemy {
         Queue<GraphNode> queue = new LinkedList<>();
         queue.add(new GraphNode(false, getY(), getX()));
         ArrayList<GraphNode> visited = new ArrayList<>();
+        int distance = 0;
         while (queue.size() > 0) {
+            distance ++;
             GraphNode currentNode = queue.poll();
             visited.add(currentNode);
-            for (int i = 0; i < Neighbours(currentNode, graphedLevelState); i++) {
-
+            ArrayList<GraphNode> Neighbours = getNeighbours(currentNode,graphedLevelState);
+            for (int i = 0; i < Neighbours.size() - 1; i++) {
             }
         }
 

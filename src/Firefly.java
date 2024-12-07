@@ -5,14 +5,6 @@ import javafx.scene.image.Image;
 
 public class Firefly extends Enemy {
 
-    /**
-     * Talk to james about image
-     *
-     * @return Image of Firefly
-     *
-     * // TODO - has this been done, can this comment be removed?
-     */
-
     public Firefly(int x, int y) {
         super(x, y, new Image("./sprites/firefly.png"));
     }
