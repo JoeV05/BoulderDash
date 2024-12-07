@@ -475,6 +475,13 @@ public class Game {
     }
 
     /**
+     * Creates a checkpoint save when a level is loaded.
+     */
+    public void createCheckpoint() {
+        saveGame("checkpoint.txt");
+    }
+
+    /**
      * Loads the game state from a file and reinitializes the game to
      * the saved state. This includes loading the current cave number,
      * player's position, diamonds collected, and keys.
@@ -546,9 +553,13 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
+            // Create a checkpoint save after loading the level
+            createCheckpoint();
+
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
             e.printStackTrace();
         }
     }
+
 }
