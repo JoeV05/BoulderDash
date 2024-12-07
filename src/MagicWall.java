@@ -1,5 +1,8 @@
 /**
+ * Represents a magic wall that can transform boulders and diamonds that
+ * fall onto it.
  * @author Joseph Vinson
+ * @version 1.5
  */
 
 public class MagicWall extends ActionWall {
