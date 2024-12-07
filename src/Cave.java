@@ -74,6 +74,18 @@ public class Cave {
         return tilesWide;
     }
 
+    //Get CaveNumber
+    public static int getCaveNumber() {
+        return caveNumber;
+    }
+
+    //get CaveNumber
+    public static void setCaveNumber(int number) {
+        caveNumber = number;
+    }
+
+
+
     //TODO: Have a function that loads the next cave caveN, N being the next number
 
 }
