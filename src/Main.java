@@ -8,7 +8,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +30,9 @@ import java.util.*;
  * Represents the game state, stores level data and renders game window
  */
 public class Main extends Application {
+    private static Main theMain;
+
+    private static boolean inLevel;
 
     // title.
     public static final String GAME_TITLE = "Boulder Dash";
@@ -35,7 +40,7 @@ public class Main extends Application {
     // canvas. canvas is contained within window.
     public static final int CANVAS_WIDTH = 750;
     public static final int CANVAS_HEIGHT = 400;
-    private Canvas canvas;
+    private static Canvas canvas;
 
     public static final int GRID_CELL_WIDTH = 25;
     public static final int GRID_CELL_HEIGHT = 25;
@@ -47,6 +52,17 @@ public class Main extends Application {
     // viewing system for managing the visible area of the game
     public static final View VIEW = new View(1); // TODO - this number seems suspiciously magical
 
+    private Timeline tickTimeline;
+
+    @Override
+    public void init() {
+        theMain = this;
+    }
+
+    public static Main getMain() {
+        return theMain;
+    }
+
     // TODO - maybe better description for the parameter tag
     // TODO - guess who found a magic number in this method
     /**
@@ -57,30 +73,33 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Declare new canvas
+
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // setting the scene.
-        BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
-        Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
+        /*//BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
+        BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("menu.fxml")));
+        Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);*/
+        //root.setCenter(canvas);
 
-        // setting the stage.
         primaryStage.setTitle(GAME_TITLE);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        //primaryStage.setScene(scene);
+        //primaryStage.show();
 
-        // setting control registering
+
+        //Game.loadingCave();*/
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        tickTimeline.play();
+        BorderPane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Scene scene = new Scene(root,CANVAS_WIDTH,CANVAS_HEIGHT);
+        //root.setCenter(canvas);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
         scene.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyReleased);
 
-        // load the cave.
-        Game.loadingCave();
-
-        // setting tick-based system.
-        Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
-        tickTimeline.play();
+        primaryStage.setTitle(GAME_TITLE);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     // TODO - maybe better description for the event parameter
@@ -111,6 +130,9 @@ public class Main extends Application {
      * on the map that needs to be updated every tick
      */
     public void tick() {
+        if (!Main.inLevel) {
+            return;
+        }
         if (!pressedKeys.isEmpty()) {
             Player p = Player.getPlayer();
             KeyCode intendedKey = pressedKeys.peek();
@@ -125,6 +147,10 @@ public class Main extends Application {
     // TODO - better separation of responsibilities
     // TODO - get these gosh darn mother fishing magic numbers outta here
     private void draw() {
+        if (!Main.inLevel) {
+            System.out.println("hopefully drawing the menu");
+            return;
+        }
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
@@ -136,6 +162,7 @@ public class Main extends Application {
         int yStart = whatWeCanSee[2];
         int yEnd = whatWeCanSee[3];
 
+        // TODO - wow, these numbers are so magical
         Entity[][] mapWeCanSee = new Entity[16][30];
 
         for (int y = yStart; y <= yEnd; y++) {
@@ -144,6 +171,7 @@ public class Main extends Application {
             }
         }
 
+        // TODO - would be crazy if these were constants instead of magic numbers
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 30; x++) {
                 Entity entity = mapWeCanSee[y][x];
@@ -154,8 +182,18 @@ public class Main extends Application {
     }
 
     // TODO - javadoc method comment
+    public static void setInLevel(boolean inLevel) {
+        Main.inLevel = inLevel;
+    }
+
+    public static Canvas getCanvas() {
+        return canvas;
+    }
+
+    // TODO - javadoc method comment
     public static void main(String[] args) {
-        Game.getGame();
+        Main.inLevel = false;
+        //Game.getGame();
         launch(args);
     }
 }

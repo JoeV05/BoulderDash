@@ -12,14 +12,14 @@ public class Cave {
     private final String fileName;
     private static int caveNumber = 0;
 
-    public Cave(String nameForCave, String nameForFile) throws FileNotFoundException {
-        this.caveName = nameForCave;
-        this.fileName = nameForFile;
-        caveNumber += 1;
+    public Cave() throws FileNotFoundException {
+        caveNumber++;
+        this.caveName = "Cave" + caveNumber;
+        this.fileName = "level-" + caveNumber + ".txt";
         parseCave();
         System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
-        //TODO: Change constructor, parameters no longer needed, use caveNumber for automatic new cave generation
+        // TODO: Change constructor, parameters no longer needed, use caveNumber for automatic new cave generation
         // TODO - Does this mean automatically load the relevant level-n.txt for an input n?
 
     }
@@ -72,6 +72,16 @@ public class Cave {
 
     public int getTilesWide() {
         return tilesWide;
+    }
+
+    //Get CaveNumber
+    public static int getCaveNumber() {
+        return caveNumber;
+    }
+
+    //get CaveNumber
+    public static void setCaveNumber(int number) {
+        caveNumber = number;
     }
 
     //TODO: Have a function that loads the next cave caveN, N being the next number
