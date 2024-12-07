@@ -25,6 +25,8 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private static int diamondsNeeded;
+    private static int timeLimit;
     private ArrayList<AmoebaGroup> amoebaGroups;
 
     /**
@@ -35,6 +37,14 @@ public class Game {
         actionWalls = new ArrayList<>();
         enemies = new ArrayList<>();
         amoebaGroups = new ArrayList<>();
+    }
+
+
+    public static void setDiamondsNeeded(int diamondsNeeded) {
+        Game.diamondsNeeded = diamondsNeeded;
+    }
+    public static void setTimeLimit(int timeLimit) {
+        Game.timeLimit = timeLimit;
     }
 
     /**
@@ -484,6 +494,13 @@ public class Game {
     }
 
     /**
+     * Creates a checkpoint save when a level is loaded.
+     */
+    public void createCheckpoint() {
+        saveGame("checkpoint.txt");
+    }
+
+    /**
      * Loads the game state from a file and reinitializes the game to
      * the saved state. This includes loading the current cave number,
      * player's position, diamonds collected, and keys.
@@ -555,9 +572,16 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
+            // Create a checkpoint save after loading the level
+            createCheckpoint();
+
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
             e.printStackTrace();
         }
+    }
+	public void gameOver(){
+        System.out.println(" Game Over ");
+        loadGame("checkpoint.txt");
     }
 }
