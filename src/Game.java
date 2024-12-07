@@ -231,6 +231,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        // change
         System.out.println("you need to collect " + diamondsNeeded + " or more diamonds in " + timeLimit + " or less seconds time.");
     }
 
