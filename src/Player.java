@@ -115,6 +115,8 @@ public class Player extends Entity {
                 dX = 1;
             }
             this.pushBoulder(b, dX);
+        } else if (target instanceof Frog || target instanceof Butterfly || target instanceof Firefly){
+            playerDeath();
         }
     }
 
