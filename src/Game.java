@@ -1,120 +1,171 @@
 import java.io.FileNotFoundException;
-import java.util.*;
-
-// TODO - Redo the javadoc comment
+import java.util.ArrayList;
 
 /**
- *Represents the main game logic and state management for the Boulder Game
- *This class initialises the game window, receives user input and
- *handles the rendering and updating of game state
- *The game a grid based level system with entities modelled on
- *top of it using javafx for rendering
- *
+ * Stores and handles data about the overall game state. Keeps track
+ * of all entities on the map and updates them when needed. Contains
+ * validation for some processes.
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
- * Represents the game state, stores level data and renders game window
+ * @version 1.5
  */
 public class Game {
-    private static Game theGame;
-
     // constants for grid and cell sizes
     public static final int GRID_WIDTH = 40;
     public static final int GRID_HEIGHT = 23;
-
+    // TODO - look into why this is - 2
+    public static final int MAX_HEIGHT_INDEX = Game.GRID_HEIGHT - 2;
+    public static final int MAX_WIDTH_INDEX = Game.GRID_WIDTH - 1;
+    private static Game theGame;
     // the map of entities representing the game
     private Entity[][] map;
-
-    //list of entities requiring special logic
-    private ArrayList<FallingEntity> fallingEntities;//entities effected by gravity
-    private ArrayList<ActionWall> actionWalls;//special attribute walls
+    //entities effected by gravity
+    private ArrayList<FallingEntity> fallingEntities;
+    //walls that need to be updated on tick
+    private ArrayList<ActionWall> actionWalls;
+    //all active enemies
     private ArrayList<Enemy> enemies;
 
+    /**
+     * Constructor for the Game class.
+     */
     private Game() {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
         enemies = new ArrayList<>();
     }
 
-    // TODO - javadoc method comment
-    public void addFallingEntity(FallingEntity e) {
-        fallingEntities.add(e);//Adds a falling entity to the list of entities effected by gravity
+    /**
+     * Adds an object that falls (i.e. boulder or diamond) to the falling
+     * entities the game keeps track of.
+     * @param entity Entity to add.
+     */
+    public void addFallingEntity(FallingEntity entity) {
+        fallingEntities.add(entity);
     }
 
-    // TODO - javadoc method comment
-    public void removeFallingEntity(FallingEntity e) {
-        //removes a falling entity from the list
-        fallingEntities.remove(e);
+    /**
+     * Removes an object from the falling entities the game keeps track of.
+     * @param entity Entity to no longer keep track of.
+     */
+    public void removeFallingEntity(FallingEntity entity) {
+        fallingEntities.remove(entity);
     }
 
-    // TODO - javadoc method comment
-    public void removeEnemy(Enemy e) {
-        enemies.remove(e);
+    /**
+     * Remove an enemy from the enemies the game keeps track of.
+     * @param enemy Enemy to stop keeping track of.
+     */
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
     }
 
-    // TODO - better separation of responsibilities
-    // TODO - javadoc method comment
-    //Validates whether a move is allowed based on the current grid
-    //x = the current x coordinate of the entity
-    //y = the current y coordinate of the entity
-    //dir = the intended direction of the move
-    // return true if the move is valid
+    /**
+     * Checks if a move from a given (x, y) position is valid for
+     * a given direction.
+     * @param x The x coordinate to move from.
+     * @param y The y coordinate to move from.
+     * @param dir The direction to move in.
+     * @return true or false.
+     */
     public boolean isValidMove(int x, int y, Direction dir) {
         return switch (dir) {
             case UP -> validMoveUp(x, y);
             case DOWN -> validMoveDown(x, y);
             case LEFT -> validMoveLeft(x, y);
             case RIGHT -> validMoveRight(x, y);
-            default -> throw new LiamWetFishException("WHAT THE FISH DID YOU DO TO GET HERE");
+            default -> throw new IllegalStateException("Invalid direction: "
+                    + dir);
         };
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if moving up is allowed from a given position.
+     * @param x The x coordinate of the position to move up from.
+     * @param y The y coordinate of the position to move up from.
+     * @return true or false.
+     */
     private boolean validMoveUp(int x, int y) {
         int nY = y - 1;
         Entity target = getEntity(x, nY);
-        return y > 0 && moveOnValidation(target, x, nY);
+        return y > 0 && moveOnValidation(target);
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if moving down is allowed from a given position.
+     * @param x The x coordinate of the position to move down from.
+     * @param y THe y coordinate of the position to move down from.
+     * @return true or false.
+     */
     private boolean validMoveDown(int x, int y) {
         int nY = y + 1;
         Entity target = getEntity(x, nY);
-        return y < (GRID_HEIGHT - 2) && moveOnValidation(target, x, nY);
+        return y < (GRID_HEIGHT - 2) && moveOnValidation(target);
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if moving left is allowed from a given position.
+     * @param x The x coordinate of the position to move left from.
+     * @param y The y coordinate of the position move left from.
+     * @return true or false.
+     */
     private boolean validMoveLeft(int x, int y) {
         int nX = x - 1;
         Entity target = getEntity(nX, y);
-        return x > 0 && moveOnValidation(target, nX, y);
+        return x > 0 && moveOnValidation(target);
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if moving right is allowed from a given position.
+     * @param x The x coordinate of the position to move right from.
+     * @param y The y coordinate of the position to move right from.
+     * @return true or false.
+     */
     private boolean validMoveRight(int x, int y) {
         int nX = x + 1;
         Entity target = getEntity(nX, y);
-        return x < (GRID_WIDTH - 1) && moveOnValidation(target, nX, y);
+        return x < (GRID_WIDTH - 1) && moveOnValidation(target);
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if an entity is a diamond and if so whether it is not falling.
+     * @param target Entity to check.
+     * @return true or false.
+     */
     private boolean canMoveOnDiamond(Entity target) {
         return target instanceof Diamond && !isFallingDiamond(target);
     }
 
-    // TODO - javadoc method comment
-    private boolean moveOnValidation(Entity target, int x, int y) {
-        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y) ||
-                (target instanceof Exit && ((Exit) target).walkable);
+    /**
+     * Check if a move is valid given the object stored on the tile that
+     * would be moved to.
+     * @param target Entity that is on the target tile.
+     * @return true or false.
+     */
+    private boolean moveOnValidation(Entity target) {
+        return target instanceof Walkable
+                || canMoveOnDiamond(target)
+                || playerCanUnlockDoor(target)
+                || (target instanceof Exit && ((Exit) target).walkable);
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if an entity is a falling diamond. Should only be called on
+     * entities that are known to be diamonds.
+     * @param entity Diamond to check the falling state of.
+     * @return true or false.
+     */
     private boolean isFallingDiamond(Entity entity) {
         Diamond diamond = (Diamond) entity;
         return diamond.isFalling();
     }
 
-    // TODO - javadoc method comment
-    private boolean playerCanUnlockDoor(int x, int y) {
-        Entity target = getEntity(x, y);
+    /**
+     * Check if the tile the player is trying to move to is a door, and if it is
+     * then check if the player is able to unlock it.
+     * @param target Entity to check against.
+     * @return true or false.
+     */
+    private boolean playerCanUnlockDoor(Entity target) {
         if (!(target instanceof LockedDoor)) {
             return false;
         }
@@ -127,14 +178,14 @@ public class Game {
         return false;
     }
 
-    // TODO - javadoc method comment
-    // TODO - better separation of responsibilities
-    //loads a level from the text file and initializes the game state
-    //interpreting characters as game entities
+    /**
+     * Loads a level from a text file and initialises the game state.
+     * @throws FileNotFoundException Throw an error when the level file
+     * isn't found.
+     */
     public void loadingCave() throws FileNotFoundException {
         //initialise the cave from the specified file
-        Cave charCave = new Cave() ;
-        //TODO: Add automatic cave generation, see cave class
+        Cave charCave = new Cave();
         map = new Entity[charCave.getTilesTall()][charCave.getTilesWide()];
         //creates a map based on the caves dimensions
         charCave.printCave();
@@ -143,96 +194,132 @@ public class Game {
         for (int row = 0; row < charCave.getTilesTall(); row++) {
             for (int col = 0; col < charCave.getTilesWide(); col++) {
                 char tileChar = reduceGets[row][col];
-                //assign entities based on character symbols
-                switch(tileChar) {
-                    case '#':
-                        map[row][col] = new Wall(col, row, WallType.NORMAL_WALL);
-                        break;
-                    case 'T':
-                        map[row][col] = new Wall(col, row, WallType.TITANIUM_WALL);
-                        break;
-                    case 'M':
-                        MagicWall m = new MagicWall(col, row);
-                        map[row][col] = m;
-                        actionWalls.add(m);
-                        break;
-                    case 'E':
-                        Exit e = new Exit(col, row, 5);
-                        map[row][col] = e;
-                        actionWalls.add(e);
-                        break;
-                    // TODO - metadata needed for unlock exit condition
-                    case 'R':
-                        map[row][col] = new LockedDoor(col, row, Colour.RED);
-                        break;
-                    case 'G':
-                        map[row][col] = new LockedDoor(col, row, Colour.GREEN);
-                        break;
-                    case 'B':
-                        map[row][col] = new LockedDoor(col, row, Colour.BLUE);
-                        break;
-                    case 'Y':
-                        map[row][col] = new LockedDoor(col, row, Colour.YELLOW);
-                        break;
-                    case 'r':
-                        map[row][col] = new Key(col, row, Colour.RED);
-                        break;
-                    case 'g':
-                        map[row][col] = new Key(col, row, Colour.GREEN);
-                        break;
-                    case 'b':
-                        map[row][col] = new Key(col, row, Colour.BLUE);
-                        break;
-                    case 'y':
-                        map[row][col] = new Key(col, row, Colour.YELLOW);
-                        break;
-                    case 'O':
-                        Boulder b = new Boulder(col, row);
-                        map[row][col] = b;
-                        fallingEntities.add(b);
-                        break;
-                    case 'V':
-                        Diamond d = new Diamond(col, row);
-                        map[row][col] = d;
-                        fallingEntities.add(d);
-                        break;
-                    case 'W':
-                        map[row][col] = new Butterfly(col, row);
-                        break;
-                    case 'X':
-                        map[row][col] = new Firefly(col, row);
-                        break;
-                    // TODO - metadata needed for left/right wall cling
-                    case 'F':
-                        map[row][col] = new Frog(col, row);
-                        break;
-                    case 'A':
-                        map[row][col] = new Amoeba(col, row, 10);
-                        break;
-                    case 'P':
-                        map[row][col] = Player.getPlayer(col, row);
-                        break;
-                    // TODO - metadata needed for maximum Amoeba size
-                    case 'D':
-                        map[row][col] = new Dirt(col, row);
-                        break;
-                    // TODO - maybe better practice to have specific path letter and throw error otherwise?
-                    default:
-                        map[row][col] = new Path(col, row);
-                        break;
-                }
+                this.tileSwitch(tileChar, row, col);
             }
         }
     }
 
-    // TODO - finish javadoc method comment
+    /**
+     * Determines what kind of entity should be in a given location from a
+     * given character, then adds that entity to the map at the given
+     * location.
+     * @param tileChar Character representing what type of entity to place.
+     * @param y The y coordinate the entity should be placed at.
+     * @param x The x coordinate the entity should be placed at.
+     */
+    private void tileSwitch(char tileChar, int y, int x) {
+        switch (tileChar) {
+            case '#':
+                map[y][x] = new Wall(x, y, WallType.NORMAL_WALL);
+                break;
+            case 'T':
+                map[y][x] = new Wall(x, y, WallType.TITANIUM_WALL);
+                break;
+            case 'M':
+                MagicWall m = new MagicWall(x, y);
+                addToOnCreate(m);
+                break;
+            case 'E':
+                Exit e = new Exit(x, y, 5);
+                addToOnCreate(e);
+                break;
+            // TODO - metadata needed for unlock exit condition
+            case 'R':
+                map[y][x] = new LockedDoor(x, y, Colour.RED);
+                break;
+            case 'G':
+                map[y][x] = new LockedDoor(x, y, Colour.GREEN);
+                break;
+            case 'B':
+                map[y][x] = new LockedDoor(x, y, Colour.BLUE);
+                break;
+            case 'Y':
+                map[y][x] = new LockedDoor(x, y, Colour.YELLOW);
+                break;
+            case 'r':
+                map[y][x] = new Key(x, y, Colour.RED);
+                break;
+            case 'g':
+                map[y][x] = new Key(x, y, Colour.GREEN);
+                break;
+            case 'b':
+                map[y][x] = new Key(x, y, Colour.BLUE);
+                break;
+            case 'y':
+                map[y][x] = new Key(x, y, Colour.YELLOW);
+                break;
+            case 'O':
+                Boulder b = new Boulder(x, y);
+                addToOnCreate(b);
+                break;
+            case 'V':
+                Diamond d = new Diamond(x, y);
+                addToOnCreate(d);
+                break;
+            case 'W':
+                map[y][x] = new Butterfly(x, y);
+                break;
+                // TODO - read left/right from level file
+            case 'X':
+                map[y][x] = new Firefly(x, y);
+                break;
+            // TODO - metadata needed for left/right wall cling
+            case 'F':
+                map[y][x] = new Frog(x, y);
+                break;
+            case 'A':
+                map[y][x] = new Amoeba(x, y, 10);
+                break;
+            case 'P':
+                map[y][x] = Player.getPlayer(x, y);
+                break;
+            // TODO - metadata needed for maximum Amoeba size
+            case 'D':
+                map[y][x] = new Dirt(x, y);
+                break;
+            default:
+                map[y][x] = new Path(x, y);
+                break;
+        }
+    }
+
+    /**
+     * Add an entity to the map and the appropriate list for the game to keep
+     * track of and update the entity on each tick.
+     * @param entity Entity to add.
+     */
+    private void addToOnCreate(Entity entity) {
+        map[entity.getY()][entity.getX()] = entity;
+        if (entity instanceof ActionWall) {
+            if (entity instanceof Exit) {
+                actionWalls.add((Exit) entity);
+            } else {
+                actionWalls.add((MagicWall) entity);
+            }
+        } else if (entity instanceof FallingEntity) {
+            if (entity instanceof Diamond) {
+                fallingEntities.add((Diamond) entity);
+            } else {
+                fallingEntities.add((Boulder) entity);
+            }
+        } else if (entity instanceof Enemy) {
+            if (entity instanceof Frog) {
+                enemies.add((Frog) entity);
+            } else if (entity instanceof Butterfly) {
+                enemies.add((Butterfly) entity);
+            } else {
+                enemies.add((Firefly) entity);
+            }
+        }
+    }
+
     /**
      * Updates the position of an entity on the game map
-     * replacing the previous position with a path entity,
-     * used for movement
-     * @param newX
-     * @param newY
-     * @param entity
+     * replacing the previous position with a path tile.
+     * Used for movement.
+     * @param newX The x coordinate to move the entity to.
+     * @param newY The y coordinate to move the entity to.
+     * @param entity The entity to move.
      */
     public void updateLevel(int newX, int newY, Entity entity) {
         int oldX = entity.getX();
@@ -253,26 +340,31 @@ public class Game {
     }
 
     /**
-     * Changes the entity type in the levelState at x,y
-     * @param x new x position to be moved to
-     * @param y new y position to be moved to
-     * @param entity to be replaced with
+     * Replace the entity at (x, y) in the map with a given entity.
+     * @param x The x coordinate of the entity to replace.
+     * @param y The y coordinate of the entity to replace.
+     * @param entity The entity to place on the map.
      */
     public void replaceEntity(int x, int y, Entity entity) {
         map[y][x] = entity;
     }
 
-    // TODO - finish javadoc method comment
     /**
-     * Returns the entity at the given x/y coordinates
-     * @param x
-     * @param y
-     * @return Entity to be moved
+     * Returns the entity at the given (x, y) coordinates.
+     * @param x The x coordinate of the map to get the entity from.
+     * @param y The y coordinate of the map to get the entity from.
+     * @return Any object of type Entity.
      */
     public Entity getEntity(int x, int y) {
         return map[y][x];
     }
 
+    /**
+     * Loads the next level into the game.
+     * @throws FileNotFoundException Throws an error if there is no level
+     * left to load, i.e. the player has reached the final level and tries
+     * to exit to the next level.
+     */
     public void nextLevel() throws FileNotFoundException {
         actionWalls.clear();
         fallingEntities.clear();
@@ -297,26 +389,35 @@ public class Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             //enemies.get(i).???
-            // TODO - Use this for enemy update on tick, e.g. enemies.get(i).move()
-            //  (preferably enemies.get(i).tick() but it's up to hazards people)
+            // TODO - Use this for enemy update on tick, #
+            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
+            //  but it's up to hazards people)
         }
     }
 
-    // TODO - better javadoc method comment
     /**
-     * Getter for map
-     * @return Entity [][] map
+     * Retrieves the map.
+     * @return 2D array of Entity objects.
      */
-    public Entity[][] getMap(){
+    public Entity[][] getMap() {
         return map;
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Check if an entity is considered round. Used to determine if a falling
+     * entity should roll when it is above this tile.
+     * @param entity Entity to check the round status of.
+     * @return true or false.
+     */
     public static boolean isRound(Entity entity) {
-        return (entity instanceof FallingEntity) || (entity instanceof Wall && !(entity instanceof MagicWall));
+        return (entity instanceof FallingEntity)
+                || (entity instanceof Wall && !(entity instanceof MagicWall));
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Retrieve the instance of the game.
+     * @return Game object.
+     */
     public static Game getGame() {
         if (theGame == null) {
             theGame = new Game();
