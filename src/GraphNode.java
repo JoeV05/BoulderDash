@@ -4,7 +4,7 @@
  * @author Edward Tickle
  */
 public class GraphNode {
-    private int distance;
+    private int distance = -1;
     private boolean isPlayer;
     private int x;
     private int y;
@@ -21,7 +21,7 @@ public class GraphNode {
 
     /**
      * Gets distance
-     * @return int distance from starting node
+     * @return int distance from starting node returns -1 if no distance added
      */
     public int getDistance() {
         return distance;
