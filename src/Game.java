@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.io.*;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -424,5 +425,107 @@ public class Game {
             theGame = new Game();
         }
         return theGame;
+    }
+
+    /**
+     * Saves the current state of the game to a file.
+     * The save file includes the current cave number, player position,
+     * number of diamonds collected, and the number of keys the player has.
+     *
+     * @author Tafara Gonese
+     * @param filename The name of the file to save the game state to.
+     */
+    public void saveGame(String filename) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // Save the current cave number
+            writer.println("CaveNumber:" + Cave.getCaveNumber());
+            // Save the player's position on the grid
+            writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
+            // Save the number of diamonds the player has collected
+            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
+            // Save the number of keys the player has
+            writer.println("Keys:" + Player.getPlayer().getKeys().size());
+        } catch (IOException e) {
+            // Print the stack trace for debugging if saving fails
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the game state from a file and reinitializes the game to
+     * the saved state. This includes loading the current cave number,
+     * player's position, diamonds collected, and keys.
+     *
+     * The method reads the file line by line using a BufferedReader
+     * and parses the data to restore the game state.
+     *
+     * @author Tafara Gonese
+     * @param filename The name of the file to load the game state from.
+     */
+    public void loadGame(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            // Read the save file line by line
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split each line into a key-value pair based on the colon delimiter
+                String[] parts = line.split(":");
+                switch (parts[0]) {
+                    case "CaveNumber":
+                        // Set the cave number using the parsed integer
+                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
+                        break;
+                    case "PlayerPosition":
+                        // Parse the player's x and y position
+                        String[] position = parts[1].split(",");
+                        Player.getPlayer().setX(Integer.parseInt(position[0]));
+                        Player.getPlayer().setY(Integer.parseInt(position[1]));
+                        break;
+                    case "Diamonds":
+                        // Set the number of diamonds the player has
+                        Player.getPlayer().setDiamonds(Integer.parseInt(parts[1]));
+                        break;
+                    case "Keys":
+                        // Clear the player's keys and add the specified number of default keys
+                        int numKeys = Integer.parseInt(parts[1]);
+                        Player.getPlayer().getKeys().clear();
+                        for (int i = 0; i < numKeys; i++) {
+                            Player.getPlayer().getKeys().add(new Key(0, 0, Colour.RED)); // Example default key
+                        }
+                        break;
+                }
+            }
+            // After parsing the file, reload the current cave
+            loadCave();
+        } catch (IOException e) {
+            // Print the stack trace for debugging if loading fails
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the cave layout corresponding to the current cave number.
+     * Initializes the game map based on the cave's tiles.
+     * The cave layout is parsed from the appropriate level file.
+     *
+     * @author Tafara Gonese
+     */
+    public void loadCave() {
+        try {
+            // Create a new Cave instance based on the current cave number
+            Cave cave = new Cave();
+            // Initialize the game map with dimensions from the cave
+            map = new Entity[cave.getTilesTall()][cave.getTilesWide()];
+            // Retrieve the cave layout as a 2D array of characters
+            char[][] caveLayout = cave.getCave();
+            // Populate the map based on the characters in the layout
+            for (int y = 0; y < caveLayout.length; y++) {
+                for (int x = 0; x < caveLayout[0].length; x++) {
+                    tileSwitch(caveLayout[y][x], y, x);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // Print the stack trace for debugging if the cave file is missing
+            e.printStackTrace();
+        }
     }
 }
