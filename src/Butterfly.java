@@ -88,12 +88,16 @@ public class Butterfly extends Firefly {
         } else {
             positionX = positionX + 1;
         }
+		if (gameEnd = true){
+            gameEnd =false;
+            Player.getPlayer().playerDeath();
+        }
     }
 
     /**
      * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default
      */
-
+	boolean gameEnd = false;
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit) {
@@ -109,6 +113,9 @@ public class Butterfly extends Firefly {
             Diamond dropedDiamond = new Diamond(x, y);
             Game.getGame().replaceEntity(x, y, dropedDiamond);
             return false;
+        } else if (check instanceof Player) {
+            gameEnd = true;
+            return true;
         } else {
             return true;
         }
