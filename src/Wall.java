@@ -30,9 +30,13 @@ public class Wall extends Tile {
             case WallType.EXIT:
                 img = new Image("./sprites/exit_locked.png");
                 break;
+            case WallType.LOCKED_DOOR:
+                img = new Image("./sprites/titanium.png");
+                break;
             default:
                 System.out.println(wallType);
-                throw new LiamWetFishException("WHAT THE FISH??? WHERES THE FISHING WALLTYPE???");
+                throw new IllegalArgumentException("Invalid wall type "
+                        + wallType);
         }
         return img;
     }
