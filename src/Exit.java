@@ -35,6 +35,6 @@ public class Exit extends ActionWall {
 
     @Override
     public void tick(){
-        updateExit(0);
+        updateExit(Player.getPlayer().getDiamonds());
     }
 }

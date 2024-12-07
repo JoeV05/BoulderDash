@@ -102,7 +102,8 @@ public class Game {
 
     // TODO - javadoc method comment
     private boolean moveOnValidation(Entity target, int x, int y) {
-        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y) || (target instanceof Exit && ((Exit) target).walkable);
+        return target instanceof Walkable || canMoveOnDiamond(target) || playerCanUnlockDoor(x, y) ||
+                (target instanceof Exit && ((Exit) target).walkable);
     }
 
     // TODO - javadoc method comment
@@ -156,7 +157,7 @@ public class Game {
                         actionWalls.add(m);
                         break;
                     case 'E':
-                        Exit e = new Exit(col, row, 0);
+                        Exit e = new Exit(col, row, 5);
                         map[row][col] = e;
                         actionWalls.add(e);
                         break;
@@ -273,6 +274,9 @@ public class Game {
     }
 
     public void nextLevel() throws FileNotFoundException {
+        actionWalls.clear();
+        fallingEntities.clear();
+        enemies.clear();
         loadingCave();
     }
 
