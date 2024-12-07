@@ -105,7 +105,25 @@ public class Player extends Entity {
                 Game.getGame().updateLevel(nX, nY, this);
                 this.checkForChangeInView(oX, oY);
             }
+        } else if (target instanceof Boulder) {
+            Boulder b = (Boulder) target;
+            int dX;
+            if (moveDir == Direction.LEFT) {
+                dX = -1;
+                //Game.getGame().updateLevel(b.getX() - 1, b.getY(), b);
+                //Game.getGame().updateLevel(nX, nY, this);
+            } else {
+                dX = 1;
+                //Game.getGame().updateLevel(b.getX() + 1, b.getY(), b);
+                //Game.getGame().updateLevel(nX, nY, this);
+            }
+            this.pushBoulder(b, dX);
         }
+    }
+
+    public void pushBoulder(Boulder b, int dX) {
+        Game.getGame().updateLevel(b.getX() + dX, b.getY(), b);
+        Game.getGame().updateLevel(this.x + dX, this.y, this);
     }
 
     /**
