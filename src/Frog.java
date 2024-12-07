@@ -1,7 +1,5 @@
 import javafx.scene.image.Image;
 
-import javax.crypto.AEADBadTagException;
-import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,15 +19,6 @@ public class Frog extends Enemy {
 
     }
 
-    /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     *
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    @Override
-    public int onDeathByHazard() {
-        return 0;
-    }
 
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
@@ -96,6 +85,10 @@ public class Frog extends Enemy {
             positionX = positionX + 1;
         }
     }
+	
+	/**
+     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default 
+     */
 
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
@@ -207,17 +200,22 @@ public class Frog extends Enemy {
             distance ++;
             for (int i = 0; i < Neighbours.size() - 1; i++) {
                 Neighbours.get(i).setDistance(distance);
+                Neighbours.get(i).setParent(currentNode);
                 queue.add(Neighbours.get(i));
 
             }
         }
         //Checks if there is a route to the player or not
         boolean routeToPlayer = true;
+        int[] playerCoordinates = new int[2];
         for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
             System.out.println("Resetting");
             boolean reset = false;
             if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
                 routeToPlayer = false;
+            }else if (graphedLevelState[y][x].isPlayer()){
+                playerCoordinates[0] = y;
+                playerCoordinates[1] = x;
             }
             if (x == currentLevelState.length) {
                 y++;
@@ -231,7 +229,11 @@ public class Frog extends Enemy {
         }
         //Decides where to move based on distance values
         if (routeToPlayer){
-
+            GraphNode currentNode = graphedLevelState[playerCoordinates[0]][playerCoordinates[1]];
+            for (int i = 0; i < graphedLevelState[playerCoordinates[0]][playerCoordinates[1]].getDistance() - 1; i++) {
+                currentNode = currentNode.getParent();
+            }
+            game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
         }
 
 
