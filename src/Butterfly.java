@@ -38,7 +38,7 @@ public class Butterfly extends Firefly {
      */
 
     @Override
-    public int onDeathByFallingObject() {
+    public int onDeathByFallingObject(Entity below) {
         return 0;
     }
 }

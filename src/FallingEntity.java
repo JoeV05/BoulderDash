@@ -134,7 +134,8 @@ public abstract class FallingEntity extends Entity {
      * @return true or false
      */
     private boolean emptyLeft() {
-        return Game.getGame().getEntity(this.x - 1, this.y) instanceof Path;
+        Entity target = Game.getGame().getEntity(this.x - 1, this.y);
+        return target instanceof Path;
     }
 
     /**
@@ -142,7 +143,8 @@ public abstract class FallingEntity extends Entity {
      * @return true or false
      */
     private boolean emptyRight() {
-        return Game.getGame().getEntity(this.x + 1, this.y) instanceof Path;
+        Entity target = Game.getGame().getEntity(this.x + 1, this.y);
+        return target instanceof Path;
     }
 
     /**
@@ -150,7 +152,8 @@ public abstract class FallingEntity extends Entity {
      * @return true or false
      */
     private boolean emptyDownLeft() {
-        return Game.getGame().getEntity(this.x - 1, this.y + 1) instanceof Path;
+        Entity target = Game.getGame().getEntity(this.x - 1, this.y + 1);
+        return target instanceof Path;
     }
 
     /**
@@ -158,7 +161,8 @@ public abstract class FallingEntity extends Entity {
      * @return true or false
      */
     private boolean emptyDownRight() {
-        return Game.getGame().getEntity(this.x + 1, this.y + 1) instanceof Path;
+        Entity target = Game.getGame().getEntity(this.x + 1, this.y + 1);
+        return target instanceof Path;
     }
 
     /**
