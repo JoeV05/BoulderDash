@@ -48,15 +48,18 @@ public abstract class FallingEntity extends Entity {
         if (Game.isRound(below)) {
             this.roll();
             return;
-        }
-        if (below instanceof Path) {
+        } else if (below instanceof Path) {
             Game.getGame().updateLevel(x, y + 1, this);
             this.falling = true;
             return;
-        }
-        if (below instanceof MagicWall) {
+        } else if (below instanceof MagicWall) {
             ((MagicWall) below).transform(this);
             return;
+        }
+        if (below instanceof LockedDoor && this.falling) {
+            LockedDoor lD = (LockedDoor) below;
+            RuinedDoor rD = new RuinedDoor(lD.getX(), lD.getY(), lD.getColour());
+            Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
         }
         this.falling = false;
         // TODO - handle case where entity below is either player or enemy
