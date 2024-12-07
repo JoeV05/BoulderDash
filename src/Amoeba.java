@@ -21,98 +21,93 @@ import javafx.scene.image.Image;
  */
 
 public class Amoeba extends Tile {
-    /**
-     * The current size of the amoeba.
-     */
-    private int size;
-
-    // TODO - remove duplicate variables
-
-    /**
-     * The maximum size the amoeba can reach before transforming.
-     */
-    private final int maximumSize;
-
-
-    private ArrayList<Amoeba> group;
 
     /**
      * Constructs a new Amoeba tile.
-     *
-     * @param x                  The x-coordinate of the amoeba tile.
-     * @param y                  The y-coordinate of the amoeba tile.
-     * @param maximumSize        The maximum size the amoeba can reach before transforming.
-     * @param maximumSize The size at which the amoeba transforms into boulders.
+     * @param x The x-coordinate of the amoeba tile.
+     * @param y The y-coordinate of the amoeba tile.
      */
-    public Amoeba(int x, int y, int maximumSize) {
+    public Amoeba(int x, int y) {
         super(x, y, false, TileType.AMOEBA, new Image("sprites/amoeba.png"));
-        this.maximumSize = maximumSize;
-        this.size = 1; // Start with a size of 1
-        this.group = new ArrayList<>();
-        this.group.add(this);
     }
 
-    public Amoeba(int x, int y, int maximumSize, Image image, ArrayList<Amoeba> group) {
-        super(x, y, false, TileType.AMOEBA, image);
-        this.maximumSize = maximumSize;
-        this.group = group;
-        this.group.add(this);
-        this.size = this.group.size();
+    public boolean canGrow() {
+        return !growthDirections().isEmpty();
     }
 
-    /**
-     * Grows the amoeba by one size.
-     * If the size reaches the maximum size, the amoeba transforms into boulders and diamonds.
-     */
-    public void grow() {
-        if (this.size < this.maximumSize) {
-            // TODO - Check the thing
-            // TODO - if (the thing) {
-            //      do the growing
-            //  }
-            this.size++;
-        } else if (this.size >= this.maximumSize) {
-            transformToBouldersAndDiamonds();
+    public ArrayList<Direction> growthDirections() {
+        ArrayList<Direction> dirs = new ArrayList<>();
+        if (canGrowUp()) {
+            dirs.add(Direction.UP);
+        }
+        if (canGrowDown()) {
+            dirs.add(Direction.DOWN);
+        }
+        if (canGrowLeft()) {
+            dirs.add(Direction.LEFT);
+        }
+        if (canGrowRight()) {
+            dirs.add(Direction.RIGHT);
+        }
+        return dirs;
+    }
+
+    public Amoeba grow(Direction dir) {
+        Amoeba a;
+        switch (dir) {
+            case Direction.UP:
+                a = new Amoeba(this.x, this.y - 1);
+                Game.getGame().replaceEntity(this.x, this.y - 1, a);
+                return a;
+                //break;
+            case Direction.DOWN:
+                a = new Amoeba(this.x, this.y + 1);
+                Game.getGame().replaceEntity(this.x, this.y + 1, a);
+                return a;
+                //break;
+            case Direction.LEFT:
+                a = new Amoeba(this.x - 1, this.y);
+                Game.getGame().replaceEntity(this.x - 1, this.y, a);
+                return a;
+                //break;
+            case Direction.RIGHT:
+                a = new Amoeba(this.x + 1, this.y);
+                Game.getGame().replaceEntity(this.x + 1, this.y, a);
+                return a;
+            default:
+                throw new IllegalArgumentException("Illegal direction " + dir);
         }
     }
 
-    /**
-     * Transforms the amoeba into boulders and diamonds.
-     * The transformation starts with boulders, and any remaining amoeba are transformed into diamonds.
-     */
-    private void transformToBouldersAndDiamonds() {
-        transformToBouldersAndDiamonds(true);
-    }
-
-    /**
-     * Transforms the amoeba into boulders and diamonds.
-     *
-     * @param transformToBouldersFirst If true, the amoeba is transformed into boulders first,
-     *                                and the remaining amoeba are transformed into diamonds.
-     *                                If false, the amoeba is transformed into diamonds.
-     */
-    // TODO - what the fish is this, doesnt seem like the best way to do it
-    private void transformToBouldersAndDiamonds(boolean transformToBouldersFirst) {
-        if (transformToBouldersFirst) {
-            transformToBouldersAndLeaveRemaindersAsDiamonds();
-        } else {
-            transformToDiamonds();
+    private boolean canGrowUp() {
+        if (this.y == 0) {
+            return false;
         }
+        Entity e = Game.getGame().getEntity(this.x, this.y - 1);
+        return e instanceof Path || e instanceof Dirt;
     }
 
-    /**
-     * Transforms the amoeba into boulders and leaves any remaining amoeba as diamonds.
-     */
-    // TODO - what the fish is this, I don't see it in the spec
-    private void transformToBouldersAndLeaveRemaindersAsDiamonds() {
-        // Implement the logic to create boulders from the amoeba
-        // and leave any remaining amoeba as diamonds
+    private boolean canGrowDown() {
+        if (this.y == Game.MAX_HEIGHT_INDEX) {
+            return false;
+        }
+        Entity e = Game.getGame().getEntity(this.x, this.y + 1);
+        return e instanceof Path || e instanceof Dirt;
     }
 
-    /**
-     * Transforms the amoeba into diamonds.
-     */
-    private void transformToDiamonds() {
-        // Implement the logic to create diamonds from the amoeba
+    private boolean canGrowLeft() {
+        if (this.x == 0) {
+            return false;
+        }
+        Entity e = Game.getGame().getEntity(this.x - 1, this.y);
+        return e instanceof Path || e instanceof Dirt;
+    }
+
+    private boolean canGrowRight() {
+        if (this.x == Game.MAX_WIDTH_INDEX) {
+            return false;
+        }
+        Entity e = Game.getGame().getEntity(this.x + 1, this.y);
+        return e instanceof Path || e instanceof Dirt;
     }
 }

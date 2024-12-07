@@ -25,6 +25,7 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private ArrayList<AmoebaGroup> amoebaGroups;
 
     /**
      * Constructor for the Game class.
@@ -33,6 +34,7 @@ public class Game {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
         enemies = new ArrayList<>();
+        amoebaGroups = new ArrayList<>();
     }
 
     /**
@@ -58,6 +60,10 @@ public class Game {
      */
     public void removeEnemy(Enemy enemy) {
         enemies.remove(enemy);
+    }
+
+    public void removeAmoebaGroup(AmoebaGroup amoebaGroup) {
+        amoebaGroups.remove(amoebaGroup);
     }
 
     /**
@@ -292,7 +298,9 @@ public class Game {
                 map[y][x] = new Frog(x, y);
                 break;
             case 'A':
-                map[y][x] = new Amoeba(x, y, 10);
+                AmoebaGroup a = new AmoebaGroup(10, 5, x, y);
+                amoebaGroups.add(a);
+                map[y][x] = a.getFirst();
                 break;
             case 'P':
                 map[y][x] = Player.getPlayer(x, y);
@@ -414,9 +422,10 @@ public class Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).move();
-            // TODO - Use this for enemy update on tick, #
-            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
-            //  but it's up to hazards people)
+        }
+
+        for (int i = 0; i < amoebaGroups.size(); i++) {
+            amoebaGroups.get(i).tick();
         }
     }
 
