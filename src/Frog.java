@@ -201,16 +201,42 @@ public class Frog extends Enemy {
         ArrayList<GraphNode> visited = new ArrayList<>();
         int distance = 0;
         while (queue.size() > 0) {
-            distance ++;
             GraphNode currentNode = queue.poll();
             visited.add(currentNode);
             ArrayList<GraphNode> Neighbours = getNeighbours(currentNode,graphedLevelState);
+            distance ++;
             for (int i = 0; i < Neighbours.size() - 1; i++) {
+                Neighbours.get(i).setDistance(distance);
+                queue.add(Neighbours.get(i));
+
             }
+        }
+        //Checks if there is a route to the player or not
+        boolean routeToPlayer = true;
+        for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
+            System.out.println("Resetting");
+            boolean reset = false;
+            if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
+                routeToPlayer = false;
+            }
+            if (x == currentLevelState.length) {
+                y++;
+                x = 0;
+                reset = true;
+            }
+            if (!reset) {
+                x++;
+            }
+
+        }
+        //Decides where to move based on distance values
+        if (routeToPlayer){
+
         }
 
 
     }
+
 }
 
 
