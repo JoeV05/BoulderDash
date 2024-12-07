@@ -119,33 +119,21 @@ public class Frog extends Enemy {
     }
 
     /**
-     * Gets the neighbours of the target in a given Entity array
-     * @param targetIndex int[] - Index of the element you want the neighbours of
-     * @param currentGameState Entity[][] -Array in which target is contained
-     * @return Arraylist<Integer[]> list of neighbours
-     */
-    //private ArrayList<Integer[]> Neighbours(int[] targetIndex,Entity[][] currentGameState);
-    /**
-     *Moves the frog to be called in main
+     *
      */
     @Override
     public void move() {
         Game game = Game.getGame();
         Entity[][] currentLevelState = game.getMap();
-        GraphNode[][] graphedLevelState = new GraphNode[currentLevelState.length][currentLevelState[0].length];
-
         int x = 0;
         int y = 0;
         //Goes through everything that is not a path or player and changes it to null
         for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
             System.out.println("Resetting");
             boolean reset = false;
-            if (currentLevelState[y][x] instanceof Player){
-                graphedLevelState[y][x] = new GraphNode(true,y,x);
-            } else if (currentLevelState[y][x] instanceof  Path) {
-                graphedLevelState[y][x] = new GraphNode(false,y,x);
+            if (!(currentLevelState[y][x] instanceof Player) && !(currentLevelState[y][x] instanceof Path)){
+                currentLevelState[y][x] = null;
             }
-
             if (x == currentLevelState.length) {
                 y++;
                 x = 0;
@@ -157,14 +145,13 @@ public class Frog extends Enemy {
 
         }
         //START OF PATHFINDING implementing bfs and then querying the position of the player
-        GraphNode startLocation = graphedLevelState[getY()][getX()];
+        Entity startLocation = currentLevelState[getY()][getX()];
         Queue<Integer[]> queue = new LinkedList<>();
         Integer[] startingLocation = {getX(),getY()};
         queue.add(startingLocation);
         ArrayList<Integer[]> visited = new ArrayList<>();
         while (queue.size() > 0){
             visited.add(queue.poll());
-
         }
 
 

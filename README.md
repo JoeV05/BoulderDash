@@ -7,29 +7,29 @@ PLEASE IF ITS SAYING FORCE PUSH DONT DO IT AND COME AND LET SOMEONE IN THE GROUP
 
 CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 
-- [ ] Game comprises multiple levels
-- [ ] PLayer plays one level at a time
-- [ ] Player can progress to next level upon reaching the exit
+- [ ] Game does not crash if you exceed the number of currently-available levels
+- [x] Game comprises multiple levels
+- [x] PLayer plays one level at a time
+- [x] Player can progress to next level upon reaching the exit
 - [x] Path implemented
 - [x] Dirt implemented
 - [x] Normal walls implemented
 - [x] Titanium walls implemented
 - [x] Magic walls implemented
-- [ ] Exit implemented
-- [ ] Keys implemented
-- [ ] Locked doors implemented
+- [x] Exit implemented
+- [x] Keys implemented
+- [x] Locked doors implemented
 - [x] Player can move using the keyboard
+- [x] FallingEntity can roll
 - [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
-- [ ] Boulders roll
 - [ ] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
 - [ ] Diamonds kill player
 - [ ] Diamonds explode enemies
-- [ ] Diamonds roll
-- [ ] Diamonds can be collected
+- [x] Diamonds can be collected
 - [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
 - [ ] Butterfly follows left or right edge

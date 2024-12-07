@@ -2,60 +2,157 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 
-// TODO - javadoc class comment
-
 /**
+ * Represents the player. Keeps track of keys the player has and how many
+ * diamonds the player has collected. Handles parts of player movement.
  * @author James Harvey, Joseph Vinson, Joe Devlin
+ * @version 1.8
  */
 public class Player extends Entity {
-
-    // TODO - make keys collectable
+    private static Player thePlayer;
     private ArrayList<Key> keys = new ArrayList<>();
-    // TODO - make diamonds collectable
-    // TODO - make collecting diamonds increase the score
     private int diamonds = 0;
 
-    private static Player thePlayer;
-
+    /**
+     * Creates a Player object with the coordinates (x, y).
+     * @param x The x coordinate of the player.
+     * @param y The y coordinate of the player.
+     */
     private Player(int x, int y) {
         super(x, y, new Image("./sprites/Player_Down.png"));
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Retrieve the keys the player has stored.
+     * @return An ArrayList containing Key objects.
+     */
     public ArrayList<Key> getKeys() {
         return this.keys;
     }
 
+    /**
+     * Adds a key to the keys the player has stored.
+     * @param key The key to add to the players inventory.
+     */
+    private void addKey(Key key) {
+        this.keys.add(key);
+    }
+
+    /**
+     * Check if the player is currently at an invalid position.
+     * @return true or false.
+     */
+    private boolean invalidPosition() {
+        return this.x > Game.MAX_WIDTH_INDEX || this.x < 0
+                || this.y > Game.MAX_HEIGHT_INDEX || this.y < 0;
+    }
+
     // TODO - javadoc method comment
     // TODO - player can push boulders
-    // TODO - player can open doors if they have the right key
     // TODO - player can exit the level if they have enough diamonds
+    // TODO - better separation of responsibilities
+    /**
+     * Moves the player in the specified direction. Checks if the player is in
+     * a valid position, then determines the direction to move the player in.
+     * Sets the player sprite to match the direction the player is trying
+     * to move in regardless of whether the move is considered valid, then
+     * checks if the move is valid and if so performs the move, adding any
+     * keys or diamonds to the players inventory as necessary.
+     * @param key The key that was pressed.
+     */
     public void move(KeyCode key) {
-        if (this.x > Game.GRID_WIDTH - 1 || this.x < 0 || this.y > Game.GRID_HEIGHT - 1 || this.y < 0) {
-            throw new LiamWetFishException("PLAYER POSITION INVALID!!! WHAT THE FISH DID YOU DO TO GET HERE!!!");
+        if (this.invalidPosition()) {
+            throw new IllegalStateException("Player outside boundary of map at"
+                    + "\nx = " + this.x + "\ny = " + this.y);
         }
         Direction moveDir = this.dirSwitch(key);
         if (moveDir == Direction.NONE) {
             return;
         }
         this.spriteSwitch(moveDir);
-        int[] newCoordinates = this.moveSwitch(key);
+        int[] newCoordinates = this.moveSwitch(moveDir);
+        int oX = this.x;
+        int oY = this.y;
         int nX = newCoordinates[0];
         int nY = newCoordinates[1];
-        this.validateMove(nX, nY, moveDir);
-    }
-
-    // TODO - javadoc method comment
-    private void validateMove(int nX, int nY, Direction moveDir) {
-        int oldX = this.x;
-        int oldY = this.y;
-        if (Game.getGame().isValidMove(this.x, this.y, moveDir)) {
-            Game.getGame().updateLevel(nX, nY, this);
+        if (!this.validateMove(moveDir)) {
+            return;
         }
-        this.checkForChangeInView(oldX, oldY);
+        Entity target = Game.getGame().getEntity(nX, nY);
+        if (target instanceof Walkable || target instanceof Diamond) {
+            Game.getGame().updateLevel(nX, nY, this);
+            this.checkForChangeInView(oX, oY);
+            if (target instanceof Key) {
+                this.addKey((Key) target);
+            } else if (target instanceof Diamond) {
+                this.diamonds += 1;
+                System.out.println("You collected diamond " + this.diamonds);
+                Game.getGame().removeFallingEntity((Diamond) target);
+            }
+        } else if (target instanceof LockedDoor) {
+            LockedDoor door = (LockedDoor) target;
+            if (!door.isLocked()) {
+                Game.getGame().updateLevel(nX, nY, this);
+                this.checkForChangeInView(oX, oY);
+            }
+            if (this.canUnlock(door)) {
+                door.unlock();
+                this.burnKey(door.getColour());
+            }
+        } else if (target instanceof Exit) {
+            Exit exit = (Exit) target;
+            if (exit.canExit(this.diamonds)) {
+                Game.getGame().updateLevel(nX, nY, this);
+                this.checkForChangeInView(oX, oY);
+            }
+        }
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Remove a key of a given colour from the players keys. Doesn't remove
+     * a specified key, but a key with a specified colour, as there is
+     * effectively no difference between keys of the same colour after being
+     * picked up.
+     * @param colour Colour of the key to remove.
+     */
+    private void burnKey(Colour colour) {
+        for (int i = 0; i < this.keys.size(); i++) {
+            if (this.keys.get(i).getColour() == colour) {
+                this.keys.remove(i);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Checks if the player can unlock a given door.
+     * @param door The door to check if the player can unlock.
+     * @return true or false.
+     */
+    private boolean canUnlock(LockedDoor door) {
+        for (int i = 0; i < this.keys.size(); i++) {
+            if (this.keys.get(i).canUnlock(door)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the move the player is trying to make is valid.
+     * @param moveDir Direction the player is trying to move in.
+     * @return true or false.
+     */
+    private boolean validateMove(Direction moveDir) {
+        return Game.getGame().isValidMove(this.x, this.y, moveDir);
+    }
+
+    /**
+     * Get the direction the player is trying to move in from the key
+     * the player has pressed.
+     * @param key The key the player pressed.
+     * @return UP, DOWN, LEFT, RIGHT or NONE.
+     */
     private Direction dirSwitch(KeyCode key) {
         switch (key) {
             case KeyCode.UP:
@@ -75,27 +172,33 @@ public class Player extends Entity {
         }
     }
 
-    // TODO - javadoc method comment
-    // TODO - maybe only one set of keys for moving
-    private int[] moveSwitch(KeyCode key) {
-        switch (key) {
-            case UP:
-            case W:
+    /**
+     * Get the position the player will be in after moving in a given
+     * direction.
+     * @param dir Direction the player is trying to move in.
+     * @return An array [x, y] of integers where x is between 0 and the width
+     * of the map - 1 inclusive, and y is between 0 and the height of the map
+     * inclusive.
+     */
+    private int[] moveSwitch(Direction dir) {
+        switch (dir) {
+            case Direction.UP:
                 return new int[]{this.x, this.y - 1};
-            case DOWN:
-            case S:
+            case Direction.DOWN:
                 return new int[] {this.x, this.y + 1};
-            case LEFT:
-            case A:
+            case Direction.LEFT:
                 return new int[] {this.x - 1, this.y};
-            case RIGHT:
-            case D:
+            case Direction.RIGHT:
                 return new int[] {this.x + 1, this.y};
             default:
-                throw new LiamWetFishException("HOW DID YOU GET HERE!!! WHAT THE FISH!!!");
+                throw new IllegalStateException("Invalid direction: " + dir);
         }
     }
 
+    /**
+     * Set the player sprite based off the direction the player is moving in.
+     * @param dir THe direction the player is moving in.
+     */
     private void spriteSwitch(Direction dir) {
         switch (dir) {
             case Direction.UP:
@@ -111,26 +214,39 @@ public class Player extends Entity {
                 setSprite(new Image("./sprites/player_right.png"));
                 break;
             default:
-                throw new LiamWetFishException("HOW THE FISH DID YOU MESS THIS UP SO BADLY!!!");
+                throw new IllegalStateException("Invalid direction: " + dir);
         }
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Retrieve the player instance.
+     * @return The instance of player.
+     */
     public static Player getPlayer() {
         return thePlayer;
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Create a Player instance at the coordinates (x, y) and return it.
+     * @param x The x coordinate for the player to be at.
+     * @param y The y coordinate for the player to be at.
+     * @return The instance of player.
+     */
     public static Player getPlayer(int x, int y) {
         thePlayer = new Player(x, y);
         return thePlayer;
     }
 
-    // TODO - obliterate magic numbers
+    public int getDiamonds() {
+        return diamonds;
+    }
+
+    // TODO - replace magic numbers with constants
     /**
-     * Checks if the
-     * @param oldX x coordinate before player moves
-     * @param oldY y coordinate before player moves
+     * Checks if the sector of the map displayed on screen needs to
+     * be changed.
+     * @param oldX The x coordinate before player moves.
+     * @param oldY The y coordinate before player moves.
      */
     public void checkForChangeInView(int oldX, int oldY) {
         switch (Main.VIEW.getView()) {
@@ -162,6 +278,21 @@ public class Player extends Entity {
                     Main.VIEW.changeViewMode(2);
                 }
                 break;
+            default:
+                break;
+        }
+    }
+
+    //TODO: Javadoc and removal of magic numbers
+    public void manualSwitchView(int x, int y) {
+        if (x < 25 && y < 14) {
+            Main.VIEW.changeViewMode(1);
+        } else if (x > 25 && y < 14) {
+            Main.VIEW.changeViewMode(2);
+        } else if (x < 25 && y > 14) {
+            Main.VIEW.changeViewMode(3);
+        } else if (x > 25 && y > 14) {
+            Main.VIEW.changeViewMode(4);
         }
     }
 }
