@@ -10,7 +10,6 @@ import java.util.Random;
  * @author Joseph Vinson
  * @version 1.3
  */
-
 public abstract class FallingEntity extends Entity {
     public static final int[] ROLLING_CHOICES = {-1, 1};
     private boolean falling;

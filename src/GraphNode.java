@@ -4,10 +4,11 @@
  * @author Edward Tickle
  */
 public class GraphNode {
-    private int distance;
+    private int distance = -1;
     private boolean isPlayer;
     private int x;
     private int y;
+    private GraphNode parent;
 
     /**
      * Constructor for graph node
@@ -21,7 +22,7 @@ public class GraphNode {
 
     /**
      * Gets distance
-     * @return int distance from starting node
+     * @return int distance from starting node returns -1 if no distance added
      */
     public int getDistance() {
         return distance;
@@ -81,5 +82,21 @@ public class GraphNode {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * gets Parent of this node
+     * @return GraphNode Parent
+     */
+    public GraphNode getParent() {
+        return parent;
+    }
+
+    /**
+     * Sets Parent of graphNode
+     * @param parent GraphNode parent
+     */
+    public void setParent(GraphNode parent) {
+        this.parent = parent;
     }
 }

@@ -12,6 +12,11 @@ public class Player extends Entity {
     private static Player thePlayer;
     private ArrayList<Key> keys = new ArrayList<>();
     private int diamonds = 0;
+    public static final int ZONE_ONE = 8;
+    public static final int ZONE_TWO = 14;
+    public static final int ZONE_THREE = 17;
+    public static final int ZONE_FOUR = 25;
+
 
     /**
      * Creates a Player object with the coordinates (x, y).
@@ -105,7 +110,25 @@ public class Player extends Entity {
                 Game.getGame().updateLevel(nX, nY, this);
                 this.checkForChangeInView(oX, oY);
             }
+        } else if (target instanceof Boulder) {
+            Boulder b = (Boulder) target;
+            int dX;
+            if (moveDir == Direction.LEFT) {
+                dX = -1;
+                //Game.getGame().updateLevel(b.getX() - 1, b.getY(), b);
+                //Game.getGame().updateLevel(nX, nY, this);
+            } else {
+                dX = 1;
+                //Game.getGame().updateLevel(b.getX() + 1, b.getY(), b);
+                //Game.getGame().updateLevel(nX, nY, this);
+            }
+            this.pushBoulder(b, dX);
         }
+    }
+
+    public void pushBoulder(Boulder b, int dX) {
+        Game.getGame().updateLevel(b.getX() + dX, b.getY(), b);
+        Game.getGame().updateLevel(this.x + dX, this.y, this);
     }
 
     /**
@@ -256,30 +279,30 @@ public class Player extends Entity {
     public void checkForChangeInView(int oldX, int oldY) {
         switch (Main.VIEW.getView()) {
             case 1:
-                if (oldX == 24 && this.x == 25) {
+                if (oldX == ZONE_FOUR-1 && this.x == ZONE_FOUR) {
                     Main.VIEW.changeViewMode(2);
-                } else if (oldY == 13 && this.y == 14) {
+                } else if (oldY == ZONE_TWO-1 && this.y == ZONE_TWO) {
                     Main.VIEW.changeViewMode(3);
                 }
                 break;
             case 2:
-                if (oldX == 17 && this.x == 16) {
+                if (oldX == ZONE_THREE && this.x == ZONE_THREE-1) {
                     Main.VIEW.changeViewMode(1);
-                } else if (oldY == 13 && this.y == 14) {
+                } else if (oldY == ZONE_TWO-1 && this.y == ZONE_TWO) {
                     Main.VIEW.changeViewMode(4);
                 }
                 break;
             case 3:
-                if (oldX == 24 && this.x == 25) {
+                if (oldX == ZONE_FOUR-1 && this.x == ZONE_FOUR) {
                     Main.VIEW.changeViewMode(4);
-                } else if (oldY == 8 && this.y == 7) {
+                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE-1) {
                     Main.VIEW.changeViewMode(1);
                 }
                 break;
             case 4:
-                if (oldX == 17 && this.x == 16) {
+                if (oldX == ZONE_THREE && this.x == ZONE_THREE-1) {
                     Main.VIEW.changeViewMode(3);
-                } else if (oldY == 8 && this.y == 7) {
+                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE-1) {
                     Main.VIEW.changeViewMode(2);
                 }
                 break;
@@ -290,13 +313,13 @@ public class Player extends Entity {
 
     //TODO: Javadoc and removal of magic numbers
     public void manualSwitchView(int x, int y) {
-        if (x < 25 && y < 14) {
+        if (x < ZONE_FOUR && y < ZONE_TWO) {
             Main.VIEW.changeViewMode(1);
-        } else if (x > 25 && y < 14) {
+        } else if (x > ZONE_FOUR && y < ZONE_TWO) {
             Main.VIEW.changeViewMode(2);
-        } else if (x < 25 && y > 14) {
+        } else if (x < ZONE_FOUR && y > ZONE_TWO) {
             Main.VIEW.changeViewMode(3);
-        } else if (x > 25 && y > 14) {
+        } else if (x > ZONE_FOUR && y > ZONE_TWO) {
             Main.VIEW.changeViewMode(4);
         }
     }

@@ -7,7 +7,7 @@ PLEASE IF ITS SAYING FORCE PUSH DONT DO IT AND COME AND LET SOMEONE IN THE GROUP
 
 CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 
-- [ ] Game does not crash if you exceed the number of currently-available levels
+- [x] Game does not crash if you exceed the number of currently-available levels
 - [x] Game comprises multiple levels
 - [x] PLayer plays one level at a time
 - [x] Player can progress to next level upon reaching the exit
@@ -24,7 +24,7 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
-- [ ] Boulders can be pushed
+- [x] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
 - [ ] Diamonds kill player

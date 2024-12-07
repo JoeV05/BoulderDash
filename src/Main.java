@@ -7,93 +7,84 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.*;
-import javafx.scene.layout.Border;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
-// TODO - Redo the javadoc comment (THIS POOP IS SO FISHED UP)
 /**
- *Represents the main game logic and state management for the Boulder Game
- *This class initialises the game window, receives user input and
- *handles the rendering and updating of game state
- *The game a grid based level system with entities modelled on
- *top of it using javafx for rendering
-
+ * GUI class to render the game on user screen. Allows the user to interact
+ * with the game.
  * @author James Harvey, Luke Brace, Joseph Vinson, Joe Devlin
- * Represents the game state, stores level data and renders game window
  */
 public class Main extends Application {
-    private static Main theMain;
-
-    private static boolean inLevel;
-
-    // title.
-    public static final String GAME_TITLE = "Boulder Dash";
-
-    // canvas. canvas is contained within window.
-    public static final int CANVAS_WIDTH = 750;
-    public static final int CANVAS_HEIGHT = 400;
-    private static Canvas canvas;
-
+    // viewing system for managing the visible area of the game
+    public static final View VIEW = new View(1);
     public static final int GRID_CELL_WIDTH = 25;
     public static final int GRID_CELL_HEIGHT = 25;
-
+    public static final String GAME_TITLE = "Boulder Dash";
+    public static final int CANVAS_WIDTH = 750;
+    public static final int CANVAS_HEIGHT = 400;
+    public static final Duration TICK_INTERVAL = Duration.millis(125);
+    public static final int MAP_SEEN_WIDTH = 30;
+    public static final int MAP_SEEN_HEIGHT = 16;
+    public static final int X_START_INDEX = 0;
+    public static final int X_END_INDEX = 1;
+    public static final int Y_START_INDEX = 2;
+    public static final int Y_END_INDEX = 3;
+    private static Canvas canvas;
+    //Main uses singleton design pattern, only one instance stored as static
+    private static Main theMain;
+    private static boolean inLevel;
     // control registering -> actively held keys.
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
-
-    // viewing system for managing the visible area of the game
-    public static final View VIEW = new View(1); // TODO - this number seems suspiciously magical
-
     private Timeline tickTimeline;
 
+    /**
+     * Set the main class to store the instance when the instance is made.
+     */
     @Override
     public void init() {
         theMain = this;
     }
 
+    /**
+     * Retrieve the instance of main.
+     * @return Main instance.
+     */
     public static Main getMain() {
         return theMain;
     }
 
-    // TODO - maybe better description for the parameter tag
-    // TODO - guess who found a magic number in this method
     /**
-     * Method used to set off the game. Sets up the GUI to display the current view,
-     * tells Game to load the level, sets events to handle pressing and releasing keys
-     * via helper functions and sets up timeline for calling tick method.
-     * @param primaryStage The stage that is to be used for the application.
+     * Method used to set off the game. Sets up the GUI to display the current
+     * view, tells Game to load the level, sets events to handle pressing and
+     * releasing keys via helper functions and sets up timeline for calling
+     * tick method.
+     * @param primaryStage The stage that the GUI is rendered on.
+     * @throws IOException Throw an exception if there is an error while
+     * loading the fxml file for the menu screen.
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        /*//BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
-        BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("menu.fxml")));
-        Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);*/
-        //root.setCenter(canvas);
-
         primaryStage.setTitle(GAME_TITLE);
-        //primaryStage.setScene(scene);
-        //primaryStage.show();
 
-
-        //Game.loadingCave();*/
-
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(125), event -> tick()));
+        KeyFrame k = new KeyFrame(TICK_INTERVAL, event -> tick());
+        tickTimeline = new Timeline(k);
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
         BorderPane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
-        Scene scene = new Scene(root,CANVAS_WIDTH,CANVAS_HEIGHT);
-        //root.setCenter(canvas);
+
+        Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
         scene.addEventFilter(KeyEvent.KEY_RELEASED, this::handleKeyReleased);
 
@@ -102,11 +93,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    // TODO - maybe better description for the event parameter
     /**
      * If a key has not already been seen by the program as having been pressed
-     * it is added to the queue of pressed keys and the hash set of seenKeys
-     * @param event Even generated by key being pressed
+     * it is added to the queue of pressed keys and the hash set of seenKeys.
+     * @param event Even generated by key being pressed.
      */
     public void handleKeyPressed(KeyEvent event) {
         if (!seenKeys.contains(event.getCode())) {
@@ -116,7 +106,10 @@ public class Main extends Application {
         event.consume();
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Remove key presses from the presses the game handles.
+     * @param event Key press event to remove.
+     */
     public void handleKeyReleased(KeyEvent event) {
         pressedKeys.remove(event.getCode());
         seenKeys.remove(event.getCode());
@@ -127,7 +120,7 @@ public class Main extends Application {
      * This method is called periodically by the tick timeline,
      * allowing the Game class to call its own tick function,
      * which in turn triggers the tick function of any entity
-     * on the map that needs to be updated every tick
+     * on the map that needs to be updated every tick.
      */
     public void tick() {
         if (!Main.inLevel) {
@@ -142,13 +135,16 @@ public class Main extends Application {
         draw();
     }
 
-    // TODO - javadoc comment
     // TODO - display the score
     // TODO - better separation of responsibilities
-    // TODO - get these gosh darn mother fishing magic numbers outta here
+
+    /**
+     * Draw the current level state on the canvas. Calculates what the player
+     * can see given their current view of the map, then loops over the
+     * entities in that area of the map and draws them.
+     */
     private void draw() {
         if (!Main.inLevel) {
-            System.out.println("hopefully drawing the menu");
             return;
         }
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -156,44 +152,52 @@ public class Main extends Application {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        int[] whatWeCanSee = VIEW.getViewable();
-        int xStart = whatWeCanSee[0];
-        int xEnd = whatWeCanSee[1];
-        int yStart = whatWeCanSee[2];
-        int yEnd = whatWeCanSee[3];
+        int[] playerSees = VIEW.getViewable();
+        int xStart = playerSees[X_START_INDEX];
+        int xEnd = playerSees[X_END_INDEX];
+        int yStart = playerSees[Y_START_INDEX];
+        int yEnd = playerSees[Y_END_INDEX];
 
-        // TODO - wow, these numbers are so magical
-        Entity[][] mapWeCanSee = new Entity[16][30];
+        Entity[][] mapSeen = new Entity[MAP_SEEN_HEIGHT][MAP_SEEN_WIDTH];
 
         for (int y = yStart; y <= yEnd; y++) {
             for (int x = xStart; x <= xEnd; x++) {
-                mapWeCanSee[y - yStart][x - xStart] = Game.getGame().getMap()[y][x];
+                mapSeen[y - yStart][x - xStart] = Game.getGame().getMap()[y][x];
             }
         }
 
-        // TODO - would be crazy if these were constants instead of magic numbers
-        for (int y = 0; y < 16; y++) {
-            for (int x = 0; x < 30; x++) {
-                Entity entity = mapWeCanSee[y][x];
+        for (int y = 0; y < MAP_SEEN_HEIGHT; y++) {
+            for (int x = 0; x < MAP_SEEN_WIDTH; x++) {
+                Entity entity = mapSeen[y][x];
                 Image sprite = entity.getSprite();
-                gc.drawImage(sprite, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                gc.drawImage(sprite, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                        GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
             }
         }
     }
 
-    // TODO - javadoc method comment
-    public static void setInLevel(boolean inLevel) {
-        Main.inLevel = inLevel;
+    /**
+     * Set the variable tracking if the game is in a level to the given value.
+     * @param setInLevel Value to set the in level variable to.
+     */
+    public static void setInLevel(boolean setInLevel) {
+        Main.inLevel = setInLevel;
     }
 
+    /**
+     * Get the canvas the game is drawn on.
+     * @return Canvas object.
+     */
     public static Canvas getCanvas() {
         return canvas;
     }
 
-    // TODO - javadoc method comment
+    /**
+     * Launch the game.
+     * @param args Optional arguments for running the program.
+     */
     public static void main(String[] args) {
         Main.inLevel = false;
-        //Game.getGame();
         launch(args);
     }
 }
