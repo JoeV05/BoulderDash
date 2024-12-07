@@ -19,16 +19,14 @@ public class Cave {
         parseCave();
         System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
-        // TODO: Change constructor, parameters no longer needed, use caveNumber for automatic new cave generation
-        // TODO - Does this mean automatically load the relevant level-n.txt for an input n?
-
     }
 
     private void parseCave() throws FileNotFoundException {
         File file = new File("src/caves/%s".formatted(fileName));
+        if (!file.exists()) {
+            file = new File("src/caves/level-MAGIC-WALL-TEST.txt");
+        }
         Scanner scanner = new Scanner(file);
-        //TODO: soon to change, use static caveNumber for new cave generation
-
         List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {
             lines.add(scanner.nextLine());
