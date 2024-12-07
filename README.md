@@ -39,9 +39,9 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [ ] Frog implemented
 - [ ] Frog takes the shortest path
 - [ ] Amoeba growth rate read from file
-- [ ] Amoeba growth implemented
-- [ ] Amoeba transform into diamonds when growth is blocked
-- [ ] Amoeba transform into boulders when maximum size is reached
+- [ ] Amoeba growth implemented (sort of working)
+- [x] Amoeba transform into diamonds when growth is blocked
+- [x] Amoeba transform into boulders when maximum size is reached
 - [ ] Amoeba kill enemies they touch
 - [ ] Amoeba can be destroyed by explosion
 - [x] Game has ticks (spec says e.g. 200ms, movement might not happen every tick)
