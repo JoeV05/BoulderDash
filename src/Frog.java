@@ -21,15 +21,6 @@ public class Frog extends Enemy {
 
     }
 
-    /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     *
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    @Override
-    public int onDeathByHazard() {
-        return 0;
-    }
 
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
@@ -96,6 +87,10 @@ public class Frog extends Enemy {
             positionX = positionX + 1;
         }
     }
+	
+	/**
+     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default 
+     */
 
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
