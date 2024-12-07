@@ -5,14 +5,6 @@ import javafx.scene.image.Image;
 
 public class Firefly extends Enemy {
 
-    /**
-     * Talk to james about image
-     *
-     * @return Image of Firefly
-     *
-     * // TODO - has this been done, can this comment be removed?
-     */
-
     public Firefly(int x, int y) {
         super(x, y, new Image("./sprites/firefly.png"));
     }
@@ -42,12 +34,22 @@ public class Firefly extends Enemy {
     }
 
     /**
+     * Performs any actions done when an enemy dies by a hazard and returns
+     * what they should drop on their death.
+     *
+     * @return int representing a particular item or set of items to be dropped on enemy death
+     */
+    @Override
+    public int onDeathByHazard() {
+        return 0;
+    }
+
+    /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
-
     @Override
-    public int onDeathByFallingObject(Entity below) {
+    public void onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
         int positionY= below.getY();
         if(checker(positionX, positionY) == true){
@@ -105,10 +107,9 @@ public class Firefly extends Enemy {
         }else{
             positionX= positionX+1;
         }
-        return 0;
+       
     }
 
-    @Override
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit ){
@@ -129,13 +130,4 @@ public class Firefly extends Enemy {
         }
     }
     
-    /**
-     * Getter for Position
-     * @return Int[] Position
-     */
-
-    @Override
-    public int onDeathByFallingObject() {
-        return 0;
-    }
 }
