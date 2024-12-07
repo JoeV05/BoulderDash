@@ -1,0 +1,4 @@
+CaveNumber:1
+PlayerPosition:5,10
+Diamonds:4
+Keys:2
