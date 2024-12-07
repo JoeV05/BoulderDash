@@ -34,7 +34,7 @@ public class Cave {
             lines.add(scanner.nextLine());
         }
 
-        tilesTall = lines.size();
+        tilesTall = lines.size() - 2;
         tilesWide = lines.getFirst().length();
 
         cave = new char[tilesTall][tilesWide];
@@ -46,6 +46,8 @@ public class Cave {
             }
         }
         scanner.close();
+        Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
+        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall+1)));
     }
 
     public void printCave() {

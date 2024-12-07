@@ -25,6 +25,8 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private static int diamondsNeeded;
+    private static int timeLimit;
 
     /**
      * Constructor for the Game class.
@@ -33,6 +35,14 @@ public class Game {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
         enemies = new ArrayList<>();
+    }
+
+
+    public static void setDiamondsNeeded(int diamondsNeeded) {
+        Game.diamondsNeeded = diamondsNeeded;
+    }
+    public static void setTimeLimit(int timeLimit) {
+        Game.timeLimit = timeLimit;
     }
 
     /**
@@ -221,6 +231,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        System.out.println("you need to collect " + diamondsNeeded + " or more diamonds in " + timeLimit + " or less seconds time.");
     }
 
     /**
