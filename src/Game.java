@@ -272,6 +272,7 @@ public class Game {
                 break;
             case 'P':
                 map[y][x] = Player.getPlayer(x, y);
+                Player.getPlayer().manualSwitchView(x, y);
                 break;
             // TODO - metadata needed for maximum Amoeba size
             case 'D':

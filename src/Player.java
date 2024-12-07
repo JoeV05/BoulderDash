@@ -237,6 +237,10 @@ public class Player extends Entity {
         return thePlayer;
     }
 
+    public int getDiamonds() {
+        return diamonds;
+    }
+
     // TODO - replace magic numbers with constants
     /**
      * Checks if the sector of the map displayed on screen needs to
@@ -276,6 +280,19 @@ public class Player extends Entity {
                 break;
             default:
                 break;
+        }
+    }
+
+    //TODO: Javadoc and removal of magic numbers
+    public void manualSwitchView(int x, int y) {
+        if (x < 25 && y < 14) {
+            Main.VIEW.changeViewMode(1);
+        } else if (x > 25 && y < 14) {
+            Main.VIEW.changeViewMode(2);
+        } else if (x < 25 && y > 14) {
+            Main.VIEW.changeViewMode(3);
+        } else if (x > 25 && y > 14) {
+            Main.VIEW.changeViewMode(4);
         }
     }
 }
