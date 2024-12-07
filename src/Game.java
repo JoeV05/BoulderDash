@@ -436,7 +436,7 @@ public class Game {
      */
     public static boolean isRound(Entity entity) {
         return (entity instanceof FallingEntity)
-                || (entity instanceof Wall && !(entity instanceof MagicWall));
+                || (entity instanceof Wall && !(entity instanceof MagicWall || entity instanceof LockedDoor));
     }
 
     /**
