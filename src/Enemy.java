@@ -24,15 +24,7 @@ public abstract class Enemy extends Entity{
     @Test
     public abstract void movementTests();
 
-    // TODO - why does it return a representation of what should be done instead of just doing the thing?
-    /**
-     * Performs any actions done when an enemy dies by a hazard and returns
-     * what they should drop on their death.
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    public abstract int onDeathByHazard();
-
-    // TODO - why does it return a representation of what should be done instead of just doing the thing?
+   
     /**
      * Performs any actions done when an enemy dies by a hazard and returns
      * what they should drop on their death.
