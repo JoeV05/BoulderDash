@@ -23,12 +23,12 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] FallingEntity can roll
 - [x] Boulders fall
 - [x] Boulders kill player
-- [ ] Boulders explode enemies
+- [x] Boulders explode enemies
 - [x] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
 - [x] Diamonds kill player
-- [ ] Diamonds explode enemies
+- [x] Diamonds explode enemies
 - [x] Diamonds can be collected
 - [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
