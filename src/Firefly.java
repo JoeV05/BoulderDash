@@ -49,7 +49,7 @@ public class Firefly extends Enemy {
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
     @Override
-    public int onDeathByFallingObject(Entity below) {
+    public void onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
         int positionY= below.getY();
         if(checker(positionX, positionY) == true){
@@ -107,7 +107,7 @@ public class Firefly extends Enemy {
         }else{
             positionX= positionX+1;
         }
-        return 0;
+       
     }
 
     public boolean checker(int x, int y) {

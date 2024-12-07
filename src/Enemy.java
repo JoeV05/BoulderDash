@@ -38,7 +38,7 @@ public abstract class Enemy extends Entity{
      * what they should drop on their death.
      * @return int representing a particular item or set of items to be dropped on enemy death
      */
-    public abstract int onDeathByFallingObject(Entity below);
+    public abstract void onDeathByFallingObject(Entity below);
 
     /**
      * Moves the enemy.

@@ -38,7 +38,64 @@ public class Butterfly extends Firefly {
      */
 
     @Override
-    public int onDeathByFallingObject(Entity below) {
-        return 0;
+    public void onDeathByFallingObject(Entity below) {
+        int positionX = below.getX();
+        int positionY= below.getY();
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(positionX, positionY);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionX= positionX+1;
+        }else{
+            positionX= positionX+1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionY= positionY+1;
+        }else{
+            positionY= positionY+1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionX= positionX-1;
+        }else{
+            positionX= positionX-1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionX= positionX-1;
+        }else{
+            positionX= positionX-1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionY= positionY-1;
+        }else{
+            positionY= positionY-1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionY= positionY-1;
+        }else{
+            positionY= positionY-1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionX= positionX+1;
+        }else{
+            positionX= positionX+1;
+        }
+        if(checker(positionX, positionY) == true){
+            Diamond dropedDiamond = new Diamond(x, y);
+            Game.getGame().replaceEntity(positionX, positionY, dropedDiamond);
+            positionX= positionX+1;
+        }else{
+            positionX= positionX+1;
+        }
     }
 }
