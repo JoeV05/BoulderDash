@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-// TODO - Redo the javadoc comment
-
 /**
  * Stores and handles data about the overall game state. Keeps track
  * of all entities on the map and updates them when needed. Contains
@@ -83,7 +81,7 @@ public class Game {
     /**
      * Check if moving up is allowed from a given position.
      * @param x The x coordinate of the position to move up from.
-     * @param y The y coodinate of the position to move up from.
+     * @param y The y coordinate of the position to move up from.
      * @return true or false.
      */
     private boolean validMoveUp(int x, int y) {
@@ -179,8 +177,7 @@ public class Game {
         }
         return false;
     }
-
-    // TODO - better separation of responsibilities
+    
     /**
      * Loads a level from a text file and initialises the game state.
      * @throws FileNotFoundException Throw an error when the level file
@@ -220,13 +217,11 @@ public class Game {
                 break;
             case 'M':
                 MagicWall m = new MagicWall(x, y);
-                map[y][x] = m;
-                actionWalls.add(m);
+                addToOnCreate(m);
                 break;
             case 'E':
                 Exit e = new Exit(x, y, 0);
-                map[y][x] = e;
-                actionWalls.add(e);
+                addToOnCreate(e);
                 break;
             // TODO - metadata needed for unlock exit condition
             case 'R':
@@ -255,17 +250,16 @@ public class Game {
                 break;
             case 'O':
                 Boulder b = new Boulder(x, y);
-                map[y][x] = b;
-                fallingEntities.add(b);
+                addToOnCreate(b);
                 break;
             case 'V':
                 Diamond d = new Diamond(x, y);
-                map[y][x] = d;
-                fallingEntities.add(d);
+                addToOnCreate(d);
                 break;
             case 'W':
                 map[y][x] = new Butterfly(x, y);
                 break;
+                // TODO - read left/right from level file
             case 'X':
                 map[y][x] = new Firefly(x, y);
                 break;
@@ -286,6 +280,36 @@ public class Game {
             default:
                 map[y][x] = new Path(x, y);
                 break;
+        }
+    }
+
+    /**
+     * Add an entity to the map and the appropriate list for the game to keep
+     * track of and update the entity on each tick.
+     * @param entity Entity to add.
+     */
+    private void addToOnCreate(Entity entity) {
+        map[entity.getY()][entity.getX()] = entity;
+        if (entity instanceof ActionWall) {
+            if (entity instanceof Exit) {
+                actionWalls.add((Exit) entity);
+            } else {
+                actionWalls.add((MagicWall) entity);
+            }
+        } else if (entity instanceof FallingEntity) {
+            if (entity instanceof Diamond) {
+                fallingEntities.add((Diamond) entity);
+            } else {
+                fallingEntities.add((Boulder) entity);
+            }
+        } else if (entity instanceof Enemy) {
+            if (entity instanceof Frog) {
+                enemies.add((Frog) entity);
+            } else if (entity instanceof Butterfly) {
+                enemies.add((Butterfly) entity);
+            } else {
+                enemies.add((Firefly) entity);
+            }
         }
     }
 
