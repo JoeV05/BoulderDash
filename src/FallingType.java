@@ -1,10 +1,8 @@
-// TODO - proper javadoc comment
-
 /**
+ * Enumeration representing the possible types of falling entities.
  * @author Joseph Vinson
  */
-
 public enum FallingType {
-    BOULDER,
-    DIAMOND
+    BOULDER, //Represents a boulder
+    DIAMOND //Represents a boulder
 }

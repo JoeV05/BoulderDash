@@ -24,7 +24,7 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Boulders fall
 - [ ] Boulders kill player
 - [ ] Boulders explode enemies
-- [ ] Boulders can be pushed
+- [x] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
 - [ ] Diamonds kill player

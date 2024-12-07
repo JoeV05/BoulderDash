@@ -112,7 +112,8 @@ public class Game {
     private boolean validMoveLeft(int x, int y) {
         int nX = x - 1;
         Entity target = getEntity(nX, y);
-        return x > 0 && moveOnValidation(target);
+        return x > 0 && (moveOnValidation(target)
+                || pushValidation(target, Direction.LEFT));
     }
 
     /**
@@ -124,7 +125,29 @@ public class Game {
     private boolean validMoveRight(int x, int y) {
         int nX = x + 1;
         Entity target = getEntity(nX, y);
-        return x < (GRID_WIDTH - 1) && moveOnValidation(target);
+        return x < (GRID_WIDTH - 1) && (moveOnValidation(target)
+                || pushValidation(target, Direction.RIGHT));
+    }
+
+    private boolean pushValidation(Entity target, Direction dir) {
+        if (!(target instanceof Boulder)) {
+            return false;
+        }
+        Boulder b = (Boulder) target;
+        int dX;
+        if (dir == Direction.RIGHT) {
+            if (b.getX() > MAX_WIDTH_INDEX - 1) {
+                return false;
+            }
+            dX = 1;
+            return getEntity(b.getX() + dX, b.getY()) instanceof Path;
+        } else {
+            if (b.getX() < 1) {
+                return false;
+            }
+            dX = -1;
+            return getEntity(b.getX() + dX, b.getY()) instanceof Path;
+        }
     }
 
     /**
