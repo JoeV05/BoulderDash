@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Represents the player. Keeps track of keys the player has and how many
  * diamonds the player has collected. Handles parts of player movement.
- * @author James Harvey, Joseph Vinson, Joe Devlin
+ * @author James Harvey, Joseph Vinson, Joe Devlin, Tafara Gonese
  * @version 1.8
  */
 public class Player extends Entity {
@@ -238,8 +238,13 @@ public class Player extends Entity {
     }
 
     public int getDiamonds() {
-        return diamonds;
+        return this.diamonds;
     }
+
+    public void setDiamonds(int diamonds) {
+        this.diamonds = diamonds;
+    }
+
 
     // TODO - replace magic numbers with constants
     /**
