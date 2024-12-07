@@ -424,7 +424,7 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            //enemies.get(i).???
+            enemies.get(i).move();
             // TODO - Use this for enemy update on tick, #
             //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
             //  but it's up to hazards people)
@@ -447,7 +447,7 @@ public class Game {
      */
     public static boolean isRound(Entity entity) {
         return (entity instanceof FallingEntity)
-                || (entity instanceof Wall && !(entity instanceof MagicWall));
+                || (entity instanceof Wall && !(entity instanceof MagicWall || entity instanceof LockedDoor));
     }
 
     /**
@@ -483,6 +483,13 @@ public class Game {
             // Print the stack trace for debugging if saving fails
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Creates a checkpoint save when a level is loaded.
+     */
+    public void createCheckpoint() {
+        saveGame("checkpoint.txt");
     }
 
     /**
@@ -557,9 +564,13 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
+            // Create a checkpoint save after loading the level
+            createCheckpoint();
+
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
             e.printStackTrace();
         }
     }
+
 }
