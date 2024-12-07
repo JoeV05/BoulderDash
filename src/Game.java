@@ -573,5 +573,8 @@ public class Game {
             e.printStackTrace();
         }
     }
-
+	public void gameOver(){
+        System.out.println(" Game Over ");
+        loadGame("checkpoint.txt");
+    }
 }

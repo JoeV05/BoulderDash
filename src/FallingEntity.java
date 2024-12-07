@@ -75,6 +75,9 @@ public abstract class FallingEntity extends Entity {
             Butterfly butterfly = (Butterfly) below;
             butterfly.onDeathByFallingObject(below);
         }
+		if (below instanceof Player && this.falling){
+            Player.getPlayer().playerDeath();
+        }
     }
 
     /**
