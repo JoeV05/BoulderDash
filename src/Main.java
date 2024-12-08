@@ -30,7 +30,7 @@ public class Main extends Application {
     public static final int GRID_CELL_HEIGHT = 25;
     public static final String GAME_TITLE = "Boulder Dash";
     public static final int CANVAS_WIDTH = 750;
-    public static final int CANVAS_HEIGHT = 410;
+    public static final int CANVAS_HEIGHT = 432;
     public static final Duration TICK_INTERVAL = Duration.millis(125);
     public static final int MAP_SEEN_WIDTH = 30;
     public static final int MAP_SEEN_HEIGHT = 16;
