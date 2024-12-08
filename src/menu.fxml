@@ -11,7 +11,8 @@
    <children>
       <ImageView fitHeight="621.0" fitWidth="620.0" layoutX="-10.0" layoutY="-152.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Mars.png" />
+            <Image url="@menu/Mars.png" />
+
          </image>
          <effect>
             <Blend />
@@ -39,47 +40,47 @@
       </Button>
       <ImageView fitHeight="23.0" fitWidth="185.0" layoutX="213.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Tutorial.png" />
+            <Image url="@menu/Tutorial.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/LoadSave.png" />
+            <Image url="@menu/LoadSave.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="23.0" fitWidth="88.0" layoutX="261.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Exit.png" />
+            <Image url="@menu/Exit.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/NewGame.png" />
+            <Image url="@menu/NewGame.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="479.0" layoutY="258.0">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/sprites/Frog.png" />
+            <Image url="@sprites/frog.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="42.0" fitWidth="38.0" layoutX="113.0" layoutY="193.0">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/player_front.png" />
+            <Image url="@menu/player_front.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="75.0" layoutY="313.0">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Butterfly.png" />
+            <Image url="@menu/Butterfly.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="37.0" layoutY="247.0">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Firefly.png" />
+            <Image url="@menu/Firefly.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="491.0" layoutY="341.0">
          <image>
-            <Image url="@../Desktop/CS-230-Game/src/menu/Firefly.png" />
+            <Image url="@menu/Firefly.png" />
          </image>
       </ImageView>
    </children>
