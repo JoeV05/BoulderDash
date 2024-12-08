@@ -2,7 +2,7 @@ public class PlayerProfile {
     private String name;
     private int maxLevelUnlocked;
 
-    public PlayerProfile(String name, int maxLevelUnlocked) {
+    public PlayerProfile(String name) {
         this.name = name;
         this.maxLevelUnlocked = maxLevelUnlocked = 1; //Thats the default
     }
