@@ -46,7 +46,8 @@ public class Main extends Application {
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
     private Timeline tickTimeline;
-
+    private int autoSaveCounter = 0;
+    private static final int AUTO_SAVE_INTERVAL = 40;
     /**
      * Set the main class to store the instance when the instance is made.
      */
@@ -133,6 +134,12 @@ public class Main extends Application {
         }
         Game.getGame().tick();
         draw();
+
+        autoSaveCounter++;
+        if (autoSaveCounter > AUTO_SAVE_INTERVAL) {
+            autoSaveCounter = 0;
+            Game.getGame().saveGame("save.txt");
+        }
     }
 
     // TODO - display the score
