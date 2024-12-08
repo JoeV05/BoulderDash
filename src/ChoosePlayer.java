@@ -4,10 +4,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO - whoever wrote this with no comments, i will find you and throw a fish at you
-
 /**
- *
+ * What does this do?
+ * Why are there no comments?
+ * Why must you make me suffer?
+ * I don't like suffering.
+ * :(
  */
 public class ChoosePlayer {
     private static final String PF = "profiles.txt";
