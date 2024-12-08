@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
  * Represents an Amoeba within the game. Amoeba are unique organisms that
  * spread across the game board and are able to transform into boulders or
  * diamonds when certain conditions are met. Amoeba are harmless to the player
- * until they transform, adding a strategic element to the game.
+ * until they transform, adding a strategic element to the game. Amoeba will
+ * kill any enemy that they are adjacent to. Amoeba can only grow onto path
+ * or dirt tiles.
  * @author Joseph Vinson, Tafara Gonese, Jamie Crockett
  * @version 1.5
  */
