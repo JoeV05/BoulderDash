@@ -21,11 +21,7 @@ public abstract class Enemy extends Entity{
      */
     @Test
     public abstract void movementTests();
-    /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    public abstract void onDeathByHazard(Entity below);
+    
 
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
