@@ -1,20 +1,31 @@
 import  javafx.scene.image.Image;
 
 /**
+ * Represents a wall tile in the game. Walls are barriers of movements for both
+ * players and enemies with specific type based behaviours.
  * @author Joseph Vinson
- * Represents a wall tile in the game. Walls are barries of movements for both
- * players and enemies with specific type based behavious
+ * @version 1.3
  */
-
 public class Wall extends Tile {
-    protected WallType wallType; // The specific type of this wall (e.g., Normal, Titanium, Magic, Locked Door).
+    protected WallType wallType; // The specific type of this wall
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param wallType
+     */
     public Wall(int x, int y, WallType wallType) {
-        super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType)); //this type of tile is not walkable, and it belongs to the wall type
+        super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType));
 
         this.wallType = wallType; //sets the type of wall i.e. magic, titanium,door
     }
 
+    /**
+     * Determine the sprite to use for a wall given its wall type.
+     * @param wallType The type of the wall.
+     * @return Image object containing the sprite for the wall.
+     */
     private static Image getWallSprite(WallType wallType) {
         Image img;
         switch (wallType) {
@@ -41,6 +52,10 @@ public class Wall extends Tile {
         return img;
     }
 
+    /**
+     * Get the type of this wall.
+     * @return NORMAL_WALL, TITANIUM_WALL, MAGIC_WALL, LOCKED_DOOR or EXIT
+     */
     public WallType getWallType() {
         return this.wallType;
     }
