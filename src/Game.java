@@ -617,7 +617,6 @@ public class Game {
 	// resets the level by reverting to a checkpoint at the start of the level
 	public void gameOver(){
         System.out.println(" Game Over ");
-        resetLevel();
         loadGame("checkpoint.txt");
     }
 }
