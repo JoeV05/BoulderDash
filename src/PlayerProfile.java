@@ -12,5 +12,10 @@ public class PlayerProfile {
     public int getMaxLevelUnlocked() {
         return maxLevelUnlocked;
     }
-
+    public void setMaxLevelUnlocked(int maxLevelUnlocked) {
+        this.maxLevelUnlocked = maxLevelUnlocked;
+    }
+    public void increaseMaxLevelUnlocked() {
+        maxLevelUnlocked++;
+    }
 }
