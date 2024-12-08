@@ -6,9 +6,9 @@ import javafx.scene.image.Image;
  * @version 1.0
  * @author Edward Tickle
  */
-public abstract class Enemy extends Entity{
+public abstract class Enemy extends Entity {
     /**
-     * Creates an enemy at the given (x, y) coordinates with the given
+     * Creates an enemy at the given (x, y) coordinates with the given sprite.
      * @param x The x coordinate of the enemy.
      * @param y The y coordinate of the enemy.
      * @param sprite The sprite for the enemy to use.
@@ -24,11 +24,10 @@ public abstract class Enemy extends Entity{
     @Test
     public abstract void movementTests();
 
-   
     /**
-     * Performs any actions done when an enemy dies by a falling object and executes any on death actions
-     * they should do on their death.
-     * @return nothing as it executes the actions needed itself
+     * Performs any actions done when an enemy dies by a falling object and
+     * executes any on death actions they should do on their death.
+     * @param below Entity below the enemy.
      */
     public abstract void onDeathByFallingObject(Entity below);
 
