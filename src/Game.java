@@ -609,8 +609,6 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
-            // Create a checkpoint save after loading the level
-            createCheckpoint();
 
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
