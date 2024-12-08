@@ -12,12 +12,18 @@ public class Cave {
     private final String fileName;
     private static int caveNumber = 0;
 
+    /**
+     * Creates a cave by loading the relevant level file.
+     * @throws FileNotFoundException Throws an error if the required level file
+     * is not found.
+     */
     public Cave() throws FileNotFoundException {
         caveNumber++;
         this.caveName = "Cave" + caveNumber;
         this.fileName = "level-" + caveNumber + ".txt";
         parseCave();
-        System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
+        System.out.printf("Cave instance created (%s -> %s). "
+                        + "It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
@@ -45,45 +51,62 @@ public class Cave {
         }
         scanner.close();
         Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
-        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall+1)));
+        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
     }
 
-    public void printCave() {
+    /**
+     * Return the character representation of the map as a string.
+     * @return String of characters.
+     */
+    @Override
+    public String toString() {
+        String displayString = "";
         for (int x = 0; x < tilesTall; x++) {
             for (int y = 0; y < tilesWide; y++) {
-                System.out.print(cave[x][y]);
+                displayString += cave[x][y];
             }
-            System.out.println();
+            displayString += "\n";
         }
+        return displayString;
     }
 
+    /**
+     * Retrieve the character representation of the level map.
+     * @return 2D array of characters
+     */
     public char[][] getCave() {
         return cave;
     }
 
-    // TODO - is this method necessary?
-    public String getCaveName() {
-        return caveName;
-    }
-
+    /**
+     * Retrieve the height of the cave.
+     * @return A positive integer.
+     */
     public int getTilesTall() {
         return tilesTall;
     }
 
+    /**
+     * Retrieve the width of the cave.
+     * @return A positive integer.
+     */
     public int getTilesWide() {
         return tilesWide;
     }
 
-    //Get CaveNumber
+    /**
+     * Get the cave number.
+     * @return A positive integer.
+     */
     public static int getCaveNumber() {
         return caveNumber;
     }
 
-    //get CaveNumber
+    /**
+     * Set the cave number.
+     * @param number Cave number to set to.
+     */
     public static void setCaveNumber(int number) {
         caveNumber = number;
     }
-
-    //TODO: Have a function that loads the next cave caveN, N being the next number
-
 }
