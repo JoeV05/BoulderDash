@@ -17,7 +17,6 @@ public class Firefly extends Enemy {
     /**
      *
      */
-    @Override
     public void move() {
 
     }
@@ -33,7 +32,17 @@ public class Firefly extends Enemy {
 
     }
 
-   
+    /**
+     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
+     *
+     * @param below
+     * @return int representing a particular item or set of items to be dropped on enemy death
+     */
+    @Override
+    public void onDeathByHazard(Entity below) {
+
+    }
+
 
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death

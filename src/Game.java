@@ -25,6 +25,7 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private static int currentTick = 0;
 
     /**
      * Constructor for the Game class.
@@ -281,15 +282,18 @@ public class Game {
                 addToOnCreate(d);
                 break;
             case 'W':
-                map[y][x] = new Butterfly(x, y);
+                Butterfly butterfly = new Butterfly(x, y);
+                addToOnCreate(butterfly);
                 break;
                 // TODO - read left/right from level file
             case 'X':
-                map[y][x] = new Firefly(x, y);
+                Firefly firefly  = new Firefly(x, y);
+                addToOnCreate(firefly);
                 break;
             // TODO - metadata needed for left/right wall cling
             case 'F':
-                map[y][x] = new Frog(x, y);
+                Frog frog = new Frog(x, y);
+                addToOnCreate(frog);
                 break;
             case 'A':
                 map[y][x] = new Amoeba(x, y, 10);
@@ -404,6 +408,8 @@ public class Game {
      * over them all and calling their own tick method).
      */
     public void tick() {
+        currentTick++;
+        System.out.println("Enemies size " + enemies.size());
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
         }
@@ -413,7 +419,9 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).move();
+            if (currentTick % 3 == 0){
+                enemies.get(i).move();
+            }
             // TODO - Use this for enemy update on tick, #
             //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
             //  but it's up to hazards people)
