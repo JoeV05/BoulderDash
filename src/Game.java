@@ -626,6 +626,7 @@ public class Game {
      */
     public void loadCave() {
         try {
+            currentTick = 0;
             resetLevel();
             // Create a new Cave instance based on the current cave number
             Cave cave = new Cave(currentLevelFile);
@@ -651,6 +652,6 @@ public class Game {
      */
     public void gameOver() {
         System.out.println(" Game Over ");
-        loadGame("checkpoint.txt");
+        loadCave();
     }
 }

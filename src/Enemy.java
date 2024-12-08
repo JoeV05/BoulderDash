@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
  * @author Edward Tickle
  */
 public abstract class Enemy extends Entity {
+    protected boolean gameEnd = false;
     /**
      * Creates an enemy at the given (x, y) coordinates with the given sprite.
      * @param x The x coordinate of the enemy.

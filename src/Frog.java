@@ -96,7 +96,6 @@ public class Frog extends Enemy {
      * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default 
 	 *
      */
-	boolean gameEnd = false;
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit) {
@@ -247,19 +246,23 @@ public class Frog extends Enemy {
             for (int i = 0; i < graphedLevelState[playerCoordinates[0]][playerCoordinates[1]].getDistance() - 1; i++) {
                 currentNode = currentNode.getParent();
             }
+            game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
+
             if (currentNode.getY() == playerCoordinates[0] && currentNode.getX() == playerCoordinates[1]){
                 Player.getPlayer().playerDeath();
             }
-            game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
+
         }else if (!routeToPlayer){
             //Moves in random direction when player is not detected
             //randomises by using shuffling arraylist and then getting the first element in the arraylist
-
             graphedLevelState[getY()][getX()] = new GraphNode(false,getY(),getX());
             ArrayList<GraphNode> possibleMoveLocations = getNeighbours(graphedLevelState[getY()][getX()],graphedLevelState);
             Collections.shuffle(possibleMoveLocations);
-            game.updateLevel(possibleMoveLocations.get(0).getX(),possibleMoveLocations.get(0).getY(),
-                    currentLevelState[getY()][getX()]);
+            if (possibleMoveLocations.size() != 0){
+                game.updateLevel(possibleMoveLocations.get(0).getX(),possibleMoveLocations.get(0).getY(),
+                        currentLevelState[getY()][getX()]);
+
+            }
         }
 
 
