@@ -30,13 +30,6 @@ public abstract class Enemy extends Entity {
     public abstract void movementTests();
 
     /**
-     * Performs any actions done when an enemy dies by a hazard and returns
-     * what they should drop on their death.
-     */
-    public abstract void onDeathByHazard(Entity below);
-
-
-    /**
      * Performs any actions done when an enemy dies by a falling object and
      * executes any on death actions they should do on their death.
      * @param below Entity below the enemy.

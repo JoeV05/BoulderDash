@@ -284,6 +284,8 @@ public class Game {
      * @param x The x coordinate the entity should be placed at.
      */
     private void tileSwitch(char tileChar, int y, int x) {
+        Firefly firefly;
+        Butterfly butterfly;
         switch (tileChar) {
             case '#':
                 map[y][x] = new Wall(x, y, WallType.NORMAL_WALL);
@@ -331,13 +333,21 @@ public class Game {
                 Diamond d = new Diamond(x, y);
                 addToOnCreate(d);
                 break;
+            case 'w':
+                butterfly  = new Butterfly(x, y, Direction.LEFT);
+                addToOnCreate(butterfly);
+                break;
             case 'W':
-                Butterfly butterfly = new Butterfly(x, y);
+                butterfly = new Butterfly(x, y, Direction.RIGHT);
                 addToOnCreate(butterfly);
                 break;
                 // TODO - read left/right from level file
+            case 'x':
+                firefly  = new Firefly(x, y, Direction.LEFT);
+                addToOnCreate(firefly);
+                break;
             case 'X':
-                Firefly firefly  = new Firefly(x, y);
+                firefly  = new Firefly(x, y, Direction.RIGHT);
                 addToOnCreate(firefly);
                 break;
             // TODO - metadata needed for left/right wall cling
@@ -580,8 +590,9 @@ public class Game {
                     case "PlayerPosition":
                         // Parse the player's x and y position
                         String[] position = parts[1].split(",");
-                        Player.getPlayer().setX(Integer.parseInt(position[0]));
-                        Player.getPlayer().setY(Integer.parseInt(position[1]));
+                        int playerX = Integer.parseInt(position[0]);
+                        int playerY = Integer.parseInt(position[1]);
+                        Player.getPlayer(playerX, playerY);
                         break;
                     case "Diamonds":
                         // Set the number of diamonds the player has

@@ -12,8 +12,8 @@ public class Butterfly extends Firefly {
      * @param x The x coordinate of the butterfly.
      * @param y The y coordinate of the butterfly.
      */
-    public Butterfly(int x, int y) {
-        super(x, y, new Image("./sprites/butterfly.png"));
+    public Butterfly(int x, int y, Direction cling) {
+        super(x, y, new Image("./sprites/butterfly.png"), cling);
     }
 
     /**

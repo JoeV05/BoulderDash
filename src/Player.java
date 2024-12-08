@@ -259,7 +259,10 @@ public class Player extends Entity {
      * @return The instance of player.
      */
     public static Player getPlayer(int x, int y) {
-        thePlayer = new Player(x, y);
+        if (thePlayer == null) {
+            thePlayer = new Player(x, y);
+            return thePlayer;
+        }
         return thePlayer;
     }
 

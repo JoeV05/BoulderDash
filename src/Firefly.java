@@ -6,15 +6,19 @@ import javafx.scene.image.Image;
  */
 public class Firefly extends Enemy {
     private boolean gameEnd;
+    private Direction cling;
+    private Direction currentMovementDir;
 
     /**
      * Creates a firefly at a given (x, y) position.
      * @param x The x coordinate of the firefly.
      * @param y The y coordinate of the firefly.
      */
-    public Firefly(int x, int y) {
+    public Firefly(int x, int y, Direction cling) {
         super(x, y, new Image("./sprites/firefly.png"));
         this.gameEnd = false;
+        this.cling = cling;
+        this.currentMovementDir = cling;
     }
 
     /**
@@ -23,14 +27,71 @@ public class Firefly extends Enemy {
      * @param y The y coordinate of the firefly.
      * @param image The image to use as the sprite of the firefly.
      */
-    protected Firefly(int x, int y, Image image) {
+    public Firefly(int x, int y, Image image, Direction cling) {
         super(x, y, image);
+        this.cling = cling;
     }
 
     /**
      *
      */
     public void move() {
+        if (this.cling == Direction.RIGHT) {
+            this.moveClingRight();
+            return;
+        }
+        this.moveClingLeft();
+    }
+
+    public void moveClingRight() {
+        if (currentMovementDir == Direction.UP) {
+            if (!(Game.getGame().getEntity(this.x + 1, this.y) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x, this.y - 1) instanceof Path) {
+                    Game.getGame().updateLevel(this.x, this.y - 1, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.LEFT;
+                return;
+            }
+            Game.getGame().updateLevel(this.x + 1, this.y, this);
+            this.currentMovementDir = Direction.RIGHT;
+        } else if (currentMovementDir == Direction.DOWN) {
+            if (!(Game.getGame().getEntity(this.x - 1, this.y) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x, this.y + 1) instanceof Path) {
+                    Game.getGame().updateLevel(this.x, this.y + 1, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.RIGHT;
+                return;
+            }
+            Game.getGame().updateLevel(this.x - 1, this.y, this);
+            this.currentMovementDir = Direction.LEFT;
+        } else if (currentMovementDir == Direction.LEFT) {
+            if (!(Game.getGame().getEntity(this.x, this.y - 1) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x + 1, this.y) instanceof Path) {
+                    Game.getGame().updateLevel(this.x + 1, this.y, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.DOWN;
+                return;
+            }
+            Game.getGame().updateLevel(this.x, this.y - 1, this);
+            this.currentMovementDir = Direction.UP;
+        } else {
+            if (!((Game.getGame().getEntity(this.x, this.y + 1)) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x - 1, this.y) instanceof Path) {
+                    Game.getGame().updateLevel(this.x - 1, this.y, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.UP;
+                return;
+            }
+            Game.getGame().updateLevel(this.x, this.y + 1, this);
+            this.currentMovementDir = Direction.DOWN;
+        }
+    }
+
+    public void moveClingLeft() {
 
     }
 
@@ -111,7 +172,7 @@ public class Firefly extends Enemy {
             Player.getPlayer().playerDeath();
         }
     }
-	
+
 	/**
      * Used by the method called upon an enemy dying via a falling object this
      * method sees if the tiles selected result in an outcome differing from
@@ -127,7 +188,7 @@ public class Firefly extends Enemy {
                 return false;
             }else{
                 return true;
-            }  
+            }
         } else if (check instanceof Butterfly){
             Diamond dropedDiamond = new Diamond(x, y);
             Game.getGame().replaceEntity(x, y, dropedDiamond);
@@ -139,5 +200,5 @@ public class Firefly extends Enemy {
             return true;
         }
     }
-    
+
 }
