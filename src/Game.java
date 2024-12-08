@@ -90,9 +90,12 @@ public class Game {
             case DOWN -> validMoveDown(x, y);
             case LEFT -> validMoveLeft(x, y);
             case RIGHT -> validMoveRight(x, y);
+
             default -> throw new IllegalStateException("Invalid direction: "
                     + dir);
+
         };
+
     }
 
     /**
@@ -484,7 +487,7 @@ public class Game {
             // Save the player's position on the grid
             writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
             // Save the number of diamonds the player has collected
-            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
+            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
             // Save the number of keys the player has
             writer.println("Keys:" + Player.getPlayer().getKeys().size());
         } catch (IOException e) {
@@ -521,7 +524,7 @@ public class Game {
                 switch (parts[0]) {
                     case "CaveNumber":
                         // Set the cave number using the parsed integer
-                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
+                        Cave.setCaveNumber(Integer.parseInt(parts[1]));// Add a setter to Cave.java
                         break;
                     case "PlayerPosition":
                         // Parse the player's x and y position
