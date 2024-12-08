@@ -1,35 +1,36 @@
 import javafx.scene.image.Image;
 
+/**
+ * Represents a butterfly enemy in the game.
+ * @author Daniel Beesley
+ * @version 1.0
+ */
 public class Butterfly extends Firefly {
-
-    // TODO - maybe remove comment?
-
+    private boolean gameEnd = false;
     /**
-     * pending image
-     *
-     * @return Image of butterfly
+     * Creates a butterfly at a given (x, y) coordinate.
+     * @param x The x coordinate of the butterfly.
+     * @param y The y coordinate of the butterfly.
      */
-
     public Butterfly(int x, int y) {
         super(x, y, new Image("./sprites/butterfly.png"));
     }
 
     /**
-     * A Test method designed to be used inside moveTo to test your movement is working correctly
+     * A Test method designed to be used inside moveTo to test your movement
+     * is working correctly.
      */
     @Override
     public void movementTests() {
 
     }
 
-
     /**
-     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
-     * it then checks every adjacent tile and does the nessicary action depending on the tile
-     * @return nothing as it handles the conversions itself
-     * butterfly will differ by replacing the path with diamonds instead
+     * Performs any actions done when an enemy dies by a falling object and
+     * returns what they should drop on their death it then checks every
+     * adjacent tile and does the necessary action depending on the tile
+     * butterfly will differ by replacing the path with diamonds instead.
      */
-
     @Override
     public void onDeathByFallingObject(Entity below) {
         int positionX = below.getX();
@@ -90,17 +91,20 @@ public class Butterfly extends Firefly {
         } else {
             positionX = positionX + 1;
         }
-		if (gameEnd = true){
-            gameEnd =false;
+        if (gameEnd == true) {
+            gameEnd = false;
             Player.getPlayer().playerDeath();
         }
     }
 
     /**
-     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default 
-	 *
+     * Used by the method called upon an enemy dying via a falling object this
+     * method sees if the tiles selected result in an outcome differing from
+     * the default.
+     * @param x The x coordinate of the entity to check.
+     * @param y The y coordinate of the entity to check.
+     * @return true or false.
      */
-	boolean gameEnd = false;
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit) {
