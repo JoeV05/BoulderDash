@@ -1,15 +1,28 @@
 import javafx.scene.image.Image;
 
-// TODO - javadoc class comment
-// TODO - javadoc comments in general don't seem to be particularly coherent
-
+/**
+ * Represents a butterfly enemy in the game.
+ * @author Daniel Beesley
+ */
 public class Firefly extends Enemy {
+    private boolean gameEnd;
 
+    /**
+     * Creates a firefly at a given (x, y) position.
+     * @param x The x coordinate of the firefly.
+     * @param y The y coordinate of the firefly.
+     */
     public Firefly(int x, int y) {
         super(x, y, new Image("./sprites/firefly.png"));
+        this.gameEnd = false;
     }
 
-    //to be used by butterfly inheritance to carry its sprite up the chain
+    /**
+     * Create a firefly at a given (x, y) position with a given sprite.
+     * @param x The x coordinate of the firefly.
+     * @param y The y coordinate of the firefly.
+     * @param image The image to use as the sprite of the firefly.
+     */
     protected Firefly(int x, int y, Image image) {
         super(x, y, image);
     }
@@ -21,12 +34,9 @@ public class Firefly extends Enemy {
 
     }
 
-    // TODO - this comment doesn't seem relevant to the method it was placed above, maybe needs moving?
     /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     * @return int representing a particular item or set of items to be dropped on enemy death
+     * No clue what this does.
      */
-
     @Override
     public void movementTests() {
 
@@ -47,11 +57,11 @@ public class Firefly extends Enemy {
         }else{
             positionX= positionX+1;
         }
-        if(checker(positionX, positionY) == true){
+        if (checker(positionX, positionY) == true){
             Entity replaced =Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
             positionY= positionY+1;
-        }else{
+        } else {
             positionY= positionY+1;
         }
         if(checker(positionX, positionY) == true){
@@ -103,7 +113,9 @@ public class Firefly extends Enemy {
     }
 	
 	/**
-     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default  
+     * Used by the method called upon an enemy dying via a falling object this
+     * method sees if the tiles selected result in an outcome differing from
+     * the default.
      */
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);

@@ -12,6 +12,11 @@ public class Cave {
     private final String fileName;
     private static int caveNumber = 0;
 
+    /**
+     * Creates a cave by loading the relevant level file.
+     * @throws FileNotFoundException Throws an error if the required level file
+     * is not found.
+     */
     public Cave() throws FileNotFoundException {
         caveNumber++;
         this.caveName = "Cave-" + caveNumber;
@@ -26,7 +31,8 @@ public class Cave {
         this.caveName = "Cave-" + fileName.charAt(fileName.length() - 5);
         this.fileName = fileName;
         parseCave();
-        System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
+        System.out.printf("Cave instance created (%s -> %s). "
+                        + "It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
@@ -59,33 +65,58 @@ public class Cave {
         Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall + 3)));
     }
 
-    public void printCave() {
+    /**
+     * Return the character representation of the map as a string.
+     * @return String of characters.
+     */
+    @Override
+    public String toString() {
+        String displayString = "";
         for (int x = 0; x < tilesTall; x++) {
             for (int y = 0; y < tilesWide; y++) {
-                System.out.print(cave[x][y]);
+                displayString += cave[x][y];
             }
-            System.out.println();
+            displayString += "\n";
         }
+        return displayString;
     }
 
+    /**
+     * Retrieve the character representation of the level map.
+     * @return 2D array of characters
+     */
     public char[][] getCave() {
         return cave;
     }
 
+    /**
+     * Retrieve the height of the cave.
+     * @return A positive integer.
+     */
     public int getTilesTall() {
         return tilesTall;
     }
 
+    /**
+     * Retrieve the width of the cave.
+     * @return A positive integer.
+     */
     public int getTilesWide() {
         return tilesWide;
     }
 
-    //Get CaveNumber
+    /**
+     * Get the cave number.
+     * @return A positive integer.
+     */
     public static int getCaveNumber() {
         return caveNumber;
     }
 
-    //get CaveNumber
+    /**
+     * Set the cave number.
+     * @param number Cave number to set to.
+     */
     public static void setCaveNumber(int number) {
         caveNumber = number;
     }

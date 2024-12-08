@@ -1,28 +1,28 @@
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.canvas.Canvas;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyEvent;
 
 public class MenuController {
     @FXML
-    public Button startGameButton;
+    private Button startGameButton;
 
     @FXML
-    public Button exitButton;
+    private Button exitButton;
 
+    /**
+     * Start the game when the start button is pressed on the main menu.
+     * @throws IOException Throw an error if the fxml file can't be found.
+     */
     @FXML
-    public void startGameButtonPress(ActionEvent actionEvent) throws IOException {
+    public void startGameButtonPress() throws IOException {
         Stage primaryStage = (Stage) startGameButton.getScene().getWindow();
-
-        BorderPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("layout.fxml")));
+        BorderPane root;
+        root = FXMLLoader.load(getClass().getResource("layout.fxml"));
         Scene scene = new Scene(root, Main.CANVAS_WIDTH, Main.CANVAS_HEIGHT);
 
         primaryStage.setTitle(Main.GAME_TITLE);
@@ -31,30 +31,41 @@ public class MenuController {
 
         root.setCenter(Main.getCanvas());
         Main.setInLevel(true);
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, Main.getMain()::handleKeyPressed);
-        scene.addEventFilter(KeyEvent.KEY_RELEASED, Main.getMain()::handleKeyReleased);
+        Main m = Main.getMain();
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, m::handleKeyPressed);
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, m::handleKeyReleased);
 
-        Game.getGame();
         Game.getGame().loadingCave();
     }
 
+    /**
+     * Open the tutorial screen when the tutorial button is pressed.
+     */
     @FXML
-    public void tutorialButtonPress(ActionEvent actionEvent) {
+    public void tutorialButtonPress() {
     }
 
+    /**
+     * Load the save file into the game when the save button is pressed.
+     */
     @FXML
-    public void loadSaveButtonPress(ActionEvent actionEvent) {
+    public void loadSaveButtonPress() {
         Game.getGame().loadGame("save.txt");
-
     }
 
+    /**
+     * Save the game to a text file.
+     */
     @FXML
-    public void saveGameButtonPress(java.awt.event.ActionEvent actionEvent) {
+    public void saveGameButtonPress() {
         Game.getGame().saveGame("savegame.txt");
     }
 
+    /**
+     * Exit the game when the exit game button is pressed.
+     */
     @FXML
-    public void exitButtonPress(ActionEvent actionEvent) {
+    public void exitButtonPress() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }

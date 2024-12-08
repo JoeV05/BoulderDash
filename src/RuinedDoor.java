@@ -1,10 +1,9 @@
 import javafx.scene.image.Image;
 
 /**
- * Represents a ruined door tile in the game.
- * A ruined door is created when a locked door is forced open.
- * It is walkable and has a sprite based on its color.
- *
+ * Represents a ruined door tile in the game. A ruined door is created when a
+ * locked door is forced open. It is walkable and has a sprite based on its
+ * colour.
  * @author Tafara Gonese
  */
 public class RuinedDoor extends Walkable {
@@ -15,7 +14,7 @@ public class RuinedDoor extends Walkable {
      * @param colour The colour of the ruined door, used to select the sprite.
      */
     public RuinedDoor(int x, int y, Colour colour) {
-        super(x, y, spriteSwitch(colour)); // Set the sprite using the colour
+        super(x, y, spriteSwitch(colour));
     }
 
     /**

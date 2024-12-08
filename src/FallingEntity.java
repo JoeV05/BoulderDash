@@ -35,11 +35,9 @@ public abstract class FallingEntity extends Entity {
      * fallen past the border of the map.
      */
     public void tick() {
-        if (this.y > Game.GRID_HEIGHT - 2) {
+        if (this.y > Game.MAX_HEIGHT_INDEX) {
             throw new IllegalStateException(this + " out of bounds at"
-                    + "\nx = " + this.x
-                    + "\ny = " + this.y
-            );
+                    + "\nx = " + this.x + "\ny = " + this.y);
         }
         if (this.y == Game.MAX_HEIGHT_INDEX) {
             return;
@@ -55,15 +53,13 @@ public abstract class FallingEntity extends Entity {
         } else if (below instanceof MagicWall) {
             ((MagicWall) below).transform(this);
             return;
-        }
-        if (below instanceof LockedDoor && this.falling) {
+        } else if (below instanceof LockedDoor && this.falling) {
             LockedDoor lD = (LockedDoor) below;
-            RuinedDoor rD = new RuinedDoor(lD.getX(), lD.getY(), lD.getColour());
+            int lDX = lD.getX();
+            int lDY = lD.getY();
+            RuinedDoor rD = new RuinedDoor(lDX, lDY, lD.getColour());
             Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
-        }
-        this.falling = false;
-        // TODO - handle case where entity below is either player or enemy
-		if (below instanceof Frog && this.falling) {
+        } else if (below instanceof Frog && this.falling) {
            Frog frog = (Frog) below;
            frog.onDeath(below);
         }
@@ -78,6 +74,7 @@ public abstract class FallingEntity extends Entity {
 		if (below instanceof Player && this.falling){
             Player.getPlayer().playerDeath();
         }
+        this.falling = false;
     }
 
     /**

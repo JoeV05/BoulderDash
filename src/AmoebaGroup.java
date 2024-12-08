@@ -98,7 +98,7 @@ public class AmoebaGroup {
             int aX = a.getX();
             int aY = a.getY();
             Diamond d = new Diamond(aX, aY);
-            Game.getGame().replaceEntity(aX, aY,d);
+            Game.getGame().replaceEntity(aX, aY, d);
             Game.getGame().addFallingEntity(d);
         }
         Game.getGame().removeAmoebaGroup(this);

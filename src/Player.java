@@ -16,7 +16,10 @@ public class Player extends Entity {
     public static final int ZONE_TWO = 14;
     public static final int ZONE_THREE = 17;
     public static final int ZONE_FOUR = 25;
-
+    public static final int VIEW_ZONE_ONE = 1;
+    public static final int VIEW_ZONE_TWO = 2;
+    public static final int VIEW_ZONE_THREE = 3;
+    public static final int VIEW_ZONE_FOUR = 4;
 
     /**
      * Creates a Player object with the coordinates (x, y).
@@ -115,7 +118,7 @@ public class Player extends Entity {
                 dX = 1;
             }
             this.pushBoulder(b, dX);
-        } else if (target instanceof Frog || target instanceof Butterfly || target instanceof Firefly){
+        } else if (target instanceof Frog || target instanceof Firefly) {
             playerDeath();
         }
     }
@@ -260,16 +263,22 @@ public class Player extends Entity {
         return thePlayer;
     }
 
+    /**
+     * Get the number of diamonds the player has collected.
+     * @return Positive integer.
+     */
     public int getDiamonds() {
         return this.diamonds;
     }
 
+    /**
+     * Set the number of diamonds the player has. Used in save loading.
+     * @param diamonds Number of diamonds the player should have.
+     */
     public void setDiamonds(int diamonds) {
         this.diamonds = diamonds;
     }
 
-
-    // TODO - replace magic numbers with constants
     /**
      * Checks if the sector of the map displayed on screen needs to
      * be changed.
@@ -278,32 +287,32 @@ public class Player extends Entity {
      */
     public void checkForChangeInView(int oldX, int oldY) {
         switch (Main.VIEW.getView()) {
-            case 1:
-                if (oldX == ZONE_FOUR-1 && this.x == ZONE_FOUR) {
+            case VIEW_ZONE_ONE:
+                if (oldX == ZONE_FOUR - 1 && this.x == ZONE_FOUR) {
                     Main.VIEW.changeViewMode(2);
-                } else if (oldY == ZONE_TWO-1 && this.y == ZONE_TWO) {
-                    Main.VIEW.changeViewMode(3);
+                } else if (oldY == ZONE_TWO - 1 && this.y == ZONE_TWO) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_THREE);
                 }
                 break;
-            case 2:
-                if (oldX == ZONE_THREE && this.x == ZONE_THREE-1) {
+            case VIEW_ZONE_TWO:
+                if (oldX == ZONE_THREE && this.x == ZONE_THREE - 1) {
                     Main.VIEW.changeViewMode(1);
-                } else if (oldY == ZONE_TWO-1 && this.y == ZONE_TWO) {
-                    Main.VIEW.changeViewMode(4);
+                } else if (oldY == ZONE_TWO - 1 && this.y == ZONE_TWO) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_FOUR);
                 }
                 break;
-            case 3:
-                if (oldX == ZONE_FOUR-1 && this.x == ZONE_FOUR) {
-                    Main.VIEW.changeViewMode(4);
-                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE-1) {
-                    Main.VIEW.changeViewMode(1);
+            case VIEW_ZONE_THREE:
+                if (oldX == ZONE_FOUR - 1 && this.x == ZONE_FOUR) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_FOUR);
+                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE - 1) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_ONE);
                 }
                 break;
-            case 4:
-                if (oldX == ZONE_THREE && this.x == ZONE_THREE-1) {
-                    Main.VIEW.changeViewMode(3);
-                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE-1) {
-                    Main.VIEW.changeViewMode(2);
+            case VIEW_ZONE_FOUR:
+                if (oldX == ZONE_THREE && this.x == ZONE_THREE - 1) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_THREE);
+                } else if (oldY == ZONE_ONE && this.y == ZONE_ONE - 1) {
+                    Main.VIEW.changeViewMode(VIEW_ZONE_TWO);
                 }
                 break;
             default:
@@ -311,20 +320,25 @@ public class Player extends Entity {
         }
     }
 
-    //TODO: Javadoc and removal of magic numbers
-    public void manualSwitchView(int x, int y) {
+    /**
+     * Switch the current view of the screen.
+     */
+    public void manualSwitchView() {
         if (x < ZONE_FOUR && y < ZONE_TWO) {
-            Main.VIEW.changeViewMode(1);
+            Main.VIEW.changeViewMode(VIEW_ZONE_ONE);
         } else if (x > ZONE_FOUR && y < ZONE_TWO) {
-            Main.VIEW.changeViewMode(2);
+            Main.VIEW.changeViewMode(VIEW_ZONE_TWO);
         } else if (x < ZONE_FOUR && y > ZONE_TWO) {
-            Main.VIEW.changeViewMode(3);
+            Main.VIEW.changeViewMode(VIEW_ZONE_THREE);
         } else if (x > ZONE_FOUR && y > ZONE_TWO) {
-            Main.VIEW.changeViewMode(4);
+            Main.VIEW.changeViewMode(VIEW_ZONE_FOUR);
         }
     }
-	// informs the user of player death and calls the reset method
-	public void playerDeath() {
+
+    /**
+     * Tells the user that the player has died and calls the game over method.
+     */
+    public void playerDeath() {
         System.out.println("The player has died ");
         Game.getGame().gameOver();
     }
