@@ -1,4 +1,4 @@
 CaveNumber:1
-PlayerPosition:21,18
-Diamonds:1
+PlayerPosition:17,18
+Diamonds:2
 Keys:0
