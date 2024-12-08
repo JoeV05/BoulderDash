@@ -1,58 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
-   <top>
-      <HBox prefHeight="100.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-         <children>
-            <Canvas fx:id="menuCanvas" height="100.0" width="750.0" />
-         </children>
-      </HBox>
-   </top>
-   <center>
-      <VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="750.0" BorderPane.alignment="TOP_CENTER">
-         <children>
-            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGameButtonPress" prefHeight="50.0" prefWidth="400.0" text="Start Game">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="tutorialButton" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="50.0" prefWidth="400.0" text="Tutorial">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Button>
-            <Button fx:id="loadSaveButton" mnemonicParsing="false" onAction="#loadSaveButtonPress" prefHeight="50.0" prefWidth="400.0" text="Load Save">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonPress" prefHeight="50.0" prefWidth="400.0" text="Exit">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+   <children>
+      <ImageView fitHeight="760.0" fitWidth="827.0" layoutX="-10.0" layoutY="-151.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/Mars.png" />
+         </image>
+         <effect>
+            <Blend />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="23.0" fitWidth="185.0" layoutX="288.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/Tutorial.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="281.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/LoadSave.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="23.0" fitWidth="88.0" layoutX="330.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/Exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="280.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/NewGame.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="672.0" layoutY="345.0">
+         <image>
+            <!--suppost to be Frog.png but no frog in der-->
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="38.0" layoutX="149.0" layoutY="354.0">
+         <image>
+            <Image url="@menu/player_front.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="75.0" layoutY="312.0">
+         <image>
+            <Image url="@menu/Butterfly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="347.0">
+         <image>
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="470.0" layoutY="359.0">
+         <image>
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="startGameButton" layoutX="283.0" layoutY="115.0" mnemonicParsing="false" onAction="#startGameButtonPress" prefHeight="65.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="tutorialButton" layoutX="278.0" layoutY="182.0" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="loadSaveButton" layoutX="280.0" layoutY="245.0" mnemonicParsing="false" onAction="#loadSaveButtonPress" prefHeight="65.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="exitButton" layoutX="280.0" layoutY="326.0" mnemonicParsing="false" onAction="#exitButtonPress" prefHeight="65.0" prefWidth="203.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="288.0" layoutY="363.0">
+         <image>
+            <Image url="@menu/Butterfly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="600.0" layoutY="359.0">
+         <image>
+            <Image url="@menu/Butterfly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="573.0" layoutY="178.0">
+         <image>
+            <Image url="@menu/ExitUnlocked.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="38.0" layoutX="521.0" layoutY="300.0">
+         <image>
+            <Image url="@menu/PlayerRight.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="688.0" layoutY="312.0">
+         <image>
+            <Image url="@menu/Diamond.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="600.0" layoutY="312.0">
+         <image>
+            <Image url="@menu/BlueKey.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="91.0" layoutY="46.0">
+         <image>
+            <Image url="@menu/ExitUnlocked.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

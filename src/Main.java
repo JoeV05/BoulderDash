@@ -9,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -46,7 +46,8 @@ public class Main extends Application {
     private final Queue<KeyCode> pressedKeys = new LinkedList<>();
     private final HashSet<KeyCode> seenKeys = new HashSet<>();
     private Timeline tickTimeline;
-
+    private int autoSaveCounter = 0;
+    private static final int AUTO_SAVE_INTERVAL = 40;
     /**
      * Set the main class to store the instance when the instance is made.
      */
@@ -82,7 +83,7 @@ public class Main extends Application {
         tickTimeline = new Timeline(k);
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
-        BorderPane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
 
         Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
@@ -133,6 +134,12 @@ public class Main extends Application {
         }
         Game.getGame().tick();
         draw();
+
+        autoSaveCounter++;
+        if (autoSaveCounter > AUTO_SAVE_INTERVAL) {
+            autoSaveCounter = 0;
+            Game.getGame().saveGame("save.txt");
+        }
     }
 
     // TODO - display the score

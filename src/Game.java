@@ -1,6 +1,12 @@
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -25,9 +31,13 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private static int currentTick = 0;
     private static int diamondsNeeded;
     private static int timeLimit;
+    private static int diamondsOnHand = 0;
+    private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
+    private Exit exit;
 
     /**
      * Constructor for the Game class.
@@ -90,9 +100,12 @@ public class Game {
             case DOWN -> validMoveDown(x, y);
             case LEFT -> validMoveLeft(x, y);
             case RIGHT -> validMoveRight(x, y);
+
             default -> throw new IllegalStateException("Invalid direction: "
                     + dir);
+
         };
+
     }
 
     /**
@@ -237,6 +250,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        Exit.setScoreRequirement(diamondsNeeded);
     }
 
     /**
@@ -263,7 +277,6 @@ public class Game {
                 Exit e = new Exit(x, y, 5);
                 addToOnCreate(e);
                 break;
-            // TODO - metadata needed for unlock exit condition
             case 'R':
                 map[y][x] = new LockedDoor(x, y, Colour.RED);
                 break;
@@ -297,15 +310,18 @@ public class Game {
                 addToOnCreate(d);
                 break;
             case 'W':
-                map[y][x] = new Butterfly(x, y);
+                Butterfly butterfly = new Butterfly(x, y);
+                addToOnCreate(butterfly);
                 break;
                 // TODO - read left/right from level file
             case 'X':
-                map[y][x] = new Firefly(x, y);
+                Firefly firefly  = new Firefly(x, y);
+                addToOnCreate(firefly);
                 break;
             // TODO - metadata needed for left/right wall cling
             case 'F':
-                map[y][x] = new Frog(x, y);
+                Frog frog = new Frog(x, y);
+                addToOnCreate(frog);
                 break;
             case 'A':
                 AmoebaGroup a = new AmoebaGroup(10, 20, x, y);
@@ -335,6 +351,7 @@ public class Game {
         if (entity instanceof ActionWall) {
             if (entity instanceof Exit) {
                 actionWalls.add((Exit) entity);
+                this.exit = (Exit) entity;
             } else {
                 actionWalls.add((MagicWall) entity);
             }
@@ -420,7 +437,16 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
+
+    public void clock() {
+        //timeElapsed++;
+        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
+        //GameController.setTime(timeLimit - timeElapsed);
+        System.out.println("da");
+    }
+
     public void tick() {
+        currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
         }
@@ -430,7 +456,13 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).move();
+            //makes enemies move every 3 ticks
+            if (currentTick % 3 == 0){
+                enemies.get(i).move();
+            }
+            // TODO - Use this for enemy update on tick, #
+            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
+            //  but it's up to hazards people)
         }
 
         for (int i = 0; i < amoebaGroups.size(); i++) {
@@ -483,7 +515,7 @@ public class Game {
             // Save the player's position on the grid
             writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
             // Save the number of diamonds the player has collected
-            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
+            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
             // Save the number of keys the player has
             writer.println("Keys:" + Player.getPlayer().getKeys().size());
         } catch (IOException e) {
@@ -520,7 +552,7 @@ public class Game {
                 switch (parts[0]) {
                     case "CaveNumber":
                         // Set the cave number using the parsed integer
-                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
+                        Cave.setCaveNumber(Integer.parseInt(parts[1]));// Add a setter to Cave.java
                         break;
                     case "PlayerPosition":
                         // Parse the player's x and y position
@@ -579,6 +611,7 @@ public class Game {
             e.printStackTrace();
         }
     }
+	// resets the level by reverting to a checkpoint at the start of the level
 	public void gameOver(){
         System.out.println(" Game Over ");
         loadGame("checkpoint.txt");

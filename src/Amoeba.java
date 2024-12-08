@@ -1,26 +1,18 @@
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 
-// TODO - looking at this code makes me want to cry, needs fixing
-
 /**
- * Represents an Amoeba
- *
- * Amoeba are unique organisms that spread across the game board and have specific transformation rules.
- * According to the game specification, amoebae:
- * - Spread periodically to neighboring empty path tiles or dirt tiles
- * - Can kill enemies touching them in cardinal directions
- * - Transform based on their growth:
- * 1. If growth is blocked, they turn into diamonds
- * 2. If they reach a predefined size, they turn into boulders
- * Amoeba are harmless until they spread or transform, adding a strategic element to the game.
- *
- * @author Joseph Vinson, Tafara Gonese
- * Check Section 3.8 of the Functional Specification for detailed Amoeba behavior
+ * Represents an Amoeba within the game. Amoeba are unique organisms that
+ * spread across the game board and are able to transform into boulders or
+ * diamonds when certain conditions are met. Amoeba are harmless to the player
+ * until they transform, adding a strategic element to the game. Amoeba will
+ * kill any enemy that they are adjacent to. Amoeba can only grow onto path
+ * or dirt tiles.
+ * @author Joseph Vinson, Tafara Gonese, Jamie Crockett
+ * @version 1.5
  */
 
 public class Amoeba extends Tile {
-
     /**
      * Constructs a new Amoeba tile.
      * @param x The x-coordinate of the amoeba tile.
@@ -30,27 +22,40 @@ public class Amoeba extends Tile {
         super(x, y, false, TileType.AMOEBA, new Image("sprites/amoeba.png"));
     }
 
+    /**
+     * Check if this amoeba is able to grow at all.
+     * @return true or false.
+     */
     public boolean canGrow() {
         return !growthDirections().isEmpty();
     }
 
+    /**
+     * Get the directions the amoeba is able to grow in.
+     * @return ArrayList of Direction.
+     */
     public ArrayList<Direction> growthDirections() {
         ArrayList<Direction> dirs = new ArrayList<>();
-        if (canGrowUp()) {
+        if (canGrow(this.x, this.y - 1)) {
             dirs.add(Direction.UP);
         }
-        if (canGrowDown()) {
+        if (canGrow(this.x, this.y + 1)) {
             dirs.add(Direction.DOWN);
         }
-        if (canGrowLeft()) {
+        if (canGrow(this.x - 1, this.y)) {
             dirs.add(Direction.LEFT);
         }
-        if (canGrowRight()) {
+        if (canGrow(this.x + 1, this.y)) {
             dirs.add(Direction.RIGHT);
         }
         return dirs;
     }
 
+    /**
+     * Grows a new amoeba in a given direction from this amoeba.
+     * @param dir Direction which the new amoeba should grow from.
+     * @return Amoeba object.
+     */
     public Amoeba grow(Direction dir) {
         Amoeba a;
         switch (dir) {
@@ -58,17 +63,14 @@ public class Amoeba extends Tile {
                 a = new Amoeba(this.x, this.y - 1);
                 Game.getGame().replaceEntity(this.x, this.y - 1, a);
                 return a;
-                //break;
             case Direction.DOWN:
                 a = new Amoeba(this.x, this.y + 1);
                 Game.getGame().replaceEntity(this.x, this.y + 1, a);
                 return a;
-                //break;
             case Direction.LEFT:
                 a = new Amoeba(this.x - 1, this.y);
                 Game.getGame().replaceEntity(this.x - 1, this.y, a);
                 return a;
-                //break;
             case Direction.RIGHT:
                 a = new Amoeba(this.x + 1, this.y);
                 Game.getGame().replaceEntity(this.x + 1, this.y, a);
@@ -78,35 +80,23 @@ public class Amoeba extends Tile {
         }
     }
 
-    private boolean canGrowUp() {
-        if (this.y == 0) {
+    /**
+     * Checks if an amoeba is able to grow in a certain direction. Also handles
+     * killing any enemies that are adjacent to the amoeba.
+     * @param nX The x coordinate to check.
+     * @param nY The y coordinate to check.
+     * @return true or false.
+     */
+    private boolean canGrow(int nX, int nY) {
+        if (nX > Game.MAX_WIDTH_INDEX || nX < 0
+                || nY > Game.MAX_HEIGHT_INDEX || nY < 0) {
             return false;
         }
-        Entity e = Game.getGame().getEntity(this.x, this.y - 1);
-        return e instanceof Path || e instanceof Dirt;
-    }
-
-    private boolean canGrowDown() {
-        if (this.y == Game.MAX_HEIGHT_INDEX) {
-            return false;
+        Entity e = Game.getGame().getEntity(nX, nY);
+        if (e instanceof Enemy) {
+            Game.getGame().replaceEntity(nX, nY, new Path(nX, nY));
+            return true;
         }
-        Entity e = Game.getGame().getEntity(this.x, this.y + 1);
-        return e instanceof Path || e instanceof Dirt;
-    }
-
-    private boolean canGrowLeft() {
-        if (this.x == 0) {
-            return false;
-        }
-        Entity e = Game.getGame().getEntity(this.x - 1, this.y);
-        return e instanceof Path || e instanceof Dirt;
-    }
-
-    private boolean canGrowRight() {
-        if (this.x == Game.MAX_WIDTH_INDEX) {
-            return false;
-        }
-        Entity e = Game.getGame().getEntity(this.x + 1, this.y);
         return e instanceof Path || e instanceof Dirt;
     }
 }
