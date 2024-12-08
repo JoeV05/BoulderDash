@@ -30,6 +30,9 @@ public abstract class Enemy extends Entity{
     /**
      * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
      * @return int representing a particular item or set of items to be dropped on enemy death
+     * Performs any actions done when an enemy dies by a falling object and executes any on death actions
+     * they should do on their death.
+     * @return nothing as it executes the actions needed itself
      */
     public abstract void onDeathByFallingObject(Entity below);
 }

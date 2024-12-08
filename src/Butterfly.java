@@ -24,7 +24,9 @@ public class Butterfly extends Firefly {
 
 
     /**
-     * performs actions done when enemies die by falling objects for most this will replace a 3 by 3 area with path excluding exeption objects of titanium walls and the exit
+     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
+     * it then checks every adjacent tile and does the nessicary action depending on the tile
+     * @return nothing as it handles the conversions itself
      * butterfly will differ by replacing the path with diamonds instead
      */
 
@@ -88,12 +90,17 @@ public class Butterfly extends Firefly {
         } else {
             positionX = positionX + 1;
         }
+		if (gameEnd = true){
+            gameEnd =false;
+            Player.getPlayer().playerDeath();
+        }
     }
 
     /**
-     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default
+     * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default 
+	 *
      */
-
+	boolean gameEnd = false;
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit) {
@@ -105,10 +112,9 @@ public class Butterfly extends Firefly {
             } else {
                 return true;
             }
-        } else if (check instanceof Butterfly) {
-            Diamond dropedDiamond = new Diamond(x, y);
-            Game.getGame().replaceEntity(x, y, dropedDiamond);
-            return false;
+        } else if (check instanceof Player) {
+            gameEnd = true;
+            return true;
         } else {
             return true;
         }

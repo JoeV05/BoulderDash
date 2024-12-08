@@ -1,6 +1,12 @@
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -26,6 +32,12 @@ public class Game {
     //all active enemies
     private ArrayList<Enemy> enemies;
     private static int currentTick = 0;
+    private static int diamondsNeeded;
+    private static int timeLimit;
+    private static int diamondsOnHand = 0;
+    private static int timeElapsed;
+    private ArrayList<AmoebaGroup> amoebaGroups;
+    private Exit exit;
 
     /**
      * Constructor for the Game class.
@@ -34,6 +46,15 @@ public class Game {
         fallingEntities = new ArrayList<>();
         actionWalls = new ArrayList<>();
         enemies = new ArrayList<>();
+        amoebaGroups = new ArrayList<>();
+    }
+
+
+    public static void setDiamondsNeeded(int diamondsNeeded) {
+        Game.diamondsNeeded = diamondsNeeded;
+    }
+    public static void setTimeLimit(int timeLimit) {
+        Game.timeLimit = timeLimit;
     }
 
     /**
@@ -61,6 +82,10 @@ public class Game {
         enemies.remove(enemy);
     }
 
+    public void removeAmoebaGroup(AmoebaGroup amoebaGroup) {
+        amoebaGroups.remove(amoebaGroup);
+    }
+
     /**
      * Checks if a move from a given (x, y) position is valid for
      * a given direction.
@@ -75,9 +100,12 @@ public class Game {
             case DOWN -> validMoveDown(x, y);
             case LEFT -> validMoveLeft(x, y);
             case RIGHT -> validMoveRight(x, y);
+
             default -> throw new IllegalStateException("Invalid direction: "
                     + dir);
+
         };
+
     }
 
     /**
@@ -222,6 +250,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        Exit.setScoreRequirement(diamondsNeeded);
     }
 
     /**
@@ -248,7 +277,6 @@ public class Game {
                 Exit e = new Exit(x, y, 5);
                 addToOnCreate(e);
                 break;
-            // TODO - metadata needed for unlock exit condition
             case 'R':
                 map[y][x] = new LockedDoor(x, y, Colour.RED);
                 break;
@@ -296,7 +324,9 @@ public class Game {
                 addToOnCreate(frog);
                 break;
             case 'A':
-                map[y][x] = new Amoeba(x, y, 10);
+                AmoebaGroup a = new AmoebaGroup(10, 5, x, y);
+                amoebaGroups.add(a);
+                map[y][x] = a.getFirst();
                 break;
             case 'P':
                 map[y][x] = Player.getPlayer(x, y);
@@ -322,6 +352,7 @@ public class Game {
         if (entity instanceof ActionWall) {
             if (entity instanceof Exit) {
                 actionWalls.add((Exit) entity);
+                this.exit = (Exit) entity;
             } else {
                 actionWalls.add((MagicWall) entity);
             }
@@ -407,6 +438,14 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
+
+    public void clock() {
+        //timeElapsed++;
+        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
+        //GameController.setTime(timeLimit - timeElapsed);
+        System.out.println("da");
+    }
+
     public void tick() {
         currentTick++;
         System.out.println("Enemies size " + enemies.size());
@@ -426,6 +465,10 @@ public class Game {
             //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
             //  but it's up to hazards people)
         }
+
+        for (int i = 0; i < amoebaGroups.size(); i++) {
+            amoebaGroups.get(i).tick();
+        }
     }
 
     /**
@@ -444,7 +487,7 @@ public class Game {
      */
     public static boolean isRound(Entity entity) {
         return (entity instanceof FallingEntity)
-                || (entity instanceof Wall && !(entity instanceof MagicWall));
+                || (entity instanceof Wall && !(entity instanceof MagicWall || entity instanceof LockedDoor));
     }
 
     /**
@@ -473,13 +516,20 @@ public class Game {
             // Save the player's position on the grid
             writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
             // Save the number of diamonds the player has collected
-            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
+            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
             // Save the number of keys the player has
             writer.println("Keys:" + Player.getPlayer().getKeys().size());
         } catch (IOException e) {
             // Print the stack trace for debugging if saving fails
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Creates a checkpoint save when a level is loaded.
+     */
+    public void createCheckpoint() {
+        saveGame("checkpoint.txt");
     }
 
     /**
@@ -503,7 +553,7 @@ public class Game {
                 switch (parts[0]) {
                     case "CaveNumber":
                         // Set the cave number using the parsed integer
-                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
+                        Cave.setCaveNumber(Integer.parseInt(parts[1]));// Add a setter to Cave.java
                         break;
                     case "PlayerPosition":
                         // Parse the player's x and y position
@@ -554,9 +604,17 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
+            // Create a checkpoint save after loading the level
+            createCheckpoint();
+
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
             e.printStackTrace();
         }
+    }
+	// resets the level by reverting to a checkpoint at the start of the level
+	public void gameOver(){
+        System.out.println(" Game Over ");
+        loadGame("checkpoint.txt");
     }
 }

@@ -22,26 +22,26 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Player can move using the keyboard
 - [x] FallingEntity can roll
 - [x] Boulders fall
-- [ ] Boulders kill player
-- [ ] Boulders explode enemies
+- [x] Boulders kill player
+- [x] Boulders explode enemies
 - [x] Boulders can be pushed
 - [x] Boulders can be transformed by magic walls
 - [x] Diamonds fall
-- [ ] Diamonds kill player
-- [ ] Diamonds explode enemies
+- [x] Diamonds kill player
+- [x] Diamonds explode enemies
 - [x] Diamonds can be collected
 - [x] Diamonds can be transformed by magic walls
 - [ ] Butterfly implemented
 - [ ] Butterfly follows left or right edge
 - [ ] Firefly implemented
 - [ ] Firefly follows left or right edge
-- [ ] Firefly explosion turns destroyed tiles to diamonds
+- [x] Butterfly explosion turns destroyed tiles to diamonds
 - [ ] Frog implemented
 - [ ] Frog takes the shortest path
 - [ ] Amoeba growth rate read from file
-- [ ] Amoeba growth implemented
-- [ ] Amoeba transform into diamonds when growth is blocked
-- [ ] Amoeba transform into boulders when maximum size is reached
+- [ ] Amoeba growth implemented (sort of working)
+- [x] Amoeba transform into diamonds when growth is blocked
+- [x] Amoeba transform into boulders when maximum size is reached
 - [ ] Amoeba kill enemies they touch
 - [ ] Amoeba can be destroyed by explosion
 - [x] Game has ticks (spec says e.g. 200ms, movement might not happen every tick)

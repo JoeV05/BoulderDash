@@ -26,7 +26,7 @@ public class LockedDoor extends Wall {
     /**
      * Choose the correct sprite for a door of a given colour.
      * @param colour The colour of the door to get the sprite of.
-     * @return RED, YELLOW, GREEN or BLUE
+     * @return Image of either red, yellow, green or blue door.
      */
     private Image spriteSwitch(Colour colour) {
         switch (colour) {

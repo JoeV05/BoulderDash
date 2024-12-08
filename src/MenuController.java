@@ -33,6 +33,7 @@ public class MenuController {
         Main.setInLevel(true);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, Main.getMain()::handleKeyPressed);
         scene.addEventFilter(KeyEvent.KEY_RELEASED, Main.getMain()::handleKeyReleased);
+
         Game.getGame();
         Game.getGame().loadingCave();
     }
@@ -43,7 +44,7 @@ public class MenuController {
 
     @FXML
     public void loadSaveButtonPress(ActionEvent actionEvent) {
-        Game.getGame().loadGame("savegame.txt");
+        Game.getGame().loadGame("save.txt");
 
     }
 

@@ -52,9 +52,6 @@ public class Player extends Entity {
                 || this.y > Game.MAX_HEIGHT_INDEX || this.y < 0;
     }
 
-    // TODO - javadoc method comment
-    // TODO - player can push boulders
-    // TODO - player can exit the level if they have enough diamonds
     // TODO - better separation of responsibilities
     /**
      * Moves the player in the specified direction. Checks if the player is in
@@ -91,7 +88,6 @@ public class Player extends Entity {
                 this.addKey((Key) target);
             } else if (target instanceof Diamond) {
                 this.diamonds += 1;
-                System.out.println("You collected diamond " + this.diamonds);
                 Game.getGame().removeFallingEntity((Diamond) target);
             }
         } else if (target instanceof LockedDoor) {
@@ -115,17 +111,21 @@ public class Player extends Entity {
             int dX;
             if (moveDir == Direction.LEFT) {
                 dX = -1;
-                //Game.getGame().updateLevel(b.getX() - 1, b.getY(), b);
-                //Game.getGame().updateLevel(nX, nY, this);
             } else {
                 dX = 1;
-                //Game.getGame().updateLevel(b.getX() + 1, b.getY(), b);
-                //Game.getGame().updateLevel(nX, nY, this);
             }
             this.pushBoulder(b, dX);
+        } else if (target instanceof Frog || target instanceof Butterfly || target instanceof Firefly){
+            playerDeath();
         }
     }
 
+    /**
+     * Pushes a given boulder and moves the player.
+     * @param b Boulder to push.
+     * @param dX Difference in x that should be applied to the boulder and
+     * player, i.e. should the x change by +1 or -1
+     */
     public void pushBoulder(Boulder b, int dX) {
         Game.getGame().updateLevel(b.getX() + dX, b.getY(), b);
         Game.getGame().updateLevel(this.x + dX, this.y, this);
@@ -322,5 +322,10 @@ public class Player extends Entity {
         } else if (x > ZONE_FOUR && y > ZONE_TWO) {
             Main.VIEW.changeViewMode(4);
         }
+    }
+	// informs the user of player death and calls the reset method
+	public void playerDeath() {
+        System.out.println("The player has died ");
+        Game.getGame().gameOver();
     }
 }
