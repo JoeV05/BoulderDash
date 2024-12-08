@@ -44,7 +44,7 @@ public class MenuController {
 
     @FXML
     public void loadSaveButtonPress(ActionEvent actionEvent) {
-        Game.getGame().loadGame("savegame.txt");
+        Game.getGame().loadGame("save.txt");
 
     }
 
