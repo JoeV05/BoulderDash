@@ -14,8 +14,17 @@ public class Cave {
 
     public Cave() throws FileNotFoundException {
         caveNumber++;
-        this.caveName = "Cave" + caveNumber;
+        this.caveName = "Cave-" + caveNumber;
         this.fileName = "level-" + caveNumber + ".txt";
+        Game.getGame().setCurrentLevelFileName(fileName);
+        parseCave();
+        System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
+                caveName, fileName, tilesWide,  tilesTall);
+    }
+
+    public Cave(String fileName) throws FileNotFoundException {
+        this.caveName = "Cave-" + fileName.charAt(fileName.length() - 5);
+        this.fileName = fileName;
         parseCave();
         System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
@@ -80,7 +89,4 @@ public class Cave {
     public static void setCaveNumber(int number) {
         caveNumber = number;
     }
-
-    //TODO: Have a function that loads the next cave caveN, N being the next number
-
 }

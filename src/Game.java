@@ -1,12 +1,6 @@
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.*;
-import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -40,6 +34,7 @@ public class Game {
     private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
     private Exit exit;
+    private String currentLevelFile;
 
     /**
      * Constructor for the Game class.
@@ -58,11 +53,14 @@ public class Game {
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
     }
-    public static void setAmoebaMaxGrowth(int amountebaMaxGrowth) {
-        Game.amoebaMaxGrowth = amountebaMaxGrowth;
+    public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
+        Game.amoebaMaxGrowth = amoebaMaxGrowth;
     }
     public static void setAmoebaGrowthRate(int amoebaGrowthRate) {
         Game.amoebaGrowthRate = amoebaGrowthRate;
+    }
+    public void setCurrentLevelFileName(String currentLevelFile) {
+        this.currentLevelFile = currentLevelFile;
     }
 
     /**
@@ -433,14 +431,14 @@ public class Game {
      * to exit to the next level.
      */
     public void nextLevel() throws FileNotFoundException {
-        clearLevel();
+        resetLevel();
         loadingCave();
     }
 
     /**
      *
      */
-    public void clearLevel(){
+    public void resetLevel(){
         actionWalls.clear();
         fallingEntities.clear();
         enemies.clear();
@@ -597,8 +595,9 @@ public class Game {
      */
     public void loadCave() {
         try {
+            resetLevel();
             // Create a new Cave instance based on the current cave number
-            Cave cave = new Cave();
+            Cave cave = new Cave(currentLevelFile);
             // Initialize the game map with dimensions from the cave
             map = new Entity[cave.getTilesTall()][cave.getTilesWide()];
             // Retrieve the cave layout as a 2D array of characters
@@ -618,7 +617,7 @@ public class Game {
 	// resets the level by reverting to a checkpoint at the start of the level
 	public void gameOver(){
         System.out.println(" Game Over ");
-        clearLevel();
+        resetLevel();
         loadGame("checkpoint.txt");
     }
 }
