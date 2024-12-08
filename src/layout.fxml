@@ -15,8 +15,8 @@
         minWidth="675.0"
         prefHeight="400.0"
         prefWidth="750.0"
-        xmlns="http://javafx.com/javafx/"
-        xmlns:fx="http://javafx.com/fxml/"
+        xmlns="http://javafx.com/javafx/23.0.1"
+        xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="GameController">
    <center>
       <StackPane BorderPane.alignment="CENTER" style="-fx-background-color: black;">
