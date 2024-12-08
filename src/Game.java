@@ -1,12 +1,10 @@
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.io.*;
-import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -19,7 +17,6 @@ public class Game {
     // constants for grid and cell sizes
     public static final int GRID_WIDTH = 40;
     public static final int GRID_HEIGHT = 23;
-    // TODO - look into why this is - 2
     public static final int MAX_HEIGHT_INDEX = Game.GRID_HEIGHT - 2;
     public static final int MAX_WIDTH_INDEX = Game.GRID_WIDTH - 1;
     private static Game theGame;
@@ -49,9 +46,18 @@ public class Game {
     }
 
 
+    /**
+     * Set the number of diamonds needed to exit the level.
+     * @param diamondsNeeded Number of diamonds needed to exit the level.
+     */
     public static void setDiamondsNeeded(int diamondsNeeded) {
         Game.diamondsNeeded = diamondsNeeded;
     }
+
+    /**
+     * Set the time limit for the level.
+     * @param timeLimit How much time the player has to complete the level.
+     */
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
     }
@@ -81,6 +87,10 @@ public class Game {
         enemies.remove(enemy);
     }
 
+    /**
+     * Remove an amoeba group from the game.
+     * @param amoebaGroup Amoeba group to stop keeping track of.
+     */
     public void removeAmoebaGroup(AmoebaGroup amoebaGroup) {
         amoebaGroups.remove(amoebaGroup);
     }
@@ -240,7 +250,7 @@ public class Game {
         Cave charCave = new Cave();
         map = new Entity[charCave.getTilesTall()][charCave.getTilesWide()];
         //creates a map based on the caves dimensions
-        charCave.printCave();
+        System.out.println(charCave);
         char[][] reduceGets = charCave.getCave();
         //loops through the cave layout adding tiles to the map
         for (int row = 0; row < charCave.getTilesTall(); row++) {
@@ -442,6 +452,9 @@ public class Game {
         System.out.println("da");
     }
 
+    /**
+     * Update all actors in the game.
+     */
     public void tick() {
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
@@ -476,7 +489,8 @@ public class Game {
      */
     public static boolean isRound(Entity entity) {
         return (entity instanceof FallingEntity)
-                || (entity instanceof Wall && !(entity instanceof MagicWall || entity instanceof LockedDoor));
+                || (entity instanceof Wall && !(entity instanceof MagicWall
+                || entity instanceof LockedDoor));
     }
 
     /**
@@ -505,7 +519,8 @@ public class Game {
             // Save the player's position on the grid
             writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
             // Save the number of diamonds the player has collected
-            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
+            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
+            System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
             // Save the number of keys the player has
             writer.println("Keys:" + Player.getPlayer().getKeys().size());
         } catch (IOException e) {
@@ -542,7 +557,7 @@ public class Game {
                 switch (parts[0]) {
                     case "CaveNumber":
                         // Set the cave number using the parsed integer
-                        Cave.setCaveNumber(Integer.parseInt(parts[1]));// Add a setter to Cave.java
+                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
                         break;
                     case "PlayerPosition":
                         // Parse the player's x and y position
@@ -555,6 +570,7 @@ public class Game {
                         Player.getPlayer().setDiamonds(Integer.parseInt(parts[1]));
                         break;
                     case "Keys":
+                        // TODO - break up into method
                         // Clear the player's keys and add the specified number of default keys
                         int numKeys = Integer.parseInt(parts[1]);
                         Player.getPlayer().getKeys().clear();
@@ -601,8 +617,11 @@ public class Game {
             e.printStackTrace();
         }
     }
-	// resets the level by reverting to a checkpoint at the start of the level
-	public void gameOver(){
+
+    /**
+     * Reloads the last checkpoint.
+     */
+    public void gameOver() {
         System.out.println(" Game Over ");
         loadGame("checkpoint.txt");
     }
