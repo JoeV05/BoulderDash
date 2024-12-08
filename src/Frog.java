@@ -199,7 +199,7 @@ public class Frog extends Enemy {
         int x = 0;
         int y = 0;
         //Goes through everything that is not a path or player and changes it to null
-        for (int i = 0; i < game.MAX_HEIGHT_INDEX * game.MAX_WIDTH_INDEX; i++) {
+        for (int i = 0; i < game.MAX_HEIGHT_INDEX * game.MAX_WIDTH_INDEX + 1; i++) {
             boolean reset = false;
             if (currentLevelState[y][x] instanceof Player) {
                 graphedLevelState[y][x] = new GraphNode(true, y, x);
@@ -227,14 +227,14 @@ public class Frog extends Enemy {
             GraphNode currentNode = queue.poll();
             ArrayList<GraphNode> Neighbours = getNeighbours(currentNode,graphedLevelState);
 
-            for (int i = 0; i < Neighbours.size() - 1; i++) {
+            for (int i = 0; i < Neighbours.size(); i++) {
                 if (Neighbours.get(i).getDistance() == -1){
                     Neighbours.get(i).setDistance(currentNode.getDistance() + 1);
                     Neighbours.get(i).setParent(currentNode);
                     queue.add(Neighbours.get(i));
+                    graphedLevelState[Neighbours.get(i).getY()][Neighbours.get(i).getX()] = Neighbours.get(i);
                 }
             }
-            System.out.println("QUEUE SIZE " + queue.size());
         }
         //Checks if there is a route to the player or not
 
@@ -242,10 +242,8 @@ public class Frog extends Enemy {
         int[] playerCoordinates = new int[2];
         y = 0;
         x = 0;
-        for (int i = 0; i < game.MAX_HEIGHT_INDEX  *  game.MAX_WIDTH_INDEX; i++) {
-            System.out.println("SEARCHING FOR PLAYER");
+        for (int i = 0; i < game.MAX_HEIGHT_INDEX  *  game.MAX_WIDTH_INDEX + 1; i++) {
             boolean reset = false;
-            System.out.println("X " + x + "Y " + y);
             if (graphedLevelState[y][x] != null){
                 System.out.println(graphedLevelState[y][x].isPlayer() + " PLAYER");
                 if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
