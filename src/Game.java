@@ -1,6 +1,12 @@
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -27,6 +33,8 @@ public class Game {
     private ArrayList<Enemy> enemies;
     private static int diamondsNeeded;
     private static int timeLimit;
+    private static int diamondsOnHand = 0;
+    private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
 
     /**
@@ -421,6 +429,14 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
+
+    public void clock() {
+        //timeElapsed++;
+        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
+        //GameController.setTime(timeLimit - timeElapsed);
+        System.out.println("da");
+    }
+
     public void tick() {
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
