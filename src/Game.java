@@ -460,9 +460,6 @@ public class Game {
             if (currentTick % 6 == 0){
                 enemies.get(i).move();
             }
-            // TODO - Use this for enemy update on tick, #
-            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
-            //  but it's up to hazards people)
         }
 
         for (int i = 0; i < amoebaGroups.size(); i++) {
