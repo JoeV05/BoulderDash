@@ -448,7 +448,6 @@ public class Game {
 
     public void tick() {
         currentTick++;
-        System.out.println("Enemies size " + enemies.size());
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
         }
@@ -458,6 +457,7 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
+            //makes enemies move every 3 ticks
             if (currentTick % 3 == 0){
                 enemies.get(i).move();
             }

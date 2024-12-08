@@ -146,8 +146,6 @@ public class Frog extends Enemy {
         //Inner if statements check that the neighbour is not null
         if (neighbour1[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour1[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour1[0] >= 0 && neighbour1[1] >= 0){
-            //System.out.println("NEIGHBOUR 1 EXISTS");
-            //System.out.println(graphedLevelState[neighbour1[0]][neighbour1[1]] != null);
             if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
                 output.add(graphedLevelState[neighbour1[0]][neighbour1[1]]);
             }
@@ -156,8 +154,6 @@ public class Frog extends Enemy {
         if (neighbour2[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour2[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour2[0] >= 0 && neighbour2[1] >= 0){
 
-            //System.out.println("NEIGHBOUR 2 EXISTS");
-            //System.out.println(graphedLevelState[neighbour2[0]][neighbour2[1]] != null);
 
             if (graphedLevelState[neighbour2[0]][neighbour2[1]] != null){
                 output.add(graphedLevelState[neighbour2[0]][neighbour2[1]]);
@@ -166,8 +162,6 @@ public class Frog extends Enemy {
         }
         if (neighbour3[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour3[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour3[0] >= 0 && neighbour3[1] >= 0){
-            //System.out.println("NEIGHBOUR 3 EXISTS");
-            //System.out.println(graphedLevelState[neighbour3[0]][neighbour3[1]] != null);
             if (graphedLevelState[neighbour3[0]][neighbour3[1]] != null){
                 output.add(graphedLevelState[neighbour3[0]][neighbour3[1]]);
             }
@@ -175,23 +169,17 @@ public class Frog extends Enemy {
 
         if (neighbour4[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour4[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour4[0] >= 0 && neighbour4[1] >= 0){
-            //System.out.println("NEIGHBOUR 4 EXISTS");
-            //System.out.println(graphedLevelState[neighbour1[0]][neighbour1[1]] != null);
-
             if (graphedLevelState[neighbour4[0]][neighbour4[1]] != null){
                 output.add(graphedLevelState[neighbour4[0]][neighbour4[1]]);
             }
 
         }
-        //System.out.println(" NEIGHBOUR TIME");
-        //System.out.println("Current x" + getX() + "Current Y " + getY());
         return output;
     }
     /**
      * Moves the frog to be called in main
      */
     public void move() {
-        System.out.println("FROG MOVING");
         Game game = Game.getGame();
         Entity[][] currentLevelState = game.getMap();
         GraphNode[][] graphedLevelState = new GraphNode[game.MAX_HEIGHT_INDEX + 2][game.MAX_WIDTH_INDEX + 1];
@@ -245,7 +233,6 @@ public class Frog extends Enemy {
         for (int i = 0; i < game.MAX_HEIGHT_INDEX  *  game.MAX_WIDTH_INDEX + 1; i++) {
             boolean reset = false;
             if (graphedLevelState[y][x] != null){
-                System.out.println(graphedLevelState[y][x].isPlayer() + " PLAYER");
                 if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
                     routeToPlayer = false;
                 }else if (graphedLevelState[y][x].isPlayer()){
@@ -264,12 +251,14 @@ public class Frog extends Enemy {
             }
 
         }
-        System.out.println("Route to player : " + routeToPlayer);
         //Decides where to move based on distance values
         if (routeToPlayer){
             GraphNode currentNode = graphedLevelState[playerCoordinates[0]][playerCoordinates[1]];
             for (int i = 0; i < graphedLevelState[playerCoordinates[0]][playerCoordinates[1]].getDistance() - 1; i++) {
                 currentNode = currentNode.getParent();
+            }
+            if (currentNode.getY() == playerCoordinates[0] && currentNode.getX() == playerCoordinates[1]){
+                Player.getPlayer().playerDeath();
             }
             game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
         }
