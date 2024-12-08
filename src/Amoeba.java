@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javafx.scene.image.Image;
 
 // TODO - looking at this code makes me want to cry, needs fixing

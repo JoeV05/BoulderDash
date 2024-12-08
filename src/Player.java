@@ -323,8 +323,8 @@ public class Player extends Entity {
             Main.VIEW.changeViewMode(4);
         }
     }
-	public void playerDeath(){
-		System.out.println("The player has died ");
-		Game.getGame().gameOver();
-	{		
+	public void playerDeath() {
+        System.out.println("The player has died ");
+        Game.getGame().gameOver();
+    }
 }

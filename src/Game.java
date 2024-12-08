@@ -308,15 +308,14 @@ public class Game {
                 map[y][x] = new Frog(x, y);
                 break;
             case 'A':
-                AmoebaGroup a = new AmoebaGroup(10, 5, x, y);
+                AmoebaGroup a = new AmoebaGroup(10, 20, x, y);
                 amoebaGroups.add(a);
                 map[y][x] = a.getFirst();
-                break;
+                break;// TODO - metadata needed for maximum Amoeba size
             case 'P':
                 map[y][x] = Player.getPlayer(x, y);
                 Player.getPlayer().manualSwitchView(x, y);
                 break;
-            // TODO - metadata needed for maximum Amoeba size
             case 'D':
                 map[y][x] = new Dirt(x, y);
                 break;

@@ -37,15 +37,15 @@ public class Cave {
 
         cave = new char[tilesTall][tilesWide];
 
-        for (int x = 0; x < tilesTall; x++) {
-            String line = lines.get(x);
-            for (int y = 0; y < tilesWide; y++) {
-                cave[x][y] = line.charAt(y);
+        for (int y = 0; y < tilesTall; y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < tilesWide; x++) {
+                cave[y][x] = line.charAt(x);
             }
         }
         scanner.close();
         Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
-        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall+1)));
+        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
     }
 
     public void printCave() {
@@ -59,11 +59,6 @@ public class Cave {
 
     public char[][] getCave() {
         return cave;
-    }
-
-    // TODO - is this method necessary?
-    public String getCaveName() {
-        return caveName;
     }
 
     public int getTilesTall() {

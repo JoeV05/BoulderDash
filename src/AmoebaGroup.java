@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class AmoebaGroup {
-    private ArrayList<Amoeba> amoeba;
+    private ArrayList<Amoeba> amoebaList;
     private int maximumSize;
     private int growthRate;
     private int tickCount;
@@ -10,14 +10,14 @@ public class AmoebaGroup {
     public AmoebaGroup(int maximumSize, int growthRate, int x, int y) {
         this.maximumSize = maximumSize;
         this.growthRate = growthRate;
-        this.amoeba = new ArrayList<>();
+        this.amoebaList = new ArrayList<>();
         Amoeba initialAmoeba = new Amoeba(x, y);
-        this.amoeba.add(initialAmoeba);
+        this.amoebaList.add(initialAmoeba);
         this.tickCount = 0;
     }
 
     public Amoeba getFirst() {
-        return amoeba.get(0);
+        return amoebaList.get(0);
     }
 
     public void tick() {
@@ -28,16 +28,16 @@ public class AmoebaGroup {
         
         this.tickCount = 0;
 
-        if (this.amoeba.size() == maximumSize) {
+        if (this.amoebaList.size() == maximumSize) {
             System.out.println("Maximum size reached");
             transformToBoulders();
             return;
         }
 
         ArrayList<Amoeba> growable = new ArrayList<>();
-        for (int i = 0; i < amoeba.size(); i++) {
-            if (amoeba.get(i).canGrow()) {
-                growable.add(amoeba.get(i));
+        for (int i = 0; i < amoebaList.size(); i++) {
+            if (amoebaList.get(i).canGrow()) {
+                growable.add(amoebaList.get(i));
             }
         }
 
@@ -48,10 +48,9 @@ public class AmoebaGroup {
 
         Random rand = new Random();
         int growIndex = rand.nextInt(growable.size());
-        Amoeba grower = amoeba.get(growIndex);
-        System.out.println("Growing " + growIndex);
+        Amoeba activeAmoeba = growable.get(growIndex);
         Random r = new Random();
-        ArrayList<Direction> growDirs = grower.growthDirections();
+        ArrayList<Direction> growDirs = activeAmoeba.growthDirections();
 
         if (growDirs.isEmpty()) {
             return;
@@ -59,13 +58,13 @@ public class AmoebaGroup {
 
         Direction randDir = growDirs.get(r.nextInt(growDirs.size()));
 
-        Amoeba grown = grower.grow(randDir);
-        amoeba.add(grown);
+        Amoeba grown = activeAmoeba.grow(randDir);
+        amoebaList.add(grown);
     }
 
     public void transformToDiamonds() {
-        for (int i = 0; i < amoeba.size(); i++) {
-            Amoeba a = amoeba.get(i);
+        for (int i = 0; i < amoebaList.size(); i++) {
+            Amoeba a = amoebaList.get(i);
             int aX = a.getX();
             int aY = a.getY();
             Diamond d = new Diamond(aX, aY);
@@ -76,8 +75,8 @@ public class AmoebaGroup {
     }
 
     public void transformToBoulders() {
-        for (int i = 0; i < amoeba.size(); i++) {
-            Amoeba a = amoeba.get(i);
+        for (int i = 0; i < amoebaList.size(); i++) {
+            Amoeba a = amoebaList.get(i);
             int aX = a.getX();
             int aY = a.getY();
             Boulder b = new Boulder(aX, aY);
