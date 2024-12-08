@@ -433,12 +433,18 @@ public class Game {
      * to exit to the next level.
      */
     public void nextLevel() throws FileNotFoundException {
-        actionWalls.clear();
-        fallingEntities.clear();
-        enemies.clear();
+        clearLevel();
         loadingCave();
     }
 
+    /**
+     *
+     */
+    public void clearLevel(){
+        actionWalls.clear();
+        fallingEntities.clear();
+        enemies.clear();
+    }
     /**
      * This method is called periodically by the tick timeline
      * and would for, example move, perform logic in the game,
@@ -614,6 +620,7 @@ public class Game {
 	// resets the level by reverting to a checkpoint at the start of the level
 	public void gameOver(){
         System.out.println(" Game Over ");
+        clearLevel();
         loadGame("checkpoint.txt");
     }
 }

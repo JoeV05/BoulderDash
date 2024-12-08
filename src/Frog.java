@@ -2,12 +2,17 @@ import javafx.scene.image.Image;
 
 import java.util.*;
 
-// TODO - javadoc class comment
-// TODO - maybe tidy up comments?
-
+/**
+ * A class designed to represent a frog
+ * @author Edward Tickle
+ */
 public class Frog extends Enemy {
 
-
+    /**
+     * Constructor for the frog class
+     * @param x int x position
+     * @param y int y position
+     */
     public Frog(int x, int y) {
         super(x, y, new Image("./sprites/frog.png"));
     }
