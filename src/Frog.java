@@ -1,9 +1,6 @@
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 // TODO - javadoc class comment
 // TODO - maybe tidy up comments?
@@ -261,6 +258,15 @@ public class Frog extends Enemy {
                 Player.getPlayer().playerDeath();
             }
             game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
+        }else if (!routeToPlayer){
+            //Moves in random direction when player is not detected
+            //randomises by using shuffling arraylist and then getting the first element in the arraylist
+
+            graphedLevelState[getY()][getX()] = new GraphNode(false,getY(),getX());
+            ArrayList<GraphNode> possibleMoveLocations = getNeighbours(graphedLevelState[getY()][getX()],graphedLevelState);
+            Collections.shuffle(possibleMoveLocations);
+            game.updateLevel(possibleMoveLocations.get(0).getX(),possibleMoveLocations.get(0).getY(),
+                    currentLevelState[getY()][getX()]);
         }
 
 
