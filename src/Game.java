@@ -273,7 +273,6 @@ public class Game {
                 Exit e = new Exit(x, y, 5);
                 addToOnCreate(e);
                 break;
-            // TODO - metadata needed for unlock exit condition
             case 'R':
                 map[y][x] = new LockedDoor(x, y, Colour.RED);
                 break;
