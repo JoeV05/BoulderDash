@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
  */
 public abstract class Enemy extends Entity{
 
+    protected boolean gameEnd = false;
+
     protected Enemy(int row, int column, Image image) {
         super(row,column,image);
 

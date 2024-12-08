@@ -105,7 +105,6 @@ public class Firefly extends Enemy {
 	/**
      * used by the method called upon an enemy dying via a falling object this method sees if the tiles selected result in an outcome differing from the default  
      */
-	boolean gameEnd = false;
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
         if (check instanceof Exit ){
