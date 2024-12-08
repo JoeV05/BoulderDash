@@ -323,6 +323,7 @@ public class Player extends Entity {
             Main.VIEW.changeViewMode(4);
         }
     }
+	// informs the user of player death and calls the reset method
 	public void playerDeath() {
         System.out.println("The player has died ");
         Game.getGame().gameOver();
