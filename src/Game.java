@@ -33,6 +33,8 @@ public class Game {
     private ArrayList<Enemy> enemies;
     private static int currentTick = 0;
     private static int diamondsNeeded;
+    private static int amoebaMaxGrowth;
+    private static int amoebaGrowthRate;
     private static int timeLimit;
     private static int diamondsOnHand = 0;
     private static int timeElapsed;
@@ -55,6 +57,12 @@ public class Game {
     }
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
+    }
+    public static void setAmoebaMaxGrowth(int amountebaMaxGrowth) {
+        Game.amoebaMaxGrowth = amountebaMaxGrowth;
+    }
+    public static void setAmoebaGrowthRate(int amoebaGrowthRate) {
+        Game.amoebaGrowthRate = amoebaGrowthRate;
     }
 
     /**
@@ -324,10 +332,10 @@ public class Game {
                 addToOnCreate(frog);
                 break;
             case 'A':
-                AmoebaGroup a = new AmoebaGroup(10, 20, x, y);
+                AmoebaGroup a = new AmoebaGroup(amoebaMaxGrowth, amoebaGrowthRate, x, y);
                 amoebaGroups.add(a);
                 map[y][x] = a.getFirst();
-                break;// TODO - metadata needed for maximum Amoeba size
+                break;
             case 'P':
                 map[y][x] = Player.getPlayer(x, y);
                 Player.getPlayer().manualSwitchView(x, y);
@@ -437,14 +445,6 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
-
-    public void clock() {
-        //timeElapsed++;
-        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
-        //GameController.setTime(timeLimit - timeElapsed);
-        System.out.println("da");
-    }
-
     public void tick() {
         currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {

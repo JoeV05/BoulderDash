@@ -46,6 +46,8 @@ public class Cave {
         scanner.close();
         Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
         Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
+        Game.setAmoebaMaxGrowth(Integer.parseInt(lines.get(tilesTall + 2)));
+        Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall + 3)));
     }
 
     public void printCave() {
