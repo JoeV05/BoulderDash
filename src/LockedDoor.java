@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
  * unlocked to become a walkable path.
  * @author Joseph Vinson, Tafara Gonese
  */
-
 public class LockedDoor extends Wall {
     //The colour of the locked door which determines which key can open it.
     private final Colour colour;
