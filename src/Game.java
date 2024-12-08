@@ -457,7 +457,7 @@ public class Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             //makes enemies move every 3 ticks
-            if (currentTick % 3 == 0){
+            if (currentTick % 6 == 0){
                 enemies.get(i).move();
             }
             // TODO - Use this for enemy update on tick, #
