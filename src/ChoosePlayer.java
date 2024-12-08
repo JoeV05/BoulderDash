@@ -1,3 +1,7 @@
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +33,12 @@ public class ChoosePlayer {
     public void createProfile (String name) {
         PlayerProfile profile = new PlayerProfile(name);
         this.profiles.add(profile);
+    }
+    private void saveProfile() throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(PF))) {
+            for (PlayerProfile profile : profiles) {
+                writer.println(profile.toString());
+            }
+        }
     }
 }
