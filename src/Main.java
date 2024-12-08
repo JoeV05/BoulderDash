@@ -9,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -82,7 +82,7 @@ public class Main extends Application {
         tickTimeline = new Timeline(k);
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
-        BorderPane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
 
         Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
