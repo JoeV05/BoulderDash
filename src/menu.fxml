@@ -7,22 +7,68 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
    <children>
       <ImageView fitHeight="621.0" fitWidth="620.0" layoutX="-10.0" layoutY="-152.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@menu/Mars.png"/>
+            <Image url="@menu/Mars.png" />
          </image>
          <effect>
             <Blend />
          </effect>
       </ImageView>
-      <Button fx:id="startGameButton" layoutX="172.0" layoutY="103.0" mnemonicParsing="false" onAction="#startGameButtonPress" prefHeight="65.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+      <ImageView fitHeight="23.0" fitWidth="185.0" layoutX="213.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/Tutorial.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/LoadSave.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="23.0" fitWidth="88.0" layoutX="261.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/Exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@menu/NewGame.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="479.0" layoutY="258.0">
+         <image>
+            <!--suppost to be Frog.png but no frog in der-->
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="38.0" layoutX="113.0" layoutY="193.0">
+         <image>
+            <Image url="@menu/player_front.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="75.0" layoutY="313.0">
+         <image>
+            <Image url="@menu/Butterfly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="37.0" layoutY="247.0">
+         <image>
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="491.0" layoutY="341.0">
+         <image>
+            <Image url="@menu/Firefly.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="startGameButton" layoutX="207.0" layoutY="125.0" mnemonicParsing="false" onAction="#startGameButtonPress" prefHeight="65.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="tutorialButton" layoutX="203.0" layoutY="180.0" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="65.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+      <Button fx:id="tutorialButton" layoutX="203.0" layoutY="192.0" mnemonicParsing="false" onAction="#tutorialButtonPress" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
          <font>
             <Font size="30.0" />
          </font>
@@ -37,51 +83,5 @@
             <Font size="30.0" />
          </font>
       </Button>
-      <ImageView fitHeight="23.0" fitWidth="185.0" layoutX="213.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@menu/Tutorial.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@menu/LoadSave.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="23.0" fitWidth="88.0" layoutX="261.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@menu/Exit.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="204.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@menu/NewGame.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="479.0" layoutY="258.0">
-         <image>
-            <!--suppost to be Frog.png but no frog in der-->
-            <Image url="@menu/Firefly.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="38.0" layoutX="113.0" layoutY="193.0">
-         <image>
-            <Image url="@menu/player_front.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="75.0" layoutY="313.0">
-         <image>
-            <Image url="@menu/Butterfly.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="37.0" layoutY="247.0">
-         <image>
-            <Image url="@menu/Firefly.png"/>
-         </image>
-      </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="491.0" layoutY="341.0">
-         <image>
-            <Image url="@menu/Firefly.png"/>
-         </image>
-      </ImageView>
    </children>
 </Pane>
