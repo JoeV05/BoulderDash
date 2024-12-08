@@ -1,9 +1,9 @@
 import javafx.scene.image.Image;
 
-// TODO - javadoc class comment
-
 /**
+ * Represents an entity that can be walked on by the player.
  * @author Joseph Vinson
+ * @version 1.1
  */
 public abstract class Walkable extends Entity {
 
