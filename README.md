@@ -38,19 +38,19 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [x] Butterfly explosion turns destroyed tiles to diamonds
 - [x] Frog implemented
 - [x] Frog takes the shortest path
-- [ ] Amoeba growth rate read from file
-- [ ] Amoeba growth implemented (sort of working)
+- [x] Amoeba growth rate read from file
+- [x] Amoeba growth implemented
 - [x] Amoeba transform into diamonds when growth is blocked
 - [x] Amoeba transform into boulders when maximum size is reached
 - [ ] Amoeba kill enemies they touch
 - [ ] Amoeba can be destroyed by explosion
 - [x] Game has ticks (spec says e.g. 200ms, movement might not happen every tick)
-- [ ] Level time limit read from level file
+- [x] Level time limit read from level file
 - [ ] Level has time limit
 - [ ] Score displayed
 - [ ] Level file stores width and height of level
 - [x] Level file stores all tiles and their locations
 - [ ] Level file stores data for enemies
-- [ ] Level file stores time limit
-- [ ] Level file stores number of diamonds needed
-- [ ] Level file stores amoeba growth rate
+- [x] Level file stores time limit
+- [x] Level file stores number of diamonds needed
+- [x] Level file stores amoeba growth rate
