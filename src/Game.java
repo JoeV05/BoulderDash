@@ -36,6 +36,7 @@ public class Game {
     private static int diamondsOnHand = 0;
     private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
+    private Exit exit;
 
     /**
      * Constructor for the Game class.
@@ -245,6 +246,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        Exit.setScoreRequirement(diamondsNeeded);
     }
 
     /**
@@ -344,6 +346,7 @@ public class Game {
         if (entity instanceof ActionWall) {
             if (entity instanceof Exit) {
                 actionWalls.add((Exit) entity);
+                this.exit = (Exit) entity;
             } else {
                 actionWalls.add((MagicWall) entity);
             }

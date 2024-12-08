@@ -14,6 +14,10 @@ public class Exit extends ActionWall {
         scoreRequirement = scoreReq;
     }
 
+    public static void setScoreRequirement(int scoreRequirement) {
+        Exit.scoreRequirement = scoreRequirement;
+    }
+
     // TODO - javadoc method comment
     public boolean canExit(int diamonds) {
         return diamonds >= scoreRequirement;
