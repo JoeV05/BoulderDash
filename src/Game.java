@@ -1,6 +1,12 @@
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * Stores and handles data about the overall game state. Keeps track
@@ -27,7 +33,10 @@ public class Game {
     private ArrayList<Enemy> enemies;
     private static int diamondsNeeded;
     private static int timeLimit;
+    private static int diamondsOnHand = 0;
+    private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
+    private Exit exit;
 
     /**
      * Constructor for the Game class.
@@ -240,6 +249,7 @@ public class Game {
                 this.tileSwitch(tileChar, row, col);
             }
         }
+        Exit.setScoreRequirement(diamondsNeeded);
     }
 
     /**
@@ -339,6 +349,7 @@ public class Game {
         if (entity instanceof ActionWall) {
             if (entity instanceof Exit) {
                 actionWalls.add((Exit) entity);
+                this.exit = (Exit) entity;
             } else {
                 actionWalls.add((MagicWall) entity);
             }
@@ -424,6 +435,14 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
+
+    public void clock() {
+        //timeElapsed++;
+        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
+        //GameController.setTime(timeLimit - timeElapsed);
+        System.out.println("da");
+    }
+
     public void tick() {
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
@@ -583,6 +602,7 @@ public class Game {
             e.printStackTrace();
         }
     }
+	// resets the level by reverting to a checkpoint at the start of the level
 	public void gameOver(){
         System.out.println(" Game Over ");
         loadGame("checkpoint.txt");
