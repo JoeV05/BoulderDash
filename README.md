@@ -36,8 +36,8 @@ CURRENT STATUS (IF YOU FINISH A FEATURE MARK IT OFF HERE)
 - [ ] Firefly implemented
 - [ ] Firefly follows left or right edge
 - [x] Butterfly explosion turns destroyed tiles to diamonds
-- [ ] Frog implemented
-- [ ] Frog takes the shortest path
+- [x] Frog implemented
+- [x] Frog takes the shortest path
 - [ ] Amoeba growth rate read from file
 - [ ] Amoeba growth implemented (sort of working)
 - [x] Amoeba transform into diamonds when growth is blocked

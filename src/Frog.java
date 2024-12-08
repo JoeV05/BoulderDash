@@ -1,6 +1,7 @@
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,6 +17,17 @@ public class Frog extends Enemy {
 
     @Override
     public void movementTests() {
+
+    }
+
+    /**
+     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
+     *
+     * @param below
+     * @return int representing a particular item or set of items to be dropped on enemy death
+     */
+    @Override
+    public void onDeathByHazard(Entity below) {
 
     }
 
@@ -126,66 +138,65 @@ public class Frog extends Enemy {
      */
     private ArrayList<GraphNode> getNeighbours(GraphNode target, GraphNode[][] graphedLevelState){
         ArrayList<GraphNode> output = new ArrayList<>();
-        Integer[] neighbour1 = {target.getY() + 1,target.getX() + 1};
-        Integer[] neighbour2 = {target.getY() - 1,target.getX() +1};
-        Integer[] neighbour3 = {target.getY() -1,target.getX() -1};
-        Integer[] neighbour4 = {target.getY() + 1,target.getX() -1};
+        Integer[] neighbour1 = {target.getY() + 1,target.getX()};
+        Integer[] neighbour2 = {target.getY(),target.getX() +1};
+        Integer[] neighbour3 = {target.getY() -1,target.getX()};
+        Integer[] neighbour4 = {target.getY(),target.getX() -1};
         //Outer if statements make sure that each neighbour is an index in the graphed level state array
         //Inner if statements check that the neighbour is not null
-        if (neighbour1[0] <= graphedLevelState[0].length -1 &&  neighbour1[1] <= graphedLevelState.length - 1
+        if (neighbour1[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour1[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour1[0] >= 0 && neighbour1[1] >= 0){
             if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
                 output.add(graphedLevelState[neighbour1[0]][neighbour1[1]]);
             }
         }
 
-        if (neighbour2[0] <= graphedLevelState[0].length -1 &&  neighbour2[1] <= graphedLevelState.length - 1
+        if (neighbour2[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour2[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour2[0] >= 0 && neighbour2[1] >= 0){
+
+
             if (graphedLevelState[neighbour2[0]][neighbour2[1]] != null){
                 output.add(graphedLevelState[neighbour2[0]][neighbour2[1]]);
             }
 
         }
-
-        if (neighbour3[0] <= graphedLevelState[0].length -1 &&  neighbour3[1] <= graphedLevelState.length - 1
+        if (neighbour3[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour3[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour3[0] >= 0 && neighbour3[1] >= 0){
-
-            if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
+            if (graphedLevelState[neighbour3[0]][neighbour3[1]] != null){
                 output.add(graphedLevelState[neighbour3[0]][neighbour3[1]]);
             }
         }
 
-        if (neighbour4[0] <= graphedLevelState[0].length -1 &&  neighbour4[1] <= graphedLevelState.length - 1
+        if (neighbour4[0] <= Game.getGame().MAX_HEIGHT_INDEX &&  neighbour4[1] <= Game.getGame().MAX_WIDTH_INDEX
                 && neighbour4[0] >= 0 && neighbour4[1] >= 0){
-
-            if (graphedLevelState[neighbour1[0]][neighbour1[1]] != null){
-                output.add(graphedLevelState[neighbour1[0]][neighbour4[1]]);
+            if (graphedLevelState[neighbour4[0]][neighbour4[1]] != null){
+                output.add(graphedLevelState[neighbour4[0]][neighbour4[1]]);
             }
+
         }
         return output;
     }
     /**
      * Moves the frog to be called in main
      */
-    @Override
     public void move() {
         Game game = Game.getGame();
         Entity[][] currentLevelState = game.getMap();
-        GraphNode[][] graphedLevelState = new GraphNode[currentLevelState.length][currentLevelState[0].length];
+        GraphNode[][] graphedLevelState = new GraphNode[game.MAX_HEIGHT_INDEX + 2][game.MAX_WIDTH_INDEX + 1];
 
         int x = 0;
         int y = 0;
         //Goes through everything that is not a path or player and changes it to null
-        for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
-            System.out.println("Resetting");
+        for (int i = 0; i < game.MAX_HEIGHT_INDEX * game.MAX_WIDTH_INDEX + 1; i++) {
             boolean reset = false;
             if (currentLevelState[y][x] instanceof Player) {
                 graphedLevelState[y][x] = new GraphNode(true, y, x);
+
             } else if (currentLevelState[y][x] instanceof Path) {
                 graphedLevelState[y][x] = new GraphNode(false, y, x);
             }
 
-            if (x == currentLevelState.length) {
+            if (x == game.MAX_WIDTH_INDEX) {
                 y++;
                 x = 0;
                 reset = true;
@@ -196,36 +207,41 @@ public class Frog extends Enemy {
 
         }
         //START OF PATHFINDING implementing bfs and then querying the position of the player
-        GraphNode startLocation = graphedLevelState[getY()][getX()];
         Queue<GraphNode> queue = new LinkedList<>();
         queue.add(new GraphNode(false, getY(), getX()));
-        ArrayList<GraphNode> visited = new ArrayList<>();
-        int distance = 0;
+        queue.peek().setDistance(0);
         while (queue.size() > 0) {
-            GraphNode currentNode = queue.poll();
-            visited.add(currentNode);
-            ArrayList<GraphNode> Neighbours = getNeighbours(currentNode,graphedLevelState);
-            distance ++;
-            for (int i = 0; i < Neighbours.size() - 1; i++) {
-                Neighbours.get(i).setDistance(distance);
-                Neighbours.get(i).setParent(currentNode);
-                queue.add(Neighbours.get(i));
 
+            GraphNode currentNode = queue.poll();
+            ArrayList<GraphNode> Neighbours = getNeighbours(currentNode,graphedLevelState);
+
+            for (int i = 0; i < Neighbours.size(); i++) {
+                if (Neighbours.get(i).getDistance() == -1){
+                    Neighbours.get(i).setDistance(currentNode.getDistance() + 1);
+                    Neighbours.get(i).setParent(currentNode);
+                    queue.add(Neighbours.get(i));
+                    graphedLevelState[Neighbours.get(i).getY()][Neighbours.get(i).getX()] = Neighbours.get(i);
+                }
             }
         }
         //Checks if there is a route to the player or not
+
         boolean routeToPlayer = true;
         int[] playerCoordinates = new int[2];
-        for (int i = 0; i < currentLevelState.length * currentLevelState[0].length; i++) {
-            System.out.println("Resetting");
+        y = 0;
+        x = 0;
+        for (int i = 0; i < game.MAX_HEIGHT_INDEX  *  game.MAX_WIDTH_INDEX + 1; i++) {
             boolean reset = false;
-            if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
-                routeToPlayer = false;
-            }else if (graphedLevelState[y][x].isPlayer()){
-                playerCoordinates[0] = y;
-                playerCoordinates[1] = x;
+            if (graphedLevelState[y][x] != null){
+                if (graphedLevelState[y][x].isPlayer() && graphedLevelState[y][x].getDistance() == -1) {
+                    routeToPlayer = false;
+                }else if (graphedLevelState[y][x].isPlayer()){
+                    playerCoordinates[0] = y;
+                    playerCoordinates[1] = x;
+                }
+
             }
-            if (x == currentLevelState.length) {
+            if (x == Game.MAX_WIDTH_INDEX) {
                 y++;
                 x = 0;
                 reset = true;
@@ -240,6 +256,9 @@ public class Frog extends Enemy {
             GraphNode currentNode = graphedLevelState[playerCoordinates[0]][playerCoordinates[1]];
             for (int i = 0; i < graphedLevelState[playerCoordinates[0]][playerCoordinates[1]].getDistance() - 1; i++) {
                 currentNode = currentNode.getParent();
+            }
+            if (currentNode.getY() == playerCoordinates[0] && currentNode.getX() == playerCoordinates[1]){
+                Player.getPlayer().playerDeath();
             }
             game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
         }

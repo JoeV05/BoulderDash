@@ -28,6 +28,7 @@ public class Game {
     private ArrayList<ActionWall> actionWalls;
     //all active enemies
     private ArrayList<Enemy> enemies;
+    private static int currentTick = 0;
     private static int diamondsNeeded;
     private static int timeLimit;
     private static int diamondsOnHand = 0;
@@ -319,15 +320,18 @@ public class Game {
                 addToOnCreate(d);
                 break;
             case 'W':
-                map[y][x] = new Butterfly(x, y);
+                Butterfly butterfly = new Butterfly(x, y);
+                addToOnCreate(butterfly);
                 break;
                 // TODO - read left/right from level file
             case 'X':
-                map[y][x] = new Firefly(x, y);
+                Firefly firefly  = new Firefly(x, y);
+                addToOnCreate(firefly);
                 break;
             // TODO - metadata needed for left/right wall cling
             case 'F':
-                map[y][x] = new Frog(x, y);
+                Frog frog = new Frog(x, y);
+                addToOnCreate(frog);
                 break;
             case 'A':
                 AmoebaGroup a = new AmoebaGroup(10, 5, x, y);
@@ -456,6 +460,7 @@ public class Game {
      * Update all actors in the game.
      */
     public void tick() {
+        currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
         }
@@ -465,7 +470,13 @@ public class Game {
         }
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).move();
+            //makes enemies move every 3 ticks
+            if (currentTick % 3 == 0){
+                enemies.get(i).move();
+            }
+            // TODO - Use this for enemy update on tick, #
+            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
+            //  but it's up to hazards people)
         }
 
         for (int i = 0; i < amoebaGroups.size(); i++) {
