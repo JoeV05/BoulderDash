@@ -30,5 +30,5 @@ public abstract class Enemy extends Entity{
      * they should do on their death.
      * @return nothing as it executes the actions needed itself
      */
-    public abstract void onDeathByFallingObject(Entity below);
+    public abstract void onDeath(Entity below);
 }

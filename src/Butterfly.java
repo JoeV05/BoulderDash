@@ -31,7 +31,7 @@ public class Butterfly extends Firefly {
      */
 
     @Override
-    public void onDeathByFallingObject(Entity below) {
+    public void onDeath(Entity below) {
         int positionX = below.getX();
         int positionY = below.getY();
         if (checker(positionX, positionY) == true) {

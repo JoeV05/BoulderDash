@@ -18,24 +18,12 @@ public class Frog extends Enemy {
     }
 
     /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     *
-     * @param below
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    @Override
-    public void onDeathByHazard(Entity below) {
-
-    }
-
-
-    /**
-     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
-     * it then checks every adjacent tile and does the nessicary action depending on the tile
+     * Performs any actions done when an enemy dies
+     * it then checks every adjacent tile and does the necessary action depending on the tile
      * @return nothing as it handles the conversions itself
      */
     @Override
-    public void onDeathByFallingObject(Entity below) {
+    public void onDeath(Entity below) {
         int positionX = below.getX();
         int positionY = below.getY();
         if (checker(positionX, positionY) == true) {

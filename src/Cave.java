@@ -32,7 +32,7 @@ public class Cave {
             lines.add(scanner.nextLine());
         }
 
-        tilesTall = lines.size() - 2;
+        tilesTall = lines.size() - 4;
         tilesWide = lines.getFirst().length();
 
         cave = new char[tilesTall][tilesWide];

@@ -65,15 +65,15 @@ public abstract class FallingEntity extends Entity {
         // TODO - handle case where entity below is either player or enemy
 		if (below instanceof Frog && this.falling) {
            Frog frog = (Frog) below;
-           frog.onDeathByFallingObject(below);
+           frog.onDeath(below);
         }
         if (below instanceof Firefly && this.falling) {
             Firefly firefly = (Firefly) below;
-            firefly.onDeathByFallingObject(below);
+            firefly.onDeath(below);
         }
         if (below instanceof Butterfly && this.falling) {
             Butterfly butterfly = (Butterfly) below;
-            butterfly.onDeathByFallingObject(below);
+            butterfly.onDeath(below);
         }
 		if (below instanceof Player && this.falling){
             Player.getPlayer().playerDeath();
