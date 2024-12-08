@@ -446,6 +446,9 @@ public class Game {
      * over them all and calling their own tick method).
      */
     public void tick() {
+		if (currentTick == 0){ 
+			createCheckpoint();
+		}
         currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
