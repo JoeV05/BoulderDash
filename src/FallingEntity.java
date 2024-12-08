@@ -61,14 +61,17 @@ public abstract class FallingEntity extends Entity {
             Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
         } else if (below instanceof Frog && this.falling) {
            Frog frog = (Frog) below;
-           frog.onDeathByFallingObject(below);
-        } else if (below instanceof Firefly && this.falling) {
+           frog.onDeath(below);
+        }
+        if (below instanceof Firefly && this.falling) {
             Firefly firefly = (Firefly) below;
-            firefly.onDeathByFallingObject(below);
-        } else if (below instanceof Butterfly && this.falling) {
+            firefly.onDeath(below);
+        }
+        if (below instanceof Butterfly && this.falling) {
             Butterfly butterfly = (Butterfly) below;
-            butterfly.onDeathByFallingObject(below);
-        } else if (below instanceof Player && this.falling) {
+            butterfly.onDeath(below);
+        }
+		if (below instanceof Player && this.falling){
             Player.getPlayer().playerDeath();
         }
         this.falling = false;

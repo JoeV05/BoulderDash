@@ -9,7 +9,7 @@ import java.util.Random;
  * @version 1.3
  */
 public class AmoebaGroup {
-    private ArrayList<Amoeba> amoeba;
+    private ArrayList<Amoeba> amoebaList;
     private int maximumSize;
     private int growthRate;
     private int tickCount;
@@ -25,9 +25,9 @@ public class AmoebaGroup {
     public AmoebaGroup(int maximumSize, int growthRate, int x, int y) {
         this.maximumSize = maximumSize;
         this.growthRate = growthRate;
-        this.amoeba = new ArrayList<>();
+        this.amoebaList = new ArrayList<>();
         Amoeba initialAmoeba = new Amoeba(x, y);
-        this.amoeba.add(initialAmoeba);
+        this.amoebaList.add(initialAmoeba);
         this.tickCount = 0;
     }
 
@@ -36,7 +36,7 @@ public class AmoebaGroup {
      * @return Amoeba object
      */
     public Amoeba getFirst() {
-        return amoeba.get(0);
+        return amoebaList.get(0);
     }
 
     /**
@@ -53,17 +53,18 @@ public class AmoebaGroup {
         //Reset tick count
         this.tickCount = 0;
         //Check if the group has reached maximum size
-        if (this.amoeba.size() == maximumSize) {
+        if (this.amoebaList.size() == maximumSize) {
             transformToBoulders();
             return;
         }
         //Find which amoeba in the group can grow
         ArrayList<Amoeba> growable = new ArrayList<>();
-        for (int i = 0; i < amoeba.size(); i++) {
-            if (amoeba.get(i).canGrow()) {
-                growable.add(amoeba.get(i));
+        for (int i = 0; i < amoebaList.size(); i++) {
+            if (amoebaList.get(i).canGrow()) {
+                growable.add(amoebaList.get(i));
             }
         }
+
         if (growable.isEmpty()) {
             transformToDiamonds();
             return;
@@ -71,18 +72,19 @@ public class AmoebaGroup {
         //Random choice of amoeba to grow
         Random rand = new Random();
         int growIndex = rand.nextInt(growable.size());
-        Amoeba grower = amoeba.get(growIndex);
+        Amoeba activeAmoeba = growable.get(growIndex);
         //Random choice of which direction to grow in
         Random r = new Random();
-        ArrayList<Direction> growDirs = grower.growthDirections();
+        ArrayList<Direction> growDirs = activeAmoeba.growthDirections();
+
         if (growDirs.isEmpty()) {
             return;
         }
         int randIndex = r.nextInt(growDirs.size());
         Direction randDir = growDirs.get(randIndex);
         //Create grown amoeba
-        Amoeba grown = grower.grow(randDir);
-        amoeba.add(grown);
+        Amoeba grown = activeAmoeba.grow(randDir);
+        amoebaList.add(grown);
     }
 
     /**
@@ -91,8 +93,8 @@ public class AmoebaGroup {
      * from the game.
      */
     private void transformToDiamonds() {
-        for (int i = 0; i < amoeba.size(); i++) {
-            Amoeba a = amoeba.get(i);
+        for (int i = 0; i < amoebaList.size(); i++) {
+            Amoeba a = amoebaList.get(i);
             int aX = a.getX();
             int aY = a.getY();
             Diamond d = new Diamond(aX, aY);
@@ -108,8 +110,8 @@ public class AmoebaGroup {
      * from the game.
      */
     private void transformToBoulders() {
-        for (int i = 0; i < amoeba.size(); i++) {
-            Amoeba a = amoeba.get(i);
+        for (int i = 0; i < amoebaList.size(); i++) {
+            Amoeba a = amoebaList.get(i);
             int aX = a.getX();
             int aY = a.getY();
             Boulder b = new Boulder(aX, aY);

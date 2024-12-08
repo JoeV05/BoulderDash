@@ -30,11 +30,14 @@ public class Game {
     private ArrayList<Enemy> enemies;
     private static int currentTick = 0;
     private static int diamondsNeeded;
+    private static int amoebaMaxGrowth;
+    private static int amoebaGrowthRate;
     private static int timeLimit;
     private static int diamondsOnHand = 0;
     private static int timeElapsed;
     private ArrayList<AmoebaGroup> amoebaGroups;
     private Exit exit;
+    private String currentLevelFile;
 
     /**
      * Constructor for the Game class.
@@ -61,6 +64,15 @@ public class Game {
      */
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
+    }
+    public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
+        Game.amoebaMaxGrowth = amoebaMaxGrowth;
+    }
+    public static void setAmoebaGrowthRate(int amoebaGrowthRate) {
+        Game.amoebaGrowthRate = amoebaGrowthRate;
+    }
+    public void setCurrentLevelFileName(String currentLevelFile) {
+        this.currentLevelFile = currentLevelFile;
     }
 
     /**
@@ -334,7 +346,7 @@ public class Game {
                 addToOnCreate(frog);
                 break;
             case 'A':
-                AmoebaGroup a = new AmoebaGroup(10, 5, x, y);
+                AmoebaGroup a = new AmoebaGroup(amoebaMaxGrowth, amoebaGrowthRate, x, y);
                 amoebaGroups.add(a);
                 map[y][x] = a.getFirst();
                 break;
@@ -342,7 +354,6 @@ public class Game {
                 map[y][x] = Player.getPlayer(x, y);
                 Player.getPlayer().manualSwitchView();
                 break;
-            // TODO - metadata needed for maximum Amoeba size
             case 'D':
                 map[y][x] = new Dirt(x, y);
                 break;
@@ -436,10 +447,17 @@ public class Game {
      * to exit to the next level.
      */
     public void nextLevel() throws FileNotFoundException {
+        resetLevel();
+        loadingCave();
+    }
+
+    /**
+     *
+     */
+    public void resetLevel(){
         actionWalls.clear();
         fallingEntities.clear();
         enemies.clear();
-        loadingCave();
     }
 
     /**
@@ -448,18 +466,10 @@ public class Game {
      * this might cause the bad guys to move (by e.g., looping
      * over them all and calling their own tick method).
      */
-
-    public void clock() {
-        //timeElapsed++;
-        //GameController.setDiamondCount(diamondsNeeded - diamondsOnHand);
-        //GameController.setTime(timeLimit - timeElapsed);
-        System.out.println("da");
-    }
-
-    /**
-     * Update all actors in the game.
-     */
     public void tick() {
+		if (currentTick == 0){
+			createCheckpoint();
+		}
         currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
@@ -471,12 +481,9 @@ public class Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             //makes enemies move every 3 ticks
-            if (currentTick % 3 == 0){
+            if (currentTick % 6 == 0){
                 enemies.get(i).move();
             }
-            // TODO - Use this for enemy update on tick, #
-            //  e.g. enemies.get(i).move() (preferably enemies.get(i).tick()
-            //  but it's up to hazards people)
         }
 
         for (int i = 0; i < amoebaGroups.size(); i++) {
@@ -608,8 +615,9 @@ public class Game {
      */
     public void loadCave() {
         try {
+            resetLevel();
             // Create a new Cave instance based on the current cave number
-            Cave cave = new Cave();
+            Cave cave = new Cave(currentLevelFile);
             // Initialize the game map with dimensions from the cave
             map = new Entity[cave.getTilesTall()][cave.getTilesWide()];
             // Retrieve the cave layout as a 2D array of characters
@@ -620,8 +628,6 @@ public class Game {
                     tileSwitch(caveLayout[y][x], y, x);
                 }
             }
-            // Create a checkpoint save after loading the level
-            createCheckpoint();
 
         } catch (FileNotFoundException e) {
             // Print the stack trace for debugging if the cave file is missing
@@ -634,6 +640,7 @@ public class Game {
      */
     public void gameOver() {
         System.out.println(" Game Over ");
+        resetLevel();
         loadGame("checkpoint.txt");
     }
 }

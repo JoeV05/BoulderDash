@@ -19,8 +19,17 @@ public class Cave {
      */
     public Cave() throws FileNotFoundException {
         caveNumber++;
-        this.caveName = "Cave" + caveNumber;
+        this.caveName = "Cave-" + caveNumber;
         this.fileName = "level-" + caveNumber + ".txt";
+        Game.getGame().setCurrentLevelFileName(fileName);
+        parseCave();
+        System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
+                caveName, fileName, tilesWide,  tilesTall);
+    }
+
+    public Cave(String fileName) throws FileNotFoundException {
+        this.caveName = "Cave-" + fileName.charAt(fileName.length() - 5);
+        this.fileName = fileName;
         parseCave();
         System.out.printf("Cave instance created (%s -> %s). "
                         + "It is %d wide and %d tall.%n",
@@ -38,20 +47,22 @@ public class Cave {
             lines.add(scanner.nextLine());
         }
 
-        tilesTall = lines.size() - 2;
+        tilesTall = lines.size() - 4;
         tilesWide = lines.getFirst().length();
 
         cave = new char[tilesTall][tilesWide];
 
-        for (int x = 0; x < tilesTall; x++) {
-            String line = lines.get(x);
-            for (int y = 0; y < tilesWide; y++) {
-                cave[x][y] = line.charAt(y);
+        for (int y = 0; y < tilesTall; y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < tilesWide; x++) {
+                cave[y][x] = line.charAt(x);
             }
         }
         scanner.close();
         Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
         Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
+        Game.setAmoebaMaxGrowth(Integer.parseInt(lines.get(tilesTall + 2)));
+        Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall + 3)));
     }
 
     /**

@@ -32,7 +32,7 @@ public class Butterfly extends Firefly {
      * butterfly will differ by replacing the path with diamonds instead.
      */
     @Override
-    public void onDeathByFallingObject(Entity below) {
+    public void onDeath(Entity below) {
         int positionX = below.getX();
         int positionY = below.getY();
         if (checker(positionX, positionY) == true) {

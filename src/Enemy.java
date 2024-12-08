@@ -35,10 +35,11 @@ public abstract class Enemy extends Entity {
      */
     public abstract void onDeathByHazard(Entity below);
 
+
     /**
      * Performs any actions done when an enemy dies by a falling object and
      * executes any on death actions they should do on their death.
      * @param below Entity below the enemy.
      */
-    public abstract void onDeathByFallingObject(Entity below);
+    public abstract void onDeath(Entity below);
 }

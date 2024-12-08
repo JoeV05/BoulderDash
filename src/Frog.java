@@ -1,16 +1,18 @@
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
-// TODO - javadoc class comment
-// TODO - maybe tidy up comments?
-
+/**
+ * A class designed to represent a frog
+ * @author Edward Tickle
+ */
 public class Frog extends Enemy {
 
-
+    /**
+     * Constructor for the frog class
+     * @param x int x position
+     * @param y int y position
+     */
     public Frog(int x, int y) {
         super(x, y, new Image("./sprites/frog.png"));
     }
@@ -21,24 +23,12 @@ public class Frog extends Enemy {
     }
 
     /**
-     * Performs any actions done when an enemy dies by a hazard and returns what they should drop on their death
-     *
-     * @param below
-     * @return int representing a particular item or set of items to be dropped on enemy death
-     */
-    @Override
-    public void onDeathByHazard(Entity below) {
-
-    }
-
-
-    /**
-     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
-     * it then checks every adjacent tile and does the nessicary action depending on the tile
+     * Performs any actions done when an enemy dies
+     * it then checks every adjacent tile and does the necessary action depending on the tile
      * @return nothing as it handles the conversions itself
      */
     @Override
-    public void onDeathByFallingObject(Entity below) {
+    public void onDeath(Entity below) {
         int positionX = below.getX();
         int positionY = below.getY();
         if (checker(positionX, positionY) == true) {
@@ -261,6 +251,15 @@ public class Frog extends Enemy {
                 Player.getPlayer().playerDeath();
             }
             game.updateLevel(currentNode.getX(),currentNode.getY(),currentLevelState[getY()][getX()]);
+        }else if (!routeToPlayer){
+            //Moves in random direction when player is not detected
+            //randomises by using shuffling arraylist and then getting the first element in the arraylist
+
+            graphedLevelState[getY()][getX()] = new GraphNode(false,getY(),getX());
+            ArrayList<GraphNode> possibleMoveLocations = getNeighbours(graphedLevelState[getY()][getX()],graphedLevelState);
+            Collections.shuffle(possibleMoveLocations);
+            game.updateLevel(possibleMoveLocations.get(0).getX(),possibleMoveLocations.get(0).getY(),
+                    currentLevelState[getY()][getX()]);
         }
 
 

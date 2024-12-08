@@ -43,22 +43,12 @@ public class Firefly extends Enemy {
     }
 
     /**
-     * Performs any actions done when an enemy dies by a hazard and returns
-     * what they should drop on their death
-     * @param below
+     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
+     * it then checks every adjacent tile and does the nessicary action depending on the tile
+     * @return nothing as it handles the conversions itself
      */
     @Override
-    public void onDeathByHazard(Entity below) {
-
-    }
-
-
-    /**
-     * Performs any actions done when an enemy dies by a falling object, checks
-     * every adjacent tile and does the necessary action depending on the tile.
-     */
-    @Override
-    public void onDeathByFallingObject(Entity below) {
+    public void onDeath(Entity below) {
         int positionX = below.getX();
         int positionY= below.getY();
         if(checker(positionX, positionY) == true){
@@ -74,7 +64,7 @@ public class Firefly extends Enemy {
         } else {
             positionY= positionY+1;
         }
-        if (checker(positionX, positionY) == true) {
+        if(checker(positionX, positionY) == true){
             Entity replaced =Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
             positionX= positionX-1;
