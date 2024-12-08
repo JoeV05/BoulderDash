@@ -640,7 +640,6 @@ public class Game {
      */
     public void gameOver() {
         System.out.println(" Game Over ");
-        resetLevel();
         loadGame("checkpoint.txt");
     }
 }
