@@ -417,6 +417,7 @@ public class Game {
         int oldY = entity.getY();
         if (getEntity(newX, newY) instanceof Exit) {
             try {
+                Player.getPlayer().nullify();
                 nextLevel();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -652,6 +653,7 @@ public class Game {
      */
     public void gameOver() {
         System.out.println(" Game Over ");
+        Player.getPlayer().nullify();
         loadCave();
     }
 }

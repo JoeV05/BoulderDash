@@ -345,4 +345,8 @@ public class Player extends Entity {
         System.out.println("The player has died ");
         Game.getGame().gameOver();
     }
+
+    public void nullify() {
+        thePlayer = null;
+    }
 }
