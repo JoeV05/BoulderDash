@@ -23,11 +23,11 @@ public class Game {
     // the map of entities representing the game
     private Entity[][] map;
     //entities effected by gravity
-    private ArrayList<FallingEntity> fallingEntities;
+    private final ArrayList<FallingEntity> fallingEntities;
     //walls that need to be updated on tick
-    private ArrayList<ActionWall> actionWalls;
+    private final ArrayList<ActionWall> actionWalls;
     //all active enemies
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
     private static int currentTick = 0;
     private static int diamondsNeeded;
     private static int amoebaMaxGrowth;
@@ -35,7 +35,7 @@ public class Game {
     private static int timeLimit;
     private static int diamondsOnHand = 0;
     private static int timeElapsed;
-    private ArrayList<AmoebaGroup> amoebaGroups;
+    private final ArrayList<AmoebaGroup> amoebaGroups;
     private Exit exit;
     private String currentLevelFile;
 

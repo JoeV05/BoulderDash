@@ -55,7 +55,6 @@ public class Player extends Entity {
                 || this.y > Game.MAX_HEIGHT_INDEX || this.y < 0;
     }
 
-    // TODO - better separation of responsibilities
     /**
      * Moves the player in the specified direction. Checks if the player is in
      * a valid position, then determines the direction to move the player in.

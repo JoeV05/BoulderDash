@@ -1,10 +1,16 @@
 /**
  * Represents a view of the map. Split into quadrants.
- * @author Joe Devlin
- * @version 1.0
+ * @author Joe Devlin, James Harvey
+ * @version 1.2
  */
 public class View {
     int viewMode;
+    private static final int LEFT_SCREEN_UPPER_BOUND = Main.MAP_SEEN_WIDTH - 1;//29
+    private static final int RIGHT_SCREEN_LOWER_BOUND = 10;
+    private static final int RIGHT_SCREEN_UPPER_BOUND = Game.GRID_WIDTH - 1;//39
+    private static final int BOTTOM_SCREEN_UPPER_BOUND = 6;
+    private static final int BOTTOM_SCREEN_LOWER_BOUND = Game.GRID_HEIGHT - 2;//21
+    private static final int TOP_SCREEN_LOWER_BOUND = Main.MAP_SEEN_HEIGHT - 1;//15
 
     public View(int viewMode) {
         this.viewMode = viewMode;
@@ -12,16 +18,33 @@ public class View {
 
     /**
      * Retrieve view boundaries.
-     * hardcoded values for now but should be made a function of
-     * map size.
      */
     public int[] getViewable() {
         return switch (viewMode) {
-            // TODO - remove magic numbers
-            case 1 -> new int[]{0, 29, 0, 15};
-            case 2 -> new int[]{10, 39, 0, 15};
-            case 3 -> new int[]{0, 29, 6, 21};
-            case 4 -> new int[]{10, 39, 6, 21};
+            case 1 -> new int[]{
+                    0,
+                    LEFT_SCREEN_UPPER_BOUND,
+                    0,
+                    TOP_SCREEN_LOWER_BOUND
+            };
+            case 2 -> new int[]{
+                    RIGHT_SCREEN_LOWER_BOUND,
+                    RIGHT_SCREEN_UPPER_BOUND,
+                    0,
+                    TOP_SCREEN_LOWER_BOUND
+            };
+            case 3 -> new int[]{
+                    0,
+                    LEFT_SCREEN_UPPER_BOUND,
+                    BOTTOM_SCREEN_UPPER_BOUND,
+                    BOTTOM_SCREEN_LOWER_BOUND
+            };
+            case 4 -> new int[]{
+                    RIGHT_SCREEN_LOWER_BOUND,
+                    RIGHT_SCREEN_UPPER_BOUND,
+                    BOTTOM_SCREEN_UPPER_BOUND,
+                    BOTTOM_SCREEN_LOWER_BOUND
+            };
             default -> throw new IllegalStateException("Invalid view mode "
                     + viewMode);
         };
