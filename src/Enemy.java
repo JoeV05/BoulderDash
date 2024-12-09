@@ -23,12 +23,6 @@ public abstract class Enemy extends Entity {
     public abstract void move();
 
     /**
-     * A Test method designed to be used inside moveTo to test your movement
-     * is working correctly.
-     */
-    public abstract void movementTests();
-
-    /**
      * Performs any actions done when an enemy dies by a falling object and
      * executes any on death actions they should do on their death.
      * @param below Entity below the enemy.
