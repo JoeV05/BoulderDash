@@ -30,6 +30,7 @@ public class Firefly extends Enemy {
     public Firefly(int x, int y, Image image, Direction cling) {
         super(x, y, image);
         this.cling = cling;
+        this.currentMovementDir = cling;
     }
 
     /**
@@ -92,7 +93,51 @@ public class Firefly extends Enemy {
     }
 
     public void moveClingLeft() {
-
+        if (currentMovementDir == Direction.DOWN) {
+            if (!(Game.getGame().getEntity(this.x + 1, this.y) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x, this.y - 1) instanceof Path) {
+                    Game.getGame().updateLevel(this.x, this.y - 1, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.RIGHT;
+                return;
+            }
+            Game.getGame().updateLevel(this.x + 1, this.y, this);
+            this.currentMovementDir = Direction.LEFT;
+        } else if (currentMovementDir == Direction.UP) {
+            if (!(Game.getGame().getEntity(this.x - 1, this.y) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x, this.y + 1) instanceof Path) {
+                    Game.getGame().updateLevel(this.x, this.y + 1, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.LEFT;
+                return;
+            }
+            Game.getGame().updateLevel(this.x - 1, this.y, this);
+            this.currentMovementDir = Direction.RIGHT;
+        } else if (currentMovementDir == Direction.RIGHT) {
+            if (!(Game.getGame().getEntity(this.x, this.y - 1) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x + 1, this.y) instanceof Path) {
+                    Game.getGame().updateLevel(this.x + 1, this.y, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.UP;
+                return;
+            }
+            Game.getGame().updateLevel(this.x, this.y - 1, this);
+            this.currentMovementDir = Direction.DOWN;
+        } else {
+            if (!((Game.getGame().getEntity(this.x, this.y + 1)) instanceof Path)) {
+                if (Game.getGame().getEntity(this.x - 1, this.y) instanceof Path) {
+                    Game.getGame().updateLevel(this.x - 1, this.y, this);
+                    return;
+                }
+                this.currentMovementDir = Direction.DOWN;
+                return;
+            }
+            Game.getGame().updateLevel(this.x, this.y + 1, this);
+            this.currentMovementDir = Direction.UP;
+        }
     }
 
     /**
