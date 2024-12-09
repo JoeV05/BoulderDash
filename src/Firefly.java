@@ -44,100 +44,75 @@ public class Firefly extends Enemy {
         this.moveClingLeft();
     }
 
-    public void moveClingRight() {
-        if (currentMovementDir == Direction.UP) {
-            if (!(Game.getGame().getEntity(this.x + 1, this.y) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x, this.y - 1) instanceof Path) {
-                    Game.getGame().updateLevel(this.x, this.y - 1, this);
-                    return;
+    public void moveClingLeft() {
+        Entity north = Game.getGame().getEntity(x, y - 1);
+        Entity east = Game.getGame().getEntity(x + 1, y);
+        Entity south = Game.getGame().getEntity(x, y + 1);
+        Entity west = Game.getGame().getEntity(x - 1, y);
+        switch (currentMovementDir) {
+            case Direction.RIGHT:
+                if (north instanceof Path) {
+                    Game.getGame().updateLevel(x, y - 1, this);
+                    currentMovementDir = Direction.DOWN;
+                } else if (east instanceof Path) {
+                    Game.getGame().updateLevel(x + 1, y, this);
+                } else if (south instanceof Path) {
+                    Game.getGame().updateLevel(x, y + 1, this);
+                    currentMovementDir = Direction.UP;
+                } else if (west instanceof Path) {
+                    Game.getGame().updateLevel(x - 1, y, this);
+                    currentMovementDir = Direction.LEFT;
                 }
-                this.currentMovementDir = Direction.LEFT;
-                return;
-            }
-            Game.getGame().updateLevel(this.x + 1, this.y, this);
-            this.currentMovementDir = Direction.RIGHT;
-        } else if (currentMovementDir == Direction.DOWN) {
-            if (!(Game.getGame().getEntity(this.x - 1, this.y) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x, this.y + 1) instanceof Path) {
-                    Game.getGame().updateLevel(this.x, this.y + 1, this);
-                    return;
+                break;
+            case Direction.UP:
+                if (east instanceof Path) {
+                    Game.getGame().updateLevel(x + 1, y, this);
+                    currentMovementDir = Direction.RIGHT;
+                } else if (south instanceof Path) {
+                    Game.getGame().updateLevel(x, y + 1, this);
+                    currentMovementDir = Direction.UP;
+                } else if (west instanceof Path) {
+                    Game.getGame().updateLevel(x - 1, y, this);
+                    currentMovementDir = Direction.LEFT;
+                } else if (north instanceof Path) {
+                    Game.getGame().updateLevel(x, y - 1, this);
+                    currentMovementDir = Direction.DOWN;
                 }
-                this.currentMovementDir = Direction.RIGHT;
-                return;
-            }
-            Game.getGame().updateLevel(this.x - 1, this.y, this);
-            this.currentMovementDir = Direction.LEFT;
-        } else if (currentMovementDir == Direction.LEFT) {
-            if (!(Game.getGame().getEntity(this.x, this.y - 1) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x + 1, this.y) instanceof Path) {
-                    Game.getGame().updateLevel(this.x + 1, this.y, this);
-                    return;
+                break;
+            case Direction.LEFT:
+                if (south instanceof Path) {
+                    Game.getGame().updateLevel(x, y + 1, this);
+                    currentMovementDir = Direction.UP;
+                } else if (west instanceof Path) {
+                    Game.getGame().updateLevel(x - 1, y, this);
+                    currentMovementDir = Direction.LEFT;
+                } else if (north instanceof Path) {
+                    Game.getGame().updateLevel(x, y - 1, this);
+                    currentMovementDir = Direction.DOWN;
+                } else if (east instanceof Path) {
+                    Game.getGame().updateLevel(x + 1, y, this);
+                    currentMovementDir = Direction.RIGHT;
                 }
-                this.currentMovementDir = Direction.DOWN;
-                return;
-            }
-            Game.getGame().updateLevel(this.x, this.y - 1, this);
-            this.currentMovementDir = Direction.UP;
-        } else {
-            if (!((Game.getGame().getEntity(this.x, this.y + 1)) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x - 1, this.y) instanceof Path) {
-                    Game.getGame().updateLevel(this.x - 1, this.y, this);
-                    return;
+                break;
+            case Direction.DOWN:
+                if (west instanceof Path) {
+                    Game.getGame().updateLevel(x - 1, y, this);
+                    currentMovementDir = Direction.LEFT;
+                } else if (north instanceof Path) {
+                    Game.getGame().updateLevel(x, y - 1, this);
+                    currentMovementDir = Direction.DOWN;
+                } else if (east instanceof Path) {
+                    Game.getGame().updateLevel(x + 1, y, this);
+                    currentMovementDir = Direction.RIGHT;
+                } else if (south instanceof Path) {
+                    Game.getGame().updateLevel(x, y + 1, this);
+                    currentMovementDir = Direction.UP;
                 }
-                this.currentMovementDir = Direction.UP;
-                return;
-            }
-            Game.getGame().updateLevel(this.x, this.y + 1, this);
-            this.currentMovementDir = Direction.DOWN;
+                break;
         }
     }
 
-    public void moveClingLeft() {
-        if (currentMovementDir == Direction.DOWN) {
-            if (!(Game.getGame().getEntity(this.x + 1, this.y) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x, this.y - 1) instanceof Path) {
-                    Game.getGame().updateLevel(this.x, this.y - 1, this);
-                    return;
-                }
-                this.currentMovementDir = Direction.RIGHT;
-                return;
-            }
-            Game.getGame().updateLevel(this.x + 1, this.y, this);
-            this.currentMovementDir = Direction.LEFT;
-        } else if (currentMovementDir == Direction.UP) {
-            if (!(Game.getGame().getEntity(this.x - 1, this.y) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x, this.y + 1) instanceof Path) {
-                    Game.getGame().updateLevel(this.x, this.y + 1, this);
-                    return;
-                }
-                this.currentMovementDir = Direction.LEFT;
-                return;
-            }
-            Game.getGame().updateLevel(this.x - 1, this.y, this);
-            this.currentMovementDir = Direction.RIGHT;
-        } else if (currentMovementDir == Direction.RIGHT) {
-            if (!(Game.getGame().getEntity(this.x, this.y - 1) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x + 1, this.y) instanceof Path) {
-                    Game.getGame().updateLevel(this.x + 1, this.y, this);
-                    return;
-                }
-                this.currentMovementDir = Direction.UP;
-                return;
-            }
-            Game.getGame().updateLevel(this.x, this.y - 1, this);
-            this.currentMovementDir = Direction.DOWN;
-        } else {
-            if (!((Game.getGame().getEntity(this.x, this.y + 1)) instanceof Path)) {
-                if (Game.getGame().getEntity(this.x - 1, this.y) instanceof Path) {
-                    Game.getGame().updateLevel(this.x - 1, this.y, this);
-                    return;
-                }
-                this.currentMovementDir = Direction.DOWN;
-                return;
-            }
-            Game.getGame().updateLevel(this.x, this.y + 1, this);
-            this.currentMovementDir = Direction.UP;
-        }
+    public void moveClingRight() {
     }
 
     /**
