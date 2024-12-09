@@ -17,15 +17,6 @@ public class Butterfly extends Firefly {
     }
 
     /**
-     * A Test method designed to be used inside moveTo to test your movement
-     * is working correctly.
-     */
-    @Override
-    public void movementTests() {
-
-    }
-
-    /**
      * Performs any actions done when an enemy dies by a falling object and
      * returns what they should drop on their death it then checks every
      * adjacent tile and does the necessary action depending on the tile

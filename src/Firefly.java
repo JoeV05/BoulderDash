@@ -116,14 +116,6 @@ public class Firefly extends Enemy {
     }
 
     /**
-     * No clue what this does.
-     */
-    @Override
-    public void movementTests() {
-
-    }
-
-    /**
      * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
      * it then checks every adjacent tile and does the nessicary action depending on the tile
      * @return nothing as it handles the conversions itself
