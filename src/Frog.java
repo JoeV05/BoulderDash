@@ -17,10 +17,6 @@ public class Frog extends Enemy {
         super(x, y, new Image("./sprites/frog.png"));
     }
 
-    @Override
-    public void movementTests() {
-
-    }
 
     /**
      * Performs any actions done when an enemy dies

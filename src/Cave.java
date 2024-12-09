@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Represents a level within the game.
- * @author Joe Devlin
- * @version 1.0
+ * Creates a map/character array from a parsed text file and defines level
+ * properties of the level such as Amoeba growth rate and Diamonds required
+ * to complete the level.
+ * @author Joe Devlin, Joe Vinson, James Harvey
+ * @version 1.5
  */
 public class Cave {
     public static final int METADATA_LENGTH = 5;
@@ -19,7 +21,7 @@ public class Cave {
     private static int caveNumber = 0;
 
     /**
-     * Creates a cave by loading the relevant level file.
+     * Automatically creates the next cave by loading the relevant level file.
      * @throws FileNotFoundException Throws an error if the required level file
      * is not found.
      */
@@ -35,10 +37,10 @@ public class Cave {
     }
 
     /**
-     * Creates a cave by loading a given file.
-     * @param fileName The name of the level file to load.
-     * @throws FileNotFoundException Throw an exception if the level file
-     * can't be found.
+     * Creates the Cave of the parsed file.
+     * @param fileName Name of the file to be parsed.
+     * @throws FileNotFoundException Throws an error if the required level file
+     * is not found.
      */
     public Cave(String fileName) throws FileNotFoundException {
         this.caveName = "Cave-" + fileName.charAt(fileName.length()
@@ -51,15 +53,16 @@ public class Cave {
     }
 
     /**
-     * Read through a level file and store the data.
-     * @throws FileNotFoundException Throw an exception if the level file can't
-     * be found.
+     * Reads the text file line-by-line and by character and adds it to the map
+     * to be read by the game class.
+     * @throws FileNotFoundException Throws an error if the file url is incorrect.
      */
     private void parseCave() throws FileNotFoundException {
         File file = new File("src/caves/%s".formatted(fileName));
         if (!file.exists()) {
             file = new File("src/caves/level-MAGIC-WALL-TEST.txt");
         }
+
         Scanner scanner = new Scanner(file);
         List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {

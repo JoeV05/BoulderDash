@@ -9,7 +9,6 @@ import java.util.Random;
  * @author Joseph Vinson
  * @version 1.1
  */
-
 public class Diamond extends FallingEntity {
     /**
      * Creates a new diamond at the given (x, y) coordinates with a sprite

@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Test;
 import javafx.scene.image.Image;
 
 /**
@@ -22,13 +21,6 @@ public abstract class Enemy extends Entity {
      * Moves the enemy.
      */
     public abstract void move();
-
-    /**
-     * A Test method designed to be used inside moveTo to test your movement
-     * is working correctly.
-     */
-    @Test
-    public abstract void movementTests();
 
     /**
      * Performs any actions done when an enemy dies by a falling object and

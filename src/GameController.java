@@ -1,4 +1,6 @@
+import com.sun.javafx.css.CalculatedValue;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,22 +9,22 @@ import javafx.scene.image.ImageView;
  * GUI controller for the Main class.
  * @author James Harvey, Joe Devlin
  */
-public class GameController {
+public class GameController{
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 750;
     private static final int CANVAS_HEIGHT = 400;
     @FXML
     private static Canvas canvas;
     @FXML
-    private ImageView topLeftImage1;
+    public ImageView scoreFirstDigit;
     @FXML
-    private ImageView topLeftImage2;
+    public ImageView scoreSecondDigit;
     @FXML
-    private ImageView topRightImage1;
+    public ImageView timerFistDigit;
     @FXML
-    private ImageView topRightImage2;
+    public ImageView timerSecondDigit;
     @FXML
-    private ImageView topRightImage3;
+    public ImageView timerThirdDigit;
 
     /**
      * Sets an image based off whether it is yellow or white and what the
@@ -31,7 +33,7 @@ public class GameController {
      * @param isYellow Whether the image should be set to a yellow number.
      * @param number The number the image should be set to.
      */
-    private void setImage(ImageView image, boolean isYellow, int number) {
+    private static void setImage(ImageView image, boolean isYellow, int number) {
         String path = String.format("/%s/%d.png",
                 isYellow ? "yellow" : "white", number);
         System.out.println(path);
@@ -40,15 +42,16 @@ public class GameController {
     }
 
     /**
-     *
+     *Sets all digits to starting numbers
      */
     @FXML
     public void initialize() {
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        setImage(topLeftImage1, true, 0);
-        setImage(topLeftImage2, true, 0);
-        setImage(topRightImage1, false, 0);
-        setImage(topRightImage2, false, 0);
-        setImage(topRightImage3, false, 0);
+        setImage(scoreFirstDigit, true, 0);
+        setImage(scoreSecondDigit, true, 0);
+
+        setImage(timerFistDigit, false, 0);
+        setImage(timerSecondDigit, false, 0);
+        setImage(timerThirdDigit, false, 0);
     }
 }

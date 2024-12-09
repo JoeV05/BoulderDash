@@ -1,3 +1,8 @@
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,11 +28,11 @@ public class Game {
     // the map of entities representing the game
     private Entity[][] map;
     //entities effected by gravity
-    private ArrayList<FallingEntity> fallingEntities;
+    private final ArrayList<FallingEntity> fallingEntities;
     //walls that need to be updated on tick
-    private ArrayList<ActionWall> actionWalls;
+    private final ArrayList<ActionWall> actionWalls;
     //all active enemies
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
     private static int currentTick = 0;
     private static int diamondsNeeded;
     private static int amoebaMaxGrowth;
@@ -35,7 +40,7 @@ public class Game {
     private static int timeLimit;
     private static int diamondsOnHand = 0;
     private static int timeElapsed;
-    private ArrayList<AmoebaGroup> amoebaGroups;
+    private final ArrayList<AmoebaGroup> amoebaGroups;
     private Exit exit;
     private String currentLevelFile;
 
@@ -48,7 +53,6 @@ public class Game {
         enemies = new ArrayList<>();
         amoebaGroups = new ArrayList<>();
     }
-
 
     /**
      * Set the number of diamonds needed to exit the level.
@@ -64,6 +68,9 @@ public class Game {
      */
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
+    }
+    public static int getTimeLimit(){
+        return timeLimit;
     }
     public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
         Game.amoebaMaxGrowth = amoebaMaxGrowth;
@@ -600,7 +607,6 @@ public class Game {
                         Player.getPlayer().setDiamonds(Integer.parseInt(parts[1]));
                         break;
                     case "Keys":
-                        // TODO - break up into method
                         // Clear the player's keys and add the specified number of default keys
                         int numKeys = Integer.parseInt(parts[1]);
                         Player.getPlayer().getKeys().clear();
