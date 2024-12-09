@@ -5,12 +5,12 @@
  */
 public class View {
     int viewMode;
-    private static final int LEFT_SCREEN_UPPER_BOUND = Main.MAP_SEEN_WIDTH - 1;//29
+    private static final int LEFT_SCREEN_UPPER_BOUND = Main.MAP_SEEN_WIDTH - 1;
     private static final int RIGHT_SCREEN_LOWER_BOUND = 10;
-    private static final int RIGHT_SCREEN_UPPER_BOUND = Game.GRID_WIDTH - 1;//39
+    private static final int RIGHT_SCREEN_UPPER_BOUND = Game.GRID_WIDTH - 1;
     private static final int BOTTOM_SCREEN_UPPER_BOUND = 6;
-    private static final int BOTTOM_SCREEN_LOWER_BOUND = Game.GRID_HEIGHT - 2;//21
-    private static final int TOP_SCREEN_LOWER_BOUND = Main.MAP_SEEN_HEIGHT - 1;//15
+    private static final int BOTTOM_SCREEN_LOWER_BOUND = Game.GRID_HEIGHT - 2;
+    private static final int TOP_SCREEN_LOWER_BOUND = Main.MAP_SEEN_HEIGHT - 1;
 
     /**
      * Constructor for the view class
@@ -22,6 +22,7 @@ public class View {
 
     /**
      * Retrieve view boundaries.
+     * @return Array of integers.
      */
     public int[] getViewable() {
         return switch (viewMode) {

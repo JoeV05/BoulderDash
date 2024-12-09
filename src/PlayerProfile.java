@@ -1,7 +1,7 @@
 /**
  * WHAT DOES THIS DO.
- * @author WHO MADE THIS.
- * @version WHAT VERSION IS THIS.
+ * @author Luke Brace
+ * @version 1.2
  */
 public class PlayerProfile {
     private String name;
