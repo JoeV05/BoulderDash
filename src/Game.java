@@ -1,3 +1,8 @@
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -49,7 +54,6 @@ public class Game {
         amoebaGroups = new ArrayList<>();
     }
 
-
     /**
      * Set the number of diamonds needed to exit the level.
      * @param diamondsNeeded Number of diamonds needed to exit the level.
@@ -64,6 +68,9 @@ public class Game {
      */
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
+    }
+    public static int getTimeLimit(){
+        return timeLimit;
     }
     public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
         Game.amoebaMaxGrowth = amoebaMaxGrowth;
@@ -417,6 +424,7 @@ public class Game {
         int oldY = entity.getY();
         if (getEntity(newX, newY) instanceof Exit) {
             try {
+                Player.getPlayer().nullify();
                 nextLevel();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -599,7 +607,6 @@ public class Game {
                         Player.getPlayer().setDiamonds(Integer.parseInt(parts[1]));
                         break;
                     case "Keys":
-                        // TODO - break up into method
                         // Clear the player's keys and add the specified number of default keys
                         int numKeys = Integer.parseInt(parts[1]);
                         Player.getPlayer().getKeys().clear();
@@ -652,6 +659,7 @@ public class Game {
      */
     public void gameOver() {
         System.out.println(" Game Over ");
+        Player.getPlayer().nullify();
         loadCave();
     }
 }

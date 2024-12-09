@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Test;
 import javafx.scene.image.Image;
 
 /**
@@ -27,7 +26,6 @@ public abstract class Enemy extends Entity {
      * A Test method designed to be used inside moveTo to test your movement
      * is working correctly.
      */
-    @Test
     public abstract void movementTests();
 
     /**

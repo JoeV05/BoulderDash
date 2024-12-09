@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * What does this do?
- * Why are there no comments?
- * Why must you make me suffer?
- * I don't like suffering.
- * :(
+ * A class designed to represent a players profile
+ * @author Luke Brace
  */
 public class ChoosePlayer {
     private static final String PF = "profiles.txt";
@@ -17,7 +14,7 @@ public class ChoosePlayer {
     private PlayerProfile curentProfile;
 
     /**
-     *
+     *Gets a player profile
      */
     public ChoosePlayer() {
         this.profiles = new ArrayList<>();
