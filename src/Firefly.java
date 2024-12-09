@@ -114,8 +114,6 @@ public class Firefly extends Enemy {
                     currentMovementDir = Direction.UP;
                 }
                 break;
-            default:
-                break;
         }
     }
 

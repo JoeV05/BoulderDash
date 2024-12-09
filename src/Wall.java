@@ -10,10 +10,10 @@ public class Wall extends Tile {
     protected WallType wallType; // The specific type of this wall
 
     /**
-     *
-     * @param x
-     * @param y
-     * @param wallType
+     * Constructor for wall class
+     * @param x x position
+     * @param y y position
+     * @param wallType type of wall
      */
     public Wall(int x, int y, WallType wallType) {
         super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType));

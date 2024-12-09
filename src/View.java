@@ -12,6 +12,10 @@ public class View {
     private static final int BOTTOM_SCREEN_LOWER_BOUND = Game.GRID_HEIGHT - 2;
     private static final int TOP_SCREEN_LOWER_BOUND = Main.MAP_SEEN_HEIGHT - 1;
 
+    /**
+     * Constructor for the view class
+     * @param viewMode part of the screen you are viewing
+     */
     public View(int viewMode) {
         this.viewMode = viewMode;
     }

@@ -163,7 +163,7 @@ public class Frog extends Enemy {
         return output;
     }
     /**
-     * Moves the frog to be called in main
+     * Moves the frog towards the player to be called in main
      */
     public void move() {
         Game game = Game.getGame();
