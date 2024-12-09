@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 /**
  * Represents an exit to a specific level within the game.
  * @author James Harvey, Joseph Vinson
+ * @version 1.4
  */
 public class Exit extends ActionWall {
     private static int scoreRequirement;

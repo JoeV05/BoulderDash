@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Represents a level within the game.
+ * @author Joe Devlin
+ * @version 1.0
+ */
 public class Cave {
+    public static final int METADATA_LENGTH = 5;
     private int tilesTall;
     private int tilesWide;
     private char[][] cave;
@@ -23,12 +29,20 @@ public class Cave {
         this.fileName = "level-" + caveNumber + ".txt";
         Game.getGame().setCurrentLevelFileName(fileName);
         parseCave();
-        System.out.printf("Cave instance created (%s -> %s). It is %d wide and %d tall.%n",
+        System.out.printf("Cave instance created (%s -> %s)."
+                        + "It is %d wide and %d tall.%n",
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
+    /**
+     * Creates a cave by loading a given file.
+     * @param fileName The name of the level file to load.
+     * @throws FileNotFoundException Throw an exception if the level file
+     * can't be found.
+     */
     public Cave(String fileName) throws FileNotFoundException {
-        this.caveName = "Cave-" + fileName.charAt(fileName.length() - 5);
+        this.caveName = "Cave-" + fileName.charAt(fileName.length()
+                - METADATA_LENGTH);
         this.fileName = fileName;
         parseCave();
         System.out.printf("Cave instance created (%s -> %s). "
@@ -36,6 +50,11 @@ public class Cave {
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
+    /**
+     * Read through a level file and store the data.
+     * @throws FileNotFoundException Throw an exception if the level file can't
+     * be found.
+     */
     private void parseCave() throws FileNotFoundException {
         File file = new File("src/caves/%s".formatted(fileName));
         if (!file.exists()) {
@@ -47,7 +66,7 @@ public class Cave {
             lines.add(scanner.nextLine());
         }
 
-        tilesTall = lines.size() - 4;
+        tilesTall = lines.size() - (METADATA_LENGTH - 1);
         tilesWide = lines.getFirst().length();
 
         cave = new char[tilesTall][tilesWide];
@@ -62,7 +81,8 @@ public class Cave {
         Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
         Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
         Game.setAmoebaMaxGrowth(Integer.parseInt(lines.get(tilesTall + 2)));
-        Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall + 3)));
+        Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall
+                + METADATA_LENGTH - 2)));
     }
 
     /**
