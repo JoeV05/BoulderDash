@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Creates a map/character array from a parsed text file and defines level
+ * properties of the level such as Amoeba growth rate and Diamonds required
+ * to complete the level.
+ * @author Joe Devlin, Joe Vinson, James Harvey
+ * @version 1.5
+ */
 public class Cave {
     private int tilesTall;
     private int tilesWide;
@@ -13,7 +20,7 @@ public class Cave {
     private static int caveNumber = 0;
 
     /**
-     * Creates a cave by loading the relevant level file.
+     * Automatically creates the next cave by loading the relevant level file.
      * @throws FileNotFoundException Throws an error if the required level file
      * is not found.
      */
@@ -27,6 +34,12 @@ public class Cave {
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
+    /**
+     * Creates the Cave of the parsed file.
+     * @param fileName Name of the file to be parsed.
+     * @throws FileNotFoundException Throws an error if the required level file
+     * is not found.
+     */
     public Cave(String fileName) throws FileNotFoundException {
         this.caveName = "Cave-" + fileName.charAt(fileName.length() - 5);
         this.fileName = fileName;
@@ -36,11 +49,17 @@ public class Cave {
                 caveName, fileName, tilesWide,  tilesTall);
     }
 
+    /**
+     * Reads the text file line-by-line and by character and adds it to the map
+     * to be read by the game class.
+     * @throws FileNotFoundException Throws an error if the file url is incorrect.
+     */
     private void parseCave() throws FileNotFoundException {
         File file = new File("src/caves/%s".formatted(fileName));
         if (!file.exists()) {
             file = new File("src/caves/level-MAGIC-WALL-TEST.txt");
         }
+
         Scanner scanner = new Scanner(file);
         List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {
