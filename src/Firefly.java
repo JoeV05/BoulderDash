@@ -13,6 +13,7 @@ public class Firefly extends Enemy {
      * Creates a firefly at a given (x, y) position.
      * @param x The x coordinate of the firefly.
      * @param y The y coordinate of the firefly.
+     * @param cling Left or right clinging.
      */
     public Firefly(int x, int y, Direction cling) {
         super(x, y, new Image("./sprites/firefly.png"));
@@ -26,6 +27,7 @@ public class Firefly extends Enemy {
      * @param x The x coordinate of the firefly.
      * @param y The y coordinate of the firefly.
      * @param image The image to use as the sprite of the firefly.
+     * @param cling Left or right clinging.
      */
     public Firefly(int x, int y, Image image, Direction cling) {
         super(x, y, image);
@@ -44,6 +46,9 @@ public class Firefly extends Enemy {
         this.moveClingLeft();
     }
 
+    /**
+     * Move while clinging to the left.
+     */
     public void moveClingLeft() {
         Entity north = Game.getGame().getEntity(x, y - 1);
         Entity east = Game.getGame().getEntity(x + 1, y);
@@ -109,107 +114,107 @@ public class Firefly extends Enemy {
                     currentMovementDir = Direction.UP;
                 }
                 break;
+            default:
+                break;
         }
     }
 
+    /**
+     * Move while clinging to the right.
+     */
     public void moveClingRight() {
     }
 
     /**
-     * No clue what this does.
-     */
-    @Override
-    public void movementTests() {
-
-    }
-
-    /**
-     * Performs any actions done when an enemy dies by a falling object and returns what they should drop on their death
-     * it then checks every adjacent tile and does the nessicary action depending on the tile
-     * @return nothing as it handles the conversions itself
+     * Performs any actions done when an enemy dies by a falling object and
+     * returns what they should drop on their death. Then checks every adjacent
+     * tile and does the necessary action depending on the tile.
      */
     @Override
     public void onDeath(Entity below) {
         int positionX = below.getX();
-        int positionY= below.getY();
-        if(checker(positionX, positionY) == true){
+        int positionY = below.getY();
+        if (checker(positionX, positionY) == true) {
             Game.getGame().updateLevel(positionX, positionY, below);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
-        }
-        if (checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
-            Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY+1;
+            positionX = positionX + 1;
         } else {
-            positionY= positionY+1;
+            positionX = positionX + 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX-1;
-        }else{
-            positionX= positionX-1;
+            positionY = positionY + 1;
+        } else {
+            positionY = positionY + 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX-1;
-        }else{
-            positionX= positionX-1;
+            positionX = positionX - 1;
+        } else {
+            positionX = positionX - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY-1;
-        }else{
-            positionY= positionY-1;
+            positionX = positionX - 1;
+        } else {
+            positionX = positionX - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionY= positionY-1;
-        }else{
-            positionY= positionY-1;
+            positionY = positionY - 1;
+        } else {
+            positionY = positionY - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
+            positionY = positionY - 1;
+        } else {
+            positionY = positionY - 1;
         }
-        if(checker(positionX, positionY) == true){
-            Entity replaced =Game.getGame().getEntity(positionX, positionY);
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
             Game.getGame().updateLevel(positionX, positionY, replaced);
-            positionX= positionX+1;
-        }else{
-            positionX= positionX+1;
+            positionX = positionX + 1;
+        } else {
+            positionX = positionX + 1;
         }
-       if (gameEnd = true){
-            gameEnd =false;
+        if (checker(positionX, positionY) == true) {
+            Entity replaced = Game.getGame().getEntity(positionX, positionY);
+            Game.getGame().updateLevel(positionX, positionY, replaced);
+            positionX = positionX + 1;
+        } else {
+            positionX = positionX + 1;
+        }
+       if (gameEnd == true) {
+            gameEnd = false;
             Player.getPlayer().playerDeath();
         }
     }
 
-	/**
+    /**
      * Used by the method called upon an enemy dying via a falling object this
      * method sees if the tiles selected result in an outcome differing from
      * the default.
+     * @param x X coordinate of the entity to check.
+     * @param y Y coordinate of the entity to check.
+     * @return true or false.
      */
     public boolean checker(int x, int y) {
         Entity check = Game.getGame().getEntity(x, y);
-        if (check instanceof Exit ){
+        if (check instanceof Exit) {
             return false;
-        } else if(check instanceof Wall){
-            WallType notUnbreakable =((Wall)check).getWallType();
-            if (notUnbreakable == WallType.TITANIUM_WALL){
+        } else if (check instanceof Wall) {
+            WallType notUnbreakable = ((Wall) check).getWallType();
+            if (notUnbreakable == WallType.TITANIUM_WALL) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        } else if (check instanceof Butterfly){
+        } else if (check instanceof Butterfly) {
             Diamond dropedDiamond = new Diamond(x, y);
             Game.getGame().replaceEntity(x, y, dropedDiamond);
             return false;

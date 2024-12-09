@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
  * locked door is forced open. It is walkable and has a sprite based on its
  * colour.
  * @author Tafara Gonese
+ * @version 1.1
  */
 public class RuinedDoor extends Walkable {
     /**

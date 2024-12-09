@@ -18,7 +18,7 @@ public class Wall extends Tile {
     public Wall(int x, int y, WallType wallType) {
         super(x, y, false, TileType.WALL, Wall.getWallSprite(wallType));
 
-        this.wallType = wallType; //sets the type of wall i.e. magic, titanium,door
+        this.wallType = wallType;
     }
 
     /**

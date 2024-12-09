@@ -3,8 +3,9 @@ import javafx.scene.image.Image;
 import java.util.*;
 
 /**
- * A class designed to represent a frog
+ * A class designed to represent a frog,
  * @author Edward Tickle
+ * @version 1.0
  */
 public class Frog extends Enemy {
 

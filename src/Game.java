@@ -1,8 +1,3 @@
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,6 +19,7 @@ public class Game {
     public static final int GRID_HEIGHT = 23;
     public static final int MAX_HEIGHT_INDEX = Game.GRID_HEIGHT - 2;
     public static final int MAX_WIDTH_INDEX = Game.GRID_WIDTH - 1;
+    public static final int ENEMY_MOVE_RATE = 6;
     private static Game theGame;
     // the map of entities representing the game
     private Entity[][] map;
@@ -69,15 +65,35 @@ public class Game {
     public static void setTimeLimit(int timeLimit) {
         Game.timeLimit = timeLimit;
     }
-    public static int getTimeLimit(){
+
+    /**
+     * Get the level time limit.
+     * @return Positive integer.
+     */
+    public static int getTimeLimit() {
         return timeLimit;
     }
+
+    /**
+     * Set the amoeba maximum growth size.
+     * @param amoebaMaxGrowth Maximum size of an amoeba group.
+     */
     public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
         Game.amoebaMaxGrowth = amoebaMaxGrowth;
     }
+
+    /**
+     * Set the amoeba growth rate.
+     * @param amoebaGrowthRate Growth rate of amoeba.
+     */
     public static void setAmoebaGrowthRate(int amoebaGrowthRate) {
         Game.amoebaGrowthRate = amoebaGrowthRate;
     }
+
+    /**
+     * Set the current level file name.
+     * @param currentLevelFile Name of the current level file.
+     */
     public void setCurrentLevelFileName(String currentLevelFile) {
         this.currentLevelFile = currentLevelFile;
     }
@@ -305,7 +321,7 @@ public class Game {
                 addToOnCreate(m);
                 break;
             case 'E':
-                Exit e = new Exit(x, y, 5);
+                Exit e = new Exit(x, y, 0);
                 addToOnCreate(e);
                 break;
             case 'R':
@@ -363,7 +379,9 @@ public class Game {
                 addToOnCreate(frog);
                 break;
             case 'A':
-                AmoebaGroup a = new AmoebaGroup(amoebaMaxGrowth, amoebaGrowthRate, x, y);
+                int mG = amoebaMaxGrowth;
+                int gR = amoebaGrowthRate;
+                AmoebaGroup a = new AmoebaGroup(mG, gR, x, y);
                 amoebaGroups.add(a);
                 map[y][x] = a.getFirst();
                 break;
@@ -470,12 +488,13 @@ public class Game {
     }
 
     /**
-     *
+     * Reset the current level.
      */
-    public void resetLevel(){
+    public void resetLevel() {
         actionWalls.clear();
         fallingEntities.clear();
         enemies.clear();
+        amoebaGroups.clear();
     }
 
     /**
@@ -485,9 +504,9 @@ public class Game {
      * over them all and calling their own tick method).
      */
     public void tick() {
-		if (currentTick == 0){
-			createCheckpoint();
-		}
+        if (currentTick == 0) {
+            createCheckpoint();
+        }
         currentTick++;
         for (int i = 0; i < actionWalls.size(); i++) {
             actionWalls.get(i).tick();
@@ -499,7 +518,7 @@ public class Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             //makes enemies move every 3 ticks
-            if (currentTick % 6 == 0){
+            if (currentTick % ENEMY_MOVE_RATE == 0) {
                 enemies.get(i).move();
             }
         }
@@ -553,10 +572,13 @@ public class Game {
             // Save the current cave number
             writer.println("CaveNumber:" + Cave.getCaveNumber());
             // Save the player's position on the grid
-            writer.println("PlayerPosition:" + Player.getPlayer().getX() + "," + Player.getPlayer().getY());
+            writer.println("PlayerPosition:" + Player.getPlayer().getX()
+                    + "," + Player.getPlayer().getY());
             // Save the number of diamonds the player has collected
-            writer.println("Diamonds:" + Player.getPlayer().getDiamonds());
-            System.out.println("Saved Diamonds: " + Player.getPlayer().getDiamonds());
+            writer.println("Diamonds:"
+                    + Player.getPlayer().getDiamonds());
+            System.out.println("Saved Diamonds: "
+                    + Player.getPlayer().getDiamonds());
             // Save the number of keys the player has
             writer.println("Keys:" + Player.getPlayer().getKeys().size());
         } catch (IOException e) {
@@ -584,16 +606,17 @@ public class Game {
      * @param filename The name of the file to load the game state from.
      */
     public void loadGame(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader read =
+                     new BufferedReader(new FileReader(filename))) {
             // Read the save file line by line
             String line;
-            while ((line = reader.readLine()) != null) {
-                // Split each line into a key-value pair based on the colon delimiter
+            while ((line = read.readLine()) != null) {
+                // Split each line into key-value based on the colon delimiter
                 String[] parts = line.split(":");
                 switch (parts[0]) {
                     case "CaveNumber":
                         // Set the cave number using the parsed integer
-                        Cave.setCaveNumber(Integer.parseInt(parts[1])); // Add a setter to Cave.java
+                        Cave.setCaveNumber(Integer.parseInt(parts[1]));
                         break;
                     case "PlayerPosition":
                         // Parse the player's x and y position
@@ -604,15 +627,19 @@ public class Game {
                         break;
                     case "Diamonds":
                         // Set the number of diamonds the player has
-                        Player.getPlayer().setDiamonds(Integer.parseInt(parts[1]));
+                        Player p = Player.getPlayer();
+                        p.setDiamonds(Integer.parseInt(parts[1]));
                         break;
                     case "Keys":
-                        // Clear the player's keys and add the specified number of default keys
+                        // Clear the player's keys and add the saved keys
                         int numKeys = Integer.parseInt(parts[1]);
                         Player.getPlayer().getKeys().clear();
                         for (int i = 0; i < numKeys; i++) {
-                            Player.getPlayer().getKeys().add(new Key(0, 0, Colour.RED)); // Example default key
+                            Key k = new Key(0, 0, Colour.RED);
+                            Player.getPlayer().getKeys().add(k);
                         }
+                        break;
+                    default:
                         break;
                 }
             }
