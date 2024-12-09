@@ -15,14 +15,14 @@
       <StackPane prefHeight="65.0">
          <HBox style="-fx-background-color: #000000;">
             <HBox>
-               <ImageView fx:id="topLeftImage1" fitHeight="32.0" fitWidth="32.0" />
-               <ImageView fx:id="topLeftImage2" fitHeight="32.0" fitWidth="32.0" />
+               <ImageView fx:id="scoreFirstDigit" fitHeight="32.0" fitWidth="32.0" />
+               <ImageView fx:id="scoreSecondDigit" fitHeight="32.0" fitWidth="32.0" />
             </HBox>
             <StackPane HBox.hgrow="ALWAYS" />
             <HBox>
-               <ImageView fx:id="topRightImage1" fitHeight="32.0" fitWidth="32.0" />
-               <ImageView fx:id="topRightImage2" fitHeight="32.0" fitWidth="32.0" />
-               <ImageView fx:id="topRightImage3" fitHeight="32.0" fitWidth="32.0" />
+               <ImageView fx:id="timerFistDigit" fitHeight="32.0" fitWidth="32.0" />
+               <ImageView fx:id="timerSecondDigit" fitHeight="32.0" fitWidth="32.0" />
+               <ImageView fx:id="timerThirdDigit" fitHeight="32.0" fitWidth="32.0" />
             </HBox>
          </HBox>
       </StackPane>
