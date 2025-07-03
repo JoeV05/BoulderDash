@@ -7,7 +7,7 @@ import java.util.Random;
  * if the tile beneath them is either a path tile, in which case it simply
  * inhabits the tile, or a magic wall, in which case it must be transformed
  * by the magic wall.
- * @author Joseph Vinson
+ * @author Joseph Vinson, Daniel Beesley, Edward Tickle
  * @version 1.3
  */
 public abstract class FallingEntity extends Entity {
@@ -59,17 +59,10 @@ public abstract class FallingEntity extends Entity {
             int lDY = lD.getY();
             RuinedDoor rD = new RuinedDoor(lDX, lDY, lD.getColour());
             Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
-        } else if (below instanceof Frog && this.falling) {
-           Frog frog = (Frog) below;
-           frog.onDeath(below);
-        }
-        if (below instanceof Firefly && this.falling) {
-            Firefly firefly = (Firefly) below;
-            firefly.onDeath(below);
-        }
-        if (below instanceof Butterfly && this.falling) {
-            Butterfly butterfly = (Butterfly) below;
-            butterfly.onDeath(below);
+        } else if (below instanceof Enemy && this.falling)
+        {
+            Enemy enemy = (Enemy) below;
+            enemy.onDeath(enemy);
         }
         if (below instanceof Player && this.falling) {
             Player.getPlayer().playerDeath();
