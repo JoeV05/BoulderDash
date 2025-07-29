@@ -94,6 +94,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    // TODO - Replace movement system
+
     /**
      * If a key has not already been seen by the program as having been pressed
      * it is added to the queue of pressed keys and the hash set of seenKeys.
@@ -154,6 +156,7 @@ public class Main extends Application {
         if (!Main.inLevel) {
             return;
         }
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
@@ -181,6 +184,9 @@ public class Main extends Application {
                         GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
             }
         }
+    }
+
+    public void drawLevel() {
     }
 
     /**
