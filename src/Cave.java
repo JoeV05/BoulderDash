@@ -81,10 +81,10 @@ public class Cave {
             }
         }
         scanner.close();
-        Game.setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
-        Game.setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
-        Game.setAmoebaMaxGrowth(Integer.parseInt(lines.get(tilesTall + 2)));
-        Game.setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall
+        Game.getGame().setDiamondsNeeded(Integer.parseInt(lines.get(tilesTall)));
+        Game.getGame().setTimeLimit(Integer.parseInt(lines.get(tilesTall + 1)));
+        Game.getGame().setAmoebaMaxGrowth(Integer.parseInt(lines.get(tilesTall + 2)));
+        Game.getGame().setAmoebaGrowthRate(Integer.parseInt(lines.get(tilesTall
                 + METADATA_LENGTH - 2)));
     }
 
