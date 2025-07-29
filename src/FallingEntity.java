@@ -39,35 +39,36 @@ public abstract class FallingEntity extends Entity {
             throw new IllegalStateException(this + " out of bounds at"
                     + "\nx = " + this.x + "\ny = " + this.y);
         }
+
         if (this.y == Game.MAX_HEIGHT_INDEX) {
             return;
         }
+
         Entity below = Game.getGame().getEntity(this.x, this.y + 1);
+
         if (Game.isRound(below)) {
             this.roll();
-            return;
         } else if (below instanceof Path) {
             Game.getGame().updateLevel(x, y + 1, this);
             this.falling = true;
-            return;
         } else if (below instanceof MagicWall) {
             ((MagicWall) below).transform(this);
-            return;
-        } else if (below instanceof LockedDoor && this.falling) {
-            LockedDoor lD = (LockedDoor) below;
-            int lDX = lD.getX();
-            int lDY = lD.getY();
-            RuinedDoor rD = new RuinedDoor(lDX, lDY, lD.getColour());
-            Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
-        } else if (below instanceof Enemy && this.falling)
-        {
-            Enemy enemy = (Enemy) below;
-            enemy.onDeath(enemy);
         }
-        if (below instanceof Player && this.falling) {
-            Player.getPlayer().playerDeath();
+
+        if (this.falling) {
+            if (below instanceof LockedDoor) {
+                LockedDoor lD = (LockedDoor) below;
+                int lDX = lD.getX();
+                int lDY = lD.getY();
+                RuinedDoor rD = new RuinedDoor(lDX, lDY, lD.getColour());
+                Game.getGame().replaceEntity(below.getX(), below.getY(), rD);
+            } else if (below instanceof Enemy) {
+                Enemy enemy = (Enemy) below;
+                enemy.onDeath(enemy);
+            } else if (below instanceof Player) {
+                Player.getPlayer().playerDeath();
+            }
         }
-        this.falling = false;
     }
 
     /**
