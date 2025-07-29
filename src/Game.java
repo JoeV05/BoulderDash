@@ -29,13 +29,12 @@ public class Game {
     private final ArrayList<ActionWall> actionWalls;
     //all active enemies
     private final ArrayList<Enemy> enemies;
-    private static int currentTick = 0;
-    private static int diamondsNeeded;
-    private static int amoebaMaxGrowth;
-    private static int amoebaGrowthRate;
-    private static int timeLimit;
-    private static int diamondsOnHand = 0;
-    private static int timeElapsed;
+    private int currentTick = 0;
+    private int diamondsNeeded;
+    private int amoebaMaxGrowth;
+    private int amoebaGrowthRate;
+    private int timeLimit;
+    private int timeElapsed;
     private final ArrayList<AmoebaGroup> amoebaGroups;
     private Exit exit;
     private String currentLevelFile;
@@ -54,23 +53,23 @@ public class Game {
      * Set the number of diamonds needed to exit the level.
      * @param diamondsNeeded Number of diamonds needed to exit the level.
      */
-    public static void setDiamondsNeeded(int diamondsNeeded) {
-        Game.diamondsNeeded = diamondsNeeded;
+    public void setDiamondsNeeded(int diamondsNeeded) {
+        this.diamondsNeeded = diamondsNeeded;
     }
 
     /**
      * Set the time limit for the level.
      * @param timeLimit How much time the player has to complete the level.
      */
-    public static void setTimeLimit(int timeLimit) {
-        Game.timeLimit = timeLimit;
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
     /**
      * Get the level time limit.
      * @return Positive integer.
      */
-    public static int getTimeLimit() {
+    public int getTimeLimit() {
         return timeLimit;
     }
 
@@ -78,16 +77,16 @@ public class Game {
      * Set the amoeba maximum growth size.
      * @param amoebaMaxGrowth Maximum size of an amoeba group.
      */
-    public static void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
-        Game.amoebaMaxGrowth = amoebaMaxGrowth;
+    public void setAmoebaMaxGrowth(int amoebaMaxGrowth) {
+        this.amoebaMaxGrowth = amoebaMaxGrowth;
     }
 
     /**
      * Set the amoeba growth rate.
      * @param amoebaGrowthRate Growth rate of amoeba.
      */
-    public static void setAmoebaGrowthRate(int amoebaGrowthRate) {
-        Game.amoebaGrowthRate = amoebaGrowthRate;
+    public void setAmoebaGrowthRate(int amoebaGrowthRate) {
+        this.amoebaGrowthRate = amoebaGrowthRate;
     }
 
     /**
